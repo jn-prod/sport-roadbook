@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "8.1"
+
+before_install:
+  - npm i -g npm@5.7.1
+
+script:
+  - pm2 start app.js
+  - npm test
