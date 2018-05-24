@@ -1,14 +1,35 @@
-<div class="container mt-5">
+<div class="container mt-5 bg-light">
   <div class="row">
-    <div class="col-6 mx-auto">
-      <div id="form-user">
+    <div class="col-12 mt-5 mr-2 ml-2">
+      <span class="d-flex h1">{{user.firstname}} {{user.lastname}}</span>
+      <span class="d-flex text-capitalize"><i class="fas fa-map-marker mr-2"></i> {{user.city}}, {{user.country}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h1 class="h2 text-center mt-5 mb-2">Flux d'activités <span class="text-muted">({{activites.length}})</span></h1>
+      {{#each activites}}
         <div class="row">
-          <div class="col-12">
-            <h1>Profil</h1>
-            {{user}}
+          <div class="col-10 mx-auto border border-primary mt-2">
+            <div class="row">
+              <div class="col-md-2 text-center text-muted mt-2 mb-2">
+                <i class="far fa-calendar fa-2x"></i>
+                <span class="d-block text-center">{{dateStrava this.start_date_local}}</span>
+              </div>
+              <div class="col-md-10 mt-2">
+                <span class="h4 d-block">
+                  {{this.name}}
+                </span>
+                {{this.type}}
+                Dist.: {{stravaDist this.distance}}Km
+                D+: {{this.total_elevation_gain}}m
+                <i class="fas fa-tachometer-alt"></i> {{this.average_speed}}
+                <i class="far fa-clock"></i> {{stravaTime this.moving_time}} min                
+              </div>
+            </div>
           </div>
         </div>
-      </div>      
+      {{/each}}
     </div>
   </div>
 </div>

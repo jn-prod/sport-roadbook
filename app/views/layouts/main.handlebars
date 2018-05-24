@@ -28,7 +28,15 @@
           <a id="nav-logo" href="/" class="h1"><span class="text-primary">My</span>Sportbook</a>
         </div>
         <div id="nav-right" class="col-md-8">
-          <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://localhost:3000/user/&approval_prompt=force&scope=public" class="btn btn-primary btn-strava"><i class="fas fa-user"></i> Se connecter avec Strava</a>
+          {{#if user}}
+            <a href="/user/{{user._id}}" class="btn btn-primary"><i class="fas fa-user"></i> Profil</a>
+            <a href="/user/logout" class="btn btn-secondary">Se déconnecter</a>
+          {{else}}
+            {{#if login}}
+            {{else}}
+            <a href="/user/login" class="btn btn-primary"><i class="fas fa-user"></i> Se connecter</a>
+            {{/if}}
+          {{/if}}
         </div>
       </div>
       <!-- body -->

@@ -3,7 +3,15 @@ var User = require('../models/user')
 
 //Controllers
 var userCtrl = {
-  home : (req, res) => {
+  login : (req, res) => {
+    if(req.user) {
+      res.redirect('/user/' + user.id)
+    } else {
+      var login = true
+      res.render('partials/user/login', {login: login})
+    }
+  },
+  stravaAuth: (req,res) => {
     if (req.query.error === 'access_denied') {
       res.redirect('/')
     } else {
@@ -31,26 +39,37 @@ var userCtrl = {
                     country: data.country,
                     city: data.city
                 })
-                user.save((err, user) => {
+                user.save((err, newUser) => {
                   if (err) throw err
                   else {
-                    console.log('New user =>')
-                    console.log(user)
-                    req.session.user = user
-                    res.render('partials/user/home')                    
+                    req.session.user = newUser
+                    res.redirect('/user/' + newUser.id)                   
                   }
                 })
               } else {
-                console.log('Exist user =>')
-                console.log(userStrava)
-                req.session.user = userStrava
-                res.render('partials/user/home')
+                req.session.user = userStrava[0]
+                res.redirect('/user/' + userStrava[0].id)
               }
             }
         })
-
       })
     }
+  },
+  home: (req, res) => {
+    if (req.session.user) {
+      strava.code = req.session.strava
+      strava.athlete.activities.get((err, activites) => {
+        var activites = activites
+        res.render('partials/user/home', {activites: activites})
+      })
+      
+    } else {
+      res.redirect('/user/login')
+    }
+  },
+  logout: (req, res) => {
+    req.session = null
+    res.redirect('/')
   }
 }
 

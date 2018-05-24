@@ -58,11 +58,19 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 
+// Locals
+app.use(function(req, res, next){
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 // Router
 var cms = require('./app/router/cmsRoutes');
 var users = require('./app/router/userRoutes');
 app.use('/', cms)
 app.use('/user', users)
+
+
 
 // Handlebars
 var hbs = exphbs.create({
@@ -71,11 +79,9 @@ var hbs = exphbs.create({
   partialsDir:'app/views/partials',
   helpers: {
       date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1 ) + '/' + val.getFullYear() },
-      dateFullYear: (val) => { return val.getUTCFullYear() },
-      dateMonth: (val) => { return ( val.getUTCMonth() + 1 )},
-      dateDay: (val) => { return val.getUTCDate() },
-      dateHours: (val) => { return val.getUTCHours() },
-      dateMinutes: (val) => { return val.getUTCMinutes() }    
+      dateStrava: (val) => { var date = new Date(val); return date.getDate() + '/' + (parseInt(date.getMonth()) + 1 ) + '/' + date.getFullYear() },
+      stravaTime: (val) => { var time = val / 60; return  Number.parseFloat(time).toFixed(2) },
+      stravaDist: (val) => { var dist = val / 1000; return  Number.parseFloat(dist).toFixed(3) }
     }
 });
 

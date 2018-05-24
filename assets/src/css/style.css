@@ -85,6 +85,14 @@ body {
   color: #FFC312 !important;
 }
 
+.border-primary {
+  border-color: #EE5A24 !important;
+}
+
+.border-secondary {
+  border-color: #FFC312 !important;
+}
+
 .bg-light {
   background-color: #FFF !important;
 }

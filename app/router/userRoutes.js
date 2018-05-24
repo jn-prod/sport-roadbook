@@ -5,7 +5,13 @@ var express = require('express'),
 var userCtrl = require('../controllers/userController')
 
 // ---------------- INDEX ----------------
+// Get login page
+router.get('/login', userCtrl.login);
+// Get Log out
+router.get('/logout', userCtrl.logout);
+// Get strava auth
+router.get('/strava-auth', userCtrl.stravaAuth);
 // Get Homepage
-router.get('/', userCtrl.home);
+router.get('/:id', userCtrl.home);
 
 module.exports = router;
