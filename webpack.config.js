@@ -11,13 +11,13 @@ const env = ( process.env.NODE_ENV === 'production' )
 const local = ( process.env.LOCAL === 'true' )
 
 if(env){
-   config_mode = 'production'   
+   config_mode = 'production'
    config_watch = false
    config_devtool = false
    config_entry = './assets/src/js/main.js'
    config_output = {
       path: path.resolve(__dirname, './assets/public/js/'),
-      filename: 'app.js',
+      filename: 'app.js'
    }
 } else {
    config_mode = 'development'   
@@ -32,7 +32,7 @@ if(env){
       sourceMapFilename: '[file].map',
       filename: 'app.js',
       publicPath: '/js/'
-   }   
+   }
 }
 
 if (local || env) {
@@ -57,6 +57,19 @@ if (local || env) {
                query: {
                   presets: ['env']
                }
+            },
+            {
+              test: /\.(png|svg|jpg|gif)$/,
+              use: [
+                'file-loader'
+              ]
+            },
+            {
+              test: /\.css$/,
+              use: [
+                'style-loader',
+                'css-loader'
+              ]
             }
          ]
       },

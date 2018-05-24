@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My roadbook - Application de gestion d'entrainement sportif</title>
+    <title>My Sportbook - Application de gestion d'entrainement sportif</title>
     <meta dname="description" content="Application de gestion d'entrainement sportif: Running - Trail - Triathlon - Cyclisme - VTT - Randonnée - Marche">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="icon" href="/img/favicon.ico" />
@@ -20,17 +18,30 @@
     </script> -->
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          {{{body}}}
+    {{#if index}}
+      <div class="container-fluid bg-img">
+    {{else}}
+      <div class="container-fluid">
+    {{/if}}
+      <div id="nav" class="row">
+        <div class="col-md-4">
+          <a id="nav-logo" href="/" class="h1"><span class="text-primary">My</span>Sportbook</a>
         </div>
+        <div id="nav-right" class="col-md-8">
+          <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://localhost:3000/user/&approval_prompt=force&scope=public" class="btn btn-primary btn-strava"><i class="fas fa-user"></i> Se connecter avec Strava</a>
+        </div>
+      </div>
+      <!-- body -->
+      <div class="container">
+        {{{body}}}
       </div>
     </div>
     <!-- global -->
     <script src="/js/app.js"></script>
-    <!-- bootstrzpp -->
+    <!-- bootstrapp -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <!-- fontawesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
   </body>
 </html>

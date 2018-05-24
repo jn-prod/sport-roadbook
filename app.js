@@ -4,10 +4,24 @@ var express = require('express'),
     helmet = require('helmet'),
     exphbs = require('express-handlebars'),
     path = require('path')
-    url = require('url');
+    url = require('url'),
+    bodyParser = require('body-parser'),
+    mongo = require('mongodb'),
+    mongoose = require('mongoose'),
+    cookieParser = require('cookie-parser');
 
 // Init App
 var app = express();
+
+// MongoDB
+mongoose.Promise = require('bluebird');
+var mongoose = mongoose.connect(process.env.MLAB, (err, client) => {
+  if (err) {
+    console.error(err)
+  } else {
+    console.log('MongoDB is connected')
+  }
+});
 
 // Webpack
 if (process.env.LOCAL === 'true') {
@@ -28,6 +42,12 @@ if (process.env.LOCAL === 'true') {
 
 // Helmet
 app.use(helmet())
+
+// BodyParser Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text({ type: 'text/html', defaultCharset: 'utf-8' }))
+app.use(cookieParser());
 
 // Router
 var cms = require('./app/router/cmsRoutes');

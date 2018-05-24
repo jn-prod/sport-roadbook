@@ -1,7 +1,18 @@
+var strava = require ('../../custom_modules/strava')
+var User = require('../models/user')
+
 //Controllers
 var userCtrl = {
-  login : function(req, res){
-    res.render('partials/user/login')
+  home : function(req, res){
+    if (req.query.error === 'access_denied') {
+      res.redirect('/')
+    } else {
+      strava.code = req.query.code
+      strava.athlete.get(function(err, data) {
+        console.log(data)
+        res.render('partials/user/home', {data: data})
+      });   
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 //Controllers
 var cmsCtrl = {
   index : function(req, res){
-    res.render('partials/cms/index')
+    res.render('partials/cms/index', {index: true})
   }
 }
 

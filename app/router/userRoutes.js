@@ -6,6 +6,6 @@ var userCtrl = require('../controllers/userController')
 
 // ---------------- INDEX ----------------
 // Get Homepage
-router.get('/', userCtrl.login);
+router.get('/', userCtrl.home);
 
 module.exports = router;
