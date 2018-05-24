@@ -23,10 +23,19 @@ body {
   height: 100vh;
 }
 
+#nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 50px 0 0 50px;  
+}
+
 #nav-logo {
   color: #FFF;
   font-family: "Anton", "Helvetica", "sans-serif";
   text-shadow: #000 1px 0 10px;
+/*  display: flex;*/
+  /*justify-content: center;*/
+  flex:1;
 }
 #nav-logo > span {
   font-family: "Permanent Marker", "Helvetica", "sans-serif";
@@ -36,14 +45,9 @@ body {
 }
 
 #nav-right {
-  display: flex;
-  justify-content: flex-end;
+  /*display: flex;*/
+  /*justify-content: flex-end;*/
   padding: 0 50px 0 0;
-}
-
-#nav {
-  display: flex;  
-  padding: 50px 0 0 50px;  
 }
 
 .banner {

@@ -1,4 +1,3 @@
-var strava = require ('../../custom_modules/strava')
 var User = require('../models/user')
 var Activity = require('../models/activity')
 

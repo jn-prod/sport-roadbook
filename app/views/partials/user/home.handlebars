@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col-md-3 mt-5 text-center">
       <span class="d-block h4 ">{{user.firstname}} {{user.lastname}}</span>
-      <span class="d-block text-capitalize"><i class="fas fa-map-marker mr-2"></i> {{user.city}}, {{user.country}}</span>
+      <span class="d-block text-capitalize mb-3"><i class="fas fa-map-marker mr-2"></i> {{user.city}}, {{user.country}}</span>
+      <a href="/activities/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-calendar"></i> Ajouter une activité</a>
+      <a href="/health/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-heart"></i> Ajouter une forme</a>
     </div>
     <div class="col-md-9">
       <h1 class="h2 text-center mt-5 mb-2">Flux d'activités <span class="text-muted">({{activities.length}})</span></h1>
