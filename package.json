@@ -25,6 +25,7 @@
     "connect-flash": "*",
     "connect-mongo": "*",
     "cookie-parser": "*",
+    "cookie-session": "^2.0.0-beta.3",
     "dotenv": "*",
     "express": "*",
     "express-handlebars": "*",

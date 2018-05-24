@@ -8,7 +8,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongo = require('mongodb'),
     mongoose = require('mongoose'),
-    cookieParser = require('cookie-parser');
+    cookieParser = require('cookie-parser'),
+    cookieSession = require('cookie-session');
 
 // Init App
 var app = express();
@@ -48,6 +49,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text({ type: 'text/html', defaultCharset: 'utf-8' }))
 app.use(cookieParser());
+
+// Cookies Session
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1','key2'],
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 
 // Router
 var cms = require('./app/router/cmsRoutes');
