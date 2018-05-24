@@ -67,10 +67,10 @@ app.use(function(req, res, next){
 // Router
 var cms = require('./app/router/cmsRoutes');
 var users = require('./app/router/userRoutes');
+var activities = require('./app/router/activityRoutes')
 app.use('/', cms)
 app.use('/user', users)
-
-
+app.use('/activities', activities)
 
 // Handlebars
 var hbs = exphbs.create({

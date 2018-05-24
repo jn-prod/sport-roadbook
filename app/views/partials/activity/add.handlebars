@@ -1,0 +1,77 @@
+<div class="container mt-5 bg-light">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="h2 text-center mt-5 mb-2">Ajouter une activités</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mb-5">
+      <form action="/activities/add" method="post">
+        <!-- type -->        
+        <div class="form-group">
+          <label for="type">Sport*</label>
+          <select class="form-control" id="type" name="type" required>
+            <option>Cyclisme</option>
+            <option>Running</option>
+            <option>Trail</option>
+            <option>Natation</option>
+            <option>Stand Up Paddle</option>
+            <option>Surf</option>
+            <option>Randonnée</option>
+            <option>Meditation</option>
+            <option>Etirements</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <!-- name -->
+        <div class="form-group">
+          <label for="name">Nom de la scéance*</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="ex: fractionné court" required>
+        </div>
+        <!-- distance -->
+        <div class="form-group">
+          <label for="distance">Distance en KM</label>
+          <input type="number" class="form-control" id="distance" name="distance" min="0" value="0" step="0.01">
+        </div>
+        <!-- moving_time -->
+        <div class="form-group">
+          <label for="moving_time">Durée en min</label>
+          <input type="number" class="form-control" id="moving_time" name="moving_time" min="0" value="0" step="1">
+        </div>
+        <!-- total_elevation_gain -->
+        <div class="form-group">
+          <label for="total_elevation_gain">Dénivelé cumulé en m</label>
+          <input type="number" class="form-control" id="total_elevation_gain" name="total_elevation_gain" min="0" step="1" value="0">
+        </div>
+        <!-- average_speed -->
+        <div class="form-group">
+          <label for="average_speed">Vitesse moyenne en Km/h</label>
+          <input type="number" class="form-control" id="average_speed" name="average_speed" min="0" value="0" step="0.01">
+        </div>
+        <!-- calories -->
+        <div class="form-group">
+          <label for="calories">Calories dépensées</label>
+          <input type="number" class="form-control" id="calories" name="calories" min="0" value="0" step="1">
+        </div>
+        <!-- start_date_local -->
+        <div class="form-group">
+          <label for="start_date_local">Date de l'activité*</label>
+          <input type="date" class="form-control" id="start_date_local" name="start_date_local" required>
+        </div>
+        <!-- description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="alert alert-warning">* champs obligatoirs</p>
+    </div>
+  </div>
+</div>

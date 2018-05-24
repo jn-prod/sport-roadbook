@@ -1,5 +1,6 @@
 var strava = require ('../../custom_modules/strava')
 var User = require('../models/user')
+var Activity = require('../models/activity')
 
 //Controllers
 var userCtrl = {
@@ -58,11 +59,24 @@ var userCtrl = {
   home: (req, res) => {
     if (req.session.user) {
       strava.code = req.session.strava
-      strava.athlete.activities.get((err, activites) => {
-        var activites = activites
-        res.render('partials/user/home', {activites: activites})
-      })
-      
+
+      Activity
+        .find({user: req.session.user._id})
+        .exec((err, dbActivites) => {
+          var allActivities = []
+          dbActivites.forEach((val) => {
+            allActivities.push(val)
+          })
+          strava.athlete.activities.get((err, stravaActivities) => {
+            stravaActivities.forEach((val) => {
+              allActivities.push(val)
+            })
+            allActivities.sort((a,b )=> {
+              return new Date(b.start_date_local) - new Date(a.start_date_local)
+            })
+            res.render('partials/user/home', {activities: allActivities})
+          })          
+        })     
     } else {
       res.redirect('/user/login')
     }
