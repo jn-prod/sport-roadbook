@@ -116,8 +116,8 @@ app.use(function(req, res, next){
 });
 
 // Set Port
-app.set('port', (process.env.PORT || port));
+app.set('port', (process.env.PORT || 3000));
 
 app.listen(3000, function () {
-  console.log('Launch App on http://localhost:3000/')
+  console.log('Launch App on http://localhost:' + process.env.PORT + '/')
 })
