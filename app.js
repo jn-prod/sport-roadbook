@@ -61,6 +61,12 @@ app.use(cookieSession({
 // Locals
 app.use(function(req, res, next){
   res.locals.user = req.session.user || null;
+  if (process.env.LOCAL) {
+    res.locals.env = true;
+  } else {
+    res.locals.env = false;
+  }
+
   next();
 });
 
@@ -108,6 +114,9 @@ app.use(function(req, res, next){
   // default to plain-text. send()
   res.type('txt').send('Not found');
 });
+
+// Set Port
+app.set('port', (process.env.PORT || port));
 
 app.listen(3000, function () {
   console.log('Launch App on http://localhost:3000/')
