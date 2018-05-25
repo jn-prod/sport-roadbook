@@ -11,7 +11,15 @@ var healthCtrl = {
     }
   },
   postAddStatus: (req, res) => {
-
+    var form = req.body
+    form.user = res.locals.user._id
+    var newHealth = new Health(form)
+    newHealth.save((err, health) => {
+      if (err) throw err
+      else {
+        res.redirect('/user/' + req.session.user._id)                   
+      }
+    })
   }
 }
 

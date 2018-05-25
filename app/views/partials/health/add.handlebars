@@ -1,1 +1,113 @@
 
+<div class="container mt-5 bg-light">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="h2 text-center mt-5 mb-2">Ajouter une forme du jour</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 mx-auto mb-5 pt-5">
+      <form action="/health/add" method="post">
+        <!-- sommeil -->        
+        <div class="form-group">
+          <label for="sommeil">Qualité du sommeil</label>
+          <select class="form-control" id="sommeil" name="sommeil" required>
+            <option value="1">Très faible</option>
+            <option value="2">Faible</option>
+            <option value="3" selected>Normal</option>
+            <option value="4">Forte</option>
+            <option value="5">Très forte</option>
+          </select>
+        </div>
+        <!-- recuperation -->        
+        <div class="form-group">
+          <label for="recuperation">Fatigue musculaire</label>
+          <select class="form-control" id="recuperation" name="recuperation" required>
+            <option value="1">Très faible</option>
+            <option value="2">Faible</option>
+            <option value="3" selected>Normale</option>
+            <option value="4">Forte</option>
+            <option value="5">Très forte</option>
+          </select>
+        </div>
+        <!-- lassitude -->        
+        <div class="form-group">
+          <label for="lassitude">Motivation</label>
+          <select class="form-control" id="lassitude" name="lassitude" required>
+            <option value="1">Très faible</option>
+            <option value="2">Faible</option>
+            <option value="3" selected>Normale</option>
+            <option value="4">Forte</option>
+            <option value="5">Très forte</option>
+          </select>
+        </div>
+        <!-- hrv -->
+        <div class="form-group">
+          <label for="hrv">HRV</label>
+          <input type="number" class="form-control" id="hrv" name="hrv" min="0" value="0" step="1">
+        </div>
+        <!-- pouls -->
+        <div class="form-group">
+          <label for="pouls">Pouls au réveil</label>
+          <input type="number" class="form-control" id="pouls" name="pouls" min="0" value="0" step="1">
+        </div>
+        <!-- poids -->
+        <div class="form-group">
+          <label for="poids">Poids au réveil</label>
+          <input type="number" class="form-control" id="poids" name="poids" min="0" value="0" step="1">
+        </div>
+        <!-- blessure -->        
+        <div class="form-group">
+          <label for="blessure">Êtes-vous blessé ?</label>
+          <select class="form-control" id="blessure" name="blessure" required>
+            <option value="false">Non</option>
+            <option value="true">Oui</option>
+          </select>
+        </div>
+        <!-- competition_day -->        
+        <div class="form-group">
+          <label for="competition_day">Jour de compétition</label>
+          <select class="form-control" id="competition_day" name="competition_day" required>
+            <option value="false">Non</option>
+            <option value="true">Oui</option>
+          </select>
+        </div>
+        <!-- faim -->        
+        <div class="form-group">
+          <label for="faim">Avez vous faim ?</label>
+          <select class="form-control" id="faim" name="faim" required>
+            <option value="1">Pas du tout</option>
+            <option value="2">Un peu</option>
+            <option value="3" selected>Normal</option>
+            <option value="4">Un peu plus</option>
+            <option value="5">Beaucoup</option>
+          </select>
+        </div>
+        <!-- soif -->        
+        <div class="form-group">
+          <label for="soif">Avez vous soif ?</label>
+          <select class="form-control" id="soif" name="soif" required>
+            <option value="1">Pas du tout</option>
+            <option value="2">Un peu mois</option>
+            <option value="3" selected>Normal</option>
+            <option value="4">Un peu plus</option>
+            <option value="5">Beaucoup</option>
+          </select>
+        </div>
+        <!-- commentaires -->
+        <div class="form-group">
+          <label for="commentaires">Commentaires personnels</label>
+          <textarea class="form-control" id="commentaires" rows="3" name="commentaires"></textarea>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="alert alert-warning">* champs obligatoirs</p>
+    </div>
+  </div>
+</div>
