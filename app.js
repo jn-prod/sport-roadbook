@@ -9,7 +9,8 @@ var express = require('express'),
     mongo = require('mongodb'),
     mongoose = require('mongoose'),
     cookieParser = require('cookie-parser'),
-    cookieSession = require('cookie-session');
+    cookieSession = require('cookie-session'),
+    path = require('path');
 
 // Init App
 var app = express();
@@ -40,6 +41,9 @@ if (process.env.LOCAL === 'true') {
   )
   app.use(webpackHotMiddleware(compiler))  
 }
+
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'assets/public')));
 
 // Helmet
 app.use(helmet())
