@@ -78,6 +78,7 @@
     "google-maps": "*",
     "html-webpack-plugin": "*",
     "jquery": "*",
+    "mini-css-extract-plugin": "^0.4.0",
     "mocha": "*",
     "popper.js": "*",
     "react": "*",
