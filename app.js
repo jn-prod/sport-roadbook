@@ -74,9 +74,11 @@ app.use(function(req, res, next){
 var cms = require('./app/router/cmsRoutes');
 var users = require('./app/router/userRoutes');
 var activities = require('./app/router/activityRoutes')
+var health = require('./app/router/healthRoutes')
 app.use('/', cms)
 app.use('/user', users)
 app.use('/activities', activities)
+app.use('/health', health)
 
 // Handlebars
 var hbs = exphbs.create({
@@ -118,6 +120,6 @@ app.use(function(req, res, next){
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
-app.listen(3000, function () {
+app.listen(app.get('port'), function () {
   console.log('Launch App on http://localhost:' + process.env.PORT + '/')
 })
