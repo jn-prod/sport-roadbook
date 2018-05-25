@@ -1,8 +1,15 @@
 Master [![Build Status](https://travis-ci.org/jn-prod/sport-roadbook.svg?branch=master)](https://travis-ci.org/jn-prod/sport-roadbook) DEV [![Build Status](https://travis-ci.org/jn-prod/sport-roadbook.svg?branch=dev)](https://travis-ci.org/jn-prod/sport-roadbook)
 
-# Event Izir App
+# Feezily App
 
+### Short description
 This app use Node.js, Express and Mongoose. Application de gestion d'entrainement sportif.
+
+### Urls
+dev : https://feezify-dev.herokuapp.com/
+prod : http://www.feezily.me
+
+# Commands 
 
 ### Version
 1.1.0
