@@ -11,7 +11,6 @@ let config, minCss
 const env = ( process.env.NODE_ENV === 'production' )
 const local = ( process.env.LOCAL === 'true' )
 
-
 if(env){
   config_mode = 'production'
   config_watch = false
@@ -34,7 +33,7 @@ if(env){
     path: path.resolve('public/'),
     sourceMapFilename: '[file].map',
     filename: 'app.js',
-    publicPath: '/js/'
+    publicPath: '/'
   }
   minCss = 'style-loader'
 }
@@ -99,7 +98,7 @@ if (local || env) {
     config.devServer = {
        contentBase: path.resolve(__dirname),
        historyApiFallback: true,
-       publicPath: "/js/",
+       publicPath: "/",
        inline: true,
        noInfo: true,
        stats: {colors: true},

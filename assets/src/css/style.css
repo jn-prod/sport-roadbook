@@ -2,39 +2,39 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Anton');
 @import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900');
 
 /*COLORS*/
 /*https://flatuicolors.com/palette/nl*/
-/*Main: #EE5A24 Secondary: #FFC312 */
-
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Raleway", "Helvetica", "sans-serif";
-  line-height: 1.1;
-  color: inherit;
-}
+/*Main: #00b4b1 Secondary: #f9e093 Default: #00908e */
 
 body {
   background-color: #F4F4F4;
 }
 
+h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Raleway", "Helvetica", "sans-serif";
+  line-height: 1.1;
+  color: inherit;
+}
+
 .bg-img {
-  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(248,9,9,0.1)),url(../img/bg-min.jpg);
+  background-image: linear-gradient(rgba(0,144,142,0.7), rgba(0,180,177,0.7)),url(../img/bg-min.jpg);
   background-size: cover;
+  background-position: center;
   height: 100vh;
 }
 
 #nav {
   display: flex;
   justify-content: flex-end;
-  padding: 50px 0 0 50px;  
+  padding: 50px 0 0 0;  
 }
 
 #nav-logo {
   color: #FFF;
   font-family: "Anton", "Helvetica", "sans-serif";
   text-shadow: #000 1px 0 10px;
-/*  display: flex;*/
-  /*justify-content: center;*/
   flex:1;
 }
 #nav-logo > span {
@@ -45,8 +45,6 @@ body {
 }
 
 #nav-right {
-  /*display: flex;*/
-  /*justify-content: flex-end;*/
   padding: 0 50px 0 0;
 }
 
@@ -60,10 +58,13 @@ body {
 
 .banner > h1 {
   width: 70%;
+  text-align: center; 
+  font-family: 'Titillium Web', sans-serif;
   line-height: 1.5;
-  text-align: center;
-  color: #FFF;
-  font-weight: 500;    
+  color: #f9e093;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 4em;
 }
 
 .btn {
@@ -74,27 +75,27 @@ body {
 }
 
 .btn-primary {
-  background-color: #EE5A24;
+  background-color: #00b4b1;
 }
 
 .btn-primary:hover{
-  background-color: #FFC312;
+  background-color: #f9e093;
 }
 
 .text-primary {
-  color: #EE5A24 !important;
+  color: #00b4b1 !important;
 }
 
 .text-secondary {
-  color: #FFC312 !important;
+  color: #f9e093 !important;
 }
 
 .border-primary {
-  border-color: #EE5A24 !important;
+  border-color: #00b4b1 !important;
 }
 
 .border-secondary {
-  border-color: #FFC312 !important;
+  border-color: #f9e093 !important;
 }
 
 .bg-light {
@@ -110,4 +111,23 @@ body {
 
 .btn-strava {
   background-color: #fc4c02;
+}
+
+@media (max-width: 736px) {
+  #nav {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  #nav-logo {
+    margin: auto;
+  }
+  #nav-right {
+    margin: 60px 0 0px 0;
+    padding: 0 0 0 0;
+  }
+  .banner > h1 {
+    font-size:1.8em;
+    height: 60vh;
+  }
 }
