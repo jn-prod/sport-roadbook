@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./node_modules/.bin/pm2 start app.js -i 1 --attach",
-    "build": "set NODE_ENV=production&& webpack",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
     "test": "./node_modules/.bin/mocha"
   },
   "repository": {
@@ -87,8 +87,8 @@
     "sinon-mongoose": "*",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "*",
-    "webpack": "*",
-    "webpack-cli": "*",
+    "webpack": "^4.9.1",
+    "webpack-cli": "^2.1.4",
     "webpack-dev-middleware": "*",
     "webpack-dev-server": "*",
     "webpack-hot-middleware": "*"

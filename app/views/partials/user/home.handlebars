@@ -1,13 +1,54 @@
 <div class="container mt-5 bg-light">
   <div class="row">
     <div class="col-md-3 mt-5 text-center">
-      <span class="d-block h4 ">{{user.firstname}} {{user.lastname}}</span>
-      <span class="d-block text-capitalize mb-3"><i class="fas fa-map-marker mr-2"></i> {{user.city}}, {{user.country}}</span>
-      <a href="/activities/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-calendar"></i> Ajouter une activité</a>
-      <a href="/health/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-heart"></i> Ajouter une forme</a>
+      <div class="row">
+        <div class="col-12">
+          <span class="d-block h4 ">{{user.firstname}} {{user.lastname}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <span class="d-block text-capitalize mb-3"><i class="fas fa-map-marker mr-2"></i> {{user.city}}, {{user.country}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a href="/activities/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-calendar"></i> Ajouter une activité</a>
+      
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a href="/health/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-heart"></i> Ajouter une forme</a>
+        </div>
+      </div>
+      {{#if health}}
+        <div class="row">
+          <div class="col-12 mt-2">
+            <h2>Dernière forme <span class="text-muted">{{date health.created_at}}</span></h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-2">
+            <ul id="form_status">
+              <li>Poids: {{health.poids}}</li>
+              <li>Pouls: {{health.pouls}}</li>
+              <li>Blessure: {{health.blessure}}</li>
+              <li>Maladie: {{health.maladie}}</li>
+              <li class="bg-light">Commentaire: {{health.commentaires}}</li>
+            </ul>
+          </div>
+        </div>
+      {{else}}
+      <div class="row">
+        <div class="col-12">
+          Vous n'avez pas encore enregistré de forme
+        </div>
+      </div>
+      {{/if}}
     </div>
-    <div class="col-md-9">
-      <h1 class="h2 text-center mt-5 mb-2">Flux d'activités <span class="text-muted">({{activities.length}})</span></h1>
+    <div class="col-md-9 mb-5">
+      <h1 class="h2 mt-5 mb-2 ml-3">Flux d'activités <span class="text-muted">({{activities.length}})</span></h1>
       {{#if activities}}
         {{#each activities}}
           <div class="row">

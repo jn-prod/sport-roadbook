@@ -12,22 +12,22 @@
         <div class="form-group">
           <label for="sommeil">Qualité du sommeil</label>
           <select class="form-control" id="sommeil" name="sommeil" required>
-            <option value="1">Très faible</option>
-            <option value="2">Faible</option>
+            <option value="1">Mal dormi</option>
+            <option value="2">Peu réparateur</option>
             <option value="3" selected>Normal</option>
-            <option value="4">Forte</option>
-            <option value="5">Très forte</option>
+            <option value="4">Plutot bien dormi</option>
+            <option value="5">Vraiment réparateur</option>
           </select>
         </div>
         <!-- recuperation -->        
         <div class="form-group">
-          <label for="recuperation">Fatigue musculaire</label>
+          <label for="recuperation">Fatigue</label>
           <select class="form-control" id="recuperation" name="recuperation" required>
-            <option value="1">Très faible</option>
-            <option value="2">Faible</option>
-            <option value="3" selected>Normale</option>
-            <option value="4">Forte</option>
-            <option value="5">Très forte</option>
+            <option value="1">Très fatigué</option>
+            <option value="2">Plus fatigué que d'habitude</option>
+            <option value="3" selected>Aucune</option>
+            <option value="4">En bonne forme</option>
+            <option value="5">En grande forme</option>
           </select>
         </div>
         <!-- lassitude -->        
@@ -39,6 +39,28 @@
             <option value="3" selected>Normale</option>
             <option value="4">Forte</option>
             <option value="5">Très forte</option>
+          </select>
+        </div>
+         <!-- Humeur -->        
+        <div class="form-group">
+          <label for="humeur">Humeur</label>
+          <select class="form-control" id="humeur" name="humeur" required>
+            <option value="1">Massacrante</option>
+            <option value="2">Plûtot maussade</option>
+            <option value="3" selected>Normale</option>
+            <option value="4">Plûtot bonne</option>
+            <option value="5">Excelente</option>
+          </select>
+        </div>       
+        <!-- stress -->        
+        <div class="form-group">
+          <label for="stress">Stress</label>
+          <select class="form-control" id="stress" name="stress" required>
+            <option value="1">Très stressé</option>
+            <option value="2">Un peu stressé</option>
+            <option value="3" selected>Aucun</option>
+            <option value="4">Plutôt relaxé</option>
+            <option value="5">Vraiment relaxé</option>
           </select>
         </div>
         <!-- hrv -->
@@ -64,6 +86,14 @@
             <option value="true">Oui</option>
           </select>
         </div>
+        <!-- maladie -->        
+        <div class="form-group">
+          <label for="maladie">Êtes-vous malade ?</label>
+          <select class="form-control" id="maladie" name="maladie" required>
+            <option value="false">Non</option>
+            <option value="true">Oui</option>
+          </select>
+        </div>        
         <!-- competition_day -->        
         <div class="form-group">
           <label for="competition_day">Jour de compétition</label>
