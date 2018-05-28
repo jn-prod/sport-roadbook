@@ -1,8 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Anton);
+@import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900);
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-@import url('https://fonts.googleapis.com/css?family=Anton');
-@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
-@import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900');
 
 /*COLORS*/
 /*https://flatuicolors.com/palette/nl*/
@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 #index {
-  background-image: linear-gradient(rgba(0,144,142,0.7), rgba(0,180,177,0.7)),url(../img/bg-min.jpg);
+  background-image: linear-gradient(rgba(0,144,142,0.7), rgba(0,180,177,0.7)),url(/edb4cec961fd7d744e44c8c958129e32.jpg);
   background-size: cover;
   background-position: center;
   height: 100vh;

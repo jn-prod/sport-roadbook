@@ -18,7 +18,8 @@ if(env){
   config_entry = './assets/src/js/main.js'
   config_output = {
     path: path.resolve(__dirname, './assets/public/'),
-    filename: 'app.js'
+    filename: 'app.js',
+    publicPath: '/'
   }
   minCss = MiniCssExtractPlugin.loader
 } else {
