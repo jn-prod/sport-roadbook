@@ -141,13 +141,28 @@ h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
   }
   #nav-logo {
     margin: auto;
-  }
+  }  
   #nav-right {
     margin: 60px 0 0px 0;
     padding: 0 0 0 0;
+    font-size: 1em;
   }
-  .banner > h1 {
-    font-size:1.8em;
-    height: 60vh;
+  #index-left {
+    margin: 50px 0 0 0;
   }
+  #index{
+    height: auto;
+    display: block;
+  }
+  #index-banner{
+    margin: 50px 0 0 0;
+    font-size: 1em;
+    height: auto;
+  }    
+  #index-banner h1 {
+    font-size: 1em;
+    padding: 0 0 20px 0;
+  }  
+
+
 }
