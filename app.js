@@ -93,7 +93,8 @@ var hbs = exphbs.create({
       date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1 ) + '/' + val.getFullYear() },
       dateStrava: (val) => { var date = new Date(val); return date.getDate() + '/' + (parseInt(date.getMonth()) + 1 ) + '/' + date.getFullYear() },
       stravaTime: (val) => { var time = val / 60; return  Number.parseFloat(time).toFixed(2) },
-      stravaDist: (val) => { var dist = val / 1000; return  Number.parseFloat(dist).toFixed(3) }
+      stravaDist: (val) => { var dist = val / 1000; return  Number.parseFloat(dist).toFixed(3) },
+      boolean: (val) => { if (val === true) { return 'oui'} else { return 'non'} }
     }
 });
 

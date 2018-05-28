@@ -5,7 +5,14 @@ var Health = require('../models/health')
 var healthCtrl = {
   getAddStatus: (req, res) => {
     if (req.session.user) {
-      res.render('partials/health/add')
+      Health
+        .find({user: req.session.user._id})
+        .sort( {"created_at": -1} )
+        .limit(1)
+        .exec((err, dbHealth) => {
+          var lastHealth = dbHealth[0]
+          res.render('partials/health/add', {lastHealth: lastHealth})
+        })
     } else {
       res.redirect('/user/login')
     }

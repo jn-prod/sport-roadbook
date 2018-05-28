@@ -14,7 +14,6 @@
       <div class="row">
         <div class="col-12">
           <a href="/activities/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-calendar"></i> Ajouter une activité</a>
-      
         </div>
       </div>
       <div class="row">
@@ -24,17 +23,17 @@
       </div>
       {{#if health}}
         <div class="row">
-          <div class="col-12 mt-2">
-            <h2>Dernière forme <span class="text-muted">{{date health.created_at}}</span></h2>
+          <div class="col-12 mt-5">
+            <span class="d-block h4 ">Dernière forme <span class="text-muted">{{date health.created_at}}</span></span>
           </div>
         </div>
         <div class="row">
           <div class="col-12 mt-2">
             <ul id="form_status">
-              <li>Poids: {{health.poids}}</li>
-              <li>Pouls: {{health.pouls}}</li>
-              <li>Blessure: {{health.blessure}}</li>
-              <li>Maladie: {{health.maladie}}</li>
+              <li>Poids: {{health.poids}} Kg</li>
+              <li>Pouls: {{health.pouls}} Bpm</li>
+              <li>Blessure: {{boolean health.blessure}}</li>
+              <li>Maladie: {{boolean health.maladie}}</li>
               <li class="bg-light">Commentaire: {{health.commentaires}}</li>
             </ul>
           </div>

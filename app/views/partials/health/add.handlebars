@@ -70,13 +70,13 @@
         </div>
         <!-- pouls -->
         <div class="form-group">
-          <label for="pouls">Pouls au réveil</label>
-          <input type="number" class="form-control" id="pouls" name="pouls" min="0" value="0" step="1">
+          <label for="pouls">Pouls au repos (bpm)</label>
+          <input type="number" class="form-control" id="pouls" name="pouls" min="0" value="{{lastHealth.pouls}}" step="1">
         </div>
         <!-- poids -->
         <div class="form-group">
-          <label for="poids">Poids au réveil</label>
-          <input type="number" class="form-control" id="poids" name="poids" min="0" value="0" step="1">
+          <label for="poids">Poids au réveil (Kg)</label>
+          <input type="number" class="form-control" id="poids" name="poids" min="0" value="{{lastHealth.poids}}" step="1">
         </div>
         <!-- blessure -->        
         <div class="form-group">
