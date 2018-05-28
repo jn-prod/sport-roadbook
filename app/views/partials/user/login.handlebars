@@ -1,14 +1,14 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-8 mx-auto">
       <div id="form-user">
         <div class="row">
           <div class="col-12">
-            <h1>Connexion</h1>
+            <h1 class="d-flex mb-5">Connexion</h1>
             {{#if env}}
-              <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://localhost:3000/user/strava-auth&approval_prompt=force&scope=public" class="btn btn-primary btn-strava mt-2"><i class="fas fa-user"></i> Se connecter avec Strava</a>
+              <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://localhost:3000/user/strava-auth&approval_prompt=force&scope=public" class="btn btn-primary btn-strava"><i class="fas fa-user"></i> Se connecter avec Strava</a>
             {{else}}
-              <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://www.feezify.me/user/strava-auth&approval_prompt=force&scope=public" class="btn btn-primary btn-strava mt-2"><i class="fas fa-user"></i> Se connecter avec Strava</a>
+              <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://www.feezify.me/user/strava-auth&approval_prompt=force&scope=public" class="btn btn-primary btn-strava"><i class="fas fa-user"></i> Se connecter avec Strava</a>
             {{/if}}
           </div>
         </div>

@@ -1,12 +1,14 @@
 var strava = require ('../../custom_modules/strava')
 var User = require('../models/user')
 var Activity = require('../models/activity')
+var Health = require('../models/health')
+var Promise = require("bluebird");
 
 //Controllers
 var userCtrl = {
   login : (req, res) => {
-    if(req.user) {
-      res.redirect('/user/' + user.id)
+    if(req.session.user) {
+      res.redirect('/user/' + req.session.user._id)
     } else {
       var login = true
       res.render('partials/user/login', {login: login})
@@ -58,25 +60,57 @@ var userCtrl = {
   },
   home: (req, res) => {
     if (req.session.user) {
+      // request Strava
       strava.code = req.session.strava
+      var stravaAll = new Promise((resolve, reject) => {
+        strava.athlete.activities.get((err, stravaActivities) => {
+          resolve(stravaActivities)
+        })
+      })
 
-      Activity
-        .find({user: req.session.user._id})
-        .exec((err, dbActivites) => {
-          var allActivities = []
-          dbActivites.forEach((val) => {
-            allActivities.push(val)
+      // request db Activities
+      var dbActivitiesAll = new Promise((resolve, reject) => {
+        Activity
+          .find({user: req.session.user._id})
+          .exec((err, dbActivites) => {
+            resolve(dbActivites)
           })
-          strava.athlete.activities.get((err, stravaActivities) => {
-            stravaActivities.forEach((val) => {
-              allActivities.push(val)
-            })
-            allActivities.sort((a,b )=> {
-              return new Date(b.start_date_local) - new Date(a.start_date_local)
-            })
-            res.render('partials/user/home', {activities: allActivities})
-          })          
-        })     
+      })
+
+      // request db Health
+      var dbHealthAll = new Promise((resolve, reject) => {
+        Health
+          .find({user: req.session.user._id})
+          .sort( {"created_at": -1} )
+          .limit(1)
+          .exec((err, dbHealth) => {
+            resolve(dbHealth[0])
+          })
+      })
+
+      // promise all requests
+      Promise.props({
+        strava : stravaAll,
+        activities: dbActivitiesAll,
+        health: dbHealthAll
+      })
+      .then((val) => {
+        var allActivities = []
+        val.strava.forEach((val) => {
+          allActivities.push(val)
+        })
+        val.activities.forEach((val) =>  {
+          allActivities.push(val)
+        })
+        allActivities.sort((a,b )=> {
+          return new Date(b.start_date_local) - new Date(a.start_date_local)
+        })
+        return {activities: allActivities, health: val.health}
+      })
+      .then((result) => {
+        res.render('partials/user/home', result)
+      })
+
     } else {
       res.redirect('/user/login')
     }
