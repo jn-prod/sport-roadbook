@@ -5,7 +5,7 @@ var Health = require('../models/health')
 var Promise = require('bluebird')
 var moment = require('moment')
 
-function groupByDate(activities, filter){
+var groupByDate = (activities, filter) => {
   return activities.reduce(function (acc, date) {
     var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
 
@@ -17,8 +17,9 @@ function groupByDate(activities, filter){
   }, {})
 }
 
-function getHealthScore (val) {
-  var reducer = (accumulator, currentValue) => accumulator + currentValue
+var reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+var getHealthScore = (val) => {
   var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
   var score = markeurs.reduce(reducer)
   var highScore = markeurs.length * 5
@@ -69,7 +70,7 @@ var userCtrl = {
                   if (err) throw err
                   else {
                     req.session.user = newUser
-                    res.redirect('/user/' + newUser.id)                   
+                    res.redirect('/user/' + newUser._id)                   
                   }
                 })
               } else {
@@ -132,7 +133,11 @@ var userCtrl = {
       })
       .then((val) => {
         var element = val
-        element.healthScore = getHealthScore(element.health)
+        if (element.health) {
+          element.healthScore = getHealthScore(element.health)
+        } else {
+          element.healthScore = ''
+        }
         return element
       })
       .then((result) => {
