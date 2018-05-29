@@ -108,7 +108,9 @@ var hbs = exphbs.create({
       adverageSpeed: (sport, dist, time) => {
         if (sport.toUpperCase() === 'RUN' || sport.toUpperCase() === 'TRAIL') {
           var speed = Number.parseFloat((time / 60) / (dist / 1000) ).toFixed(2)
-          return String(speed).split('.')[0] + ':' + String(speed).split('.')[1] + 'min/Km'
+          var min = String(speed).split('.')[0]
+          var sec = parseInt(String(speed).split('.')[1] * 60 / 100)
+          return min + ':' + sec + 'min/Km'
         } else {
           return  Number.parseFloat((dist / 1000) / (time / 3600)).toFixed(2) + 'Km/h'
         }
