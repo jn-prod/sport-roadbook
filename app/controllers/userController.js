@@ -5,6 +5,28 @@ var Health = require('../models/health')
 var Promise = require('bluebird')
 var moment = require('moment')
 
+function groupByDate(activities, filter){
+  return activities.reduce(function (acc, date) {
+    var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
+
+    if(!acc[yearWeek]){
+      acc[yearWeek] = []
+    }
+    acc[yearWeek].push({date})
+    return acc
+  }, {})
+}
+
+function getHealthScore (val) {
+  var reducer = (accumulator, currentValue) => accumulator + currentValue
+  var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
+  var score = markeurs.reduce(reducer)
+  var highScore = markeurs.length * 5
+
+  var dayScore = score / highScore * 100
+  return dayScore
+}
+
 //Controllers
 var userCtrl = {
   login : (req, res) => {
@@ -60,16 +82,6 @@ var userCtrl = {
     }
   },
   home: (req, res) => {
-    function getHealthScore (val) {
-      var reducer = (accumulator, currentValue) => accumulator + currentValue
-      var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
-      var score = markeurs.reduce(reducer)
-      var highScore = markeurs.length * 5
-
-      var dayScore = score / highScore * 100
-      return dayScore
-    }
-
     if (req.session.user) {
       // request Strava
       strava.code = req.session.strava
@@ -124,21 +136,10 @@ var userCtrl = {
         return element
       })
       .then((result) => {
-        function groupByDate(activities, filter){
-          return activities.reduce(function (acc, date) {
-            var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
-
-            if(!acc[yearWeek]){
-              acc[yearWeek] = []
-            }
-            acc[yearWeek].push(date)
-            return acc
-          }, {})
-        }
-
         var api = result
         
         api.charge = groupByDate(api.activities, "start_date_local")
+        // api.charge = Object.values(api.charge)
         console.log(api.charge)
         res.render('partials/user/home', api)
       })

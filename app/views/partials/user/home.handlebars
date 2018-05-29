@@ -59,6 +59,13 @@
     <div class="col-md-9 mb-5">
       <h1 class="h2 mt-5 mb-2 ml-3">Flux d'activités <span class="text-muted">({{activities.length}})</span></h1>
       {{#if activities}}
+        <div class="row">
+          <div class="col-12">
+            {{#each charge}}
+              {{this}}
+            {{/each}}
+          </div>
+        </div>      
         {{#each activities}}
           <div class="row">
             <div class="col-10 mx-auto border border-primary mt-2">
