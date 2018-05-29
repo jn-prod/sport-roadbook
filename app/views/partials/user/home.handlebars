@@ -67,15 +67,18 @@
                   <i class="far fa-calendar fa-2x"></i>
                   <span class="d-block text-center">{{dateStrava this.start_date_local}}</span>
                 </div>
-                <div class="col-md-10 mt-2">
-                  <span class="h4 d-block">
+                <div class="col-md-10 mt-2 mb-2">
+                  <span class="h4 d-block text-capitalize">
                     {{this.name}}
                   </span>
-                  {{this.type}}
-                  Dist.: {{stravaDist this.distance}}Km
-                  D+: {{this.total_elevation_gain}}m
-                  <i class="fas fa-tachometer-alt"></i> {{this.average_speed}}
-                  <i class="far fa-clock"></i> {{stravaTime this.moving_time}} min                
+                  <span class="badge badge-secondary">{{this.type}}</span>
+                  <span class="badge badge-secondary"><i class="fas fa-compass"></i> {{stravaDist this.distance}}Km</span>
+                  <span class="badge badge-secondary"><i class="fas fa-sort-up"></i>D+: {{this.total_elevation_gain}}m</span>
+                  <span class="badge badge-secondary"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed this.distance this.moving_time}}Km/h</span>
+                  <span class="badge badge-secondary"><i class="far fa-clock"></i> {{secondToTime this.moving_time}}</span>
+                  {{#if this.rpe}}
+                    <span class="badge badge-secondary">Difficulté {{rpe this.rpe}}%</span>
+                  {{/if}}     
                 </div>
               </div>
             </div>

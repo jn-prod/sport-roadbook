@@ -2,7 +2,8 @@ var strava = require ('../../custom_modules/strava')
 var User = require('../models/user')
 var Activity = require('../models/activity')
 var Health = require('../models/health')
-var Promise = require("bluebird");
+var Promise = require('bluebird')
+var moment = require('moment')
 
 //Controllers
 var userCtrl = {
@@ -123,7 +124,23 @@ var userCtrl = {
         return element
       })
       .then((result) => {
-        res.render('partials/user/home', result)
+        function groupByDate(activities, filter){
+          return activities.reduce(function (acc, date) {
+            var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
+
+            if(!acc[yearWeek]){
+              acc[yearWeek] = []
+            }
+            acc[yearWeek].push(date)
+            return acc
+          }, {})
+        }
+
+        var api = result
+        
+        api.charge = groupByDate(api.activities, "start_date_local")
+        console.log(api.charge)
+        res.render('partials/user/home', api)
       })
 
     } else {
