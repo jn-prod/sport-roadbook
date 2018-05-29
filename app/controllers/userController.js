@@ -59,6 +59,16 @@ var userCtrl = {
     }
   },
   home: (req, res) => {
+    function getHealthScore (val) {
+      var reducer = (accumulator, currentValue) => accumulator + currentValue
+      var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
+      var score = markeurs.reduce(reducer)
+      var highScore = markeurs.length * 5
+
+      var dayScore = score / highScore * 100
+      return dayScore
+    }
+
     if (req.session.user) {
       // request Strava
       strava.code = req.session.strava
@@ -106,6 +116,11 @@ var userCtrl = {
           return new Date(b.start_date_local) - new Date(a.start_date_local)
         })
         return {activities: allActivities, health: val.health}
+      })
+      .then((val) => {
+        var element = val
+        element.healthScore = getHealthScore(element.health)
+        return element
       })
       .then((result) => {
         res.render('partials/user/home', result)

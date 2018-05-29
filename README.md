@@ -7,7 +7,7 @@ This app use Node.js, Express and Mongoose. Application de gestion d'entrainemen
 
 ### Urls
 dev : https://feezify-dev.herokuapp.com/
-prod : http://www.feezily.me
+prod : http://www.feezify.me
 
 # Commands 
 
