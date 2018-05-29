@@ -12,6 +12,7 @@ var ActivitySchema = mongoose.Schema({
     start_date_local: { type: Date },
     average_speed: { type: Number },
     calories: { type: Number },    
+    rpe: { type: Number },
 
     //log
     created_at : { type: Date, required: true, default: Date.now },

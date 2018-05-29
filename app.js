@@ -92,8 +92,20 @@ var hbs = exphbs.create({
   helpers: {
       date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1 ) + '/' + val.getFullYear() },
       dateStrava: (val) => { var date = new Date(val); return date.getDate() + '/' + (parseInt(date.getMonth()) + 1 ) + '/' + date.getFullYear() },
-      stravaTime: (val) => { var time = val / 60; return  Number.parseFloat(time).toFixed(2) },
+      secondToTime: (val) => {
+        var sec_num = parseInt(val, 10)
+        var hours   = Math.floor(sec_num / 3600)
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60)
+        var seconds = sec_num - (hours * 3600) - (minutes * 60)
+
+        if (hours   < 10) {hours   = "0" + hours}
+        if (minutes < 10) {minutes = "0" + minutes}
+        if (seconds < 10) {seconds = "0" + seconds}
+        return hours + ':' + minutes + ':' + seconds
+      },
+      rpe: (val) => { return val / 10 * 100 },
       stravaDist: (val) => { var dist = val / 1000; return  Number.parseFloat(dist).toFixed(3) },
+      adverageSpeed: (dist, time) => { return  Number.parseFloat((dist / 1000) / (time / 3600)).toFixed(2) },
       boolean: (val) => { if (val === true) { return 'oui'} else { return 'non'} }
     }
 });

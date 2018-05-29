@@ -2,7 +2,31 @@ var strava = require ('../../custom_modules/strava')
 var User = require('../models/user')
 var Activity = require('../models/activity')
 var Health = require('../models/health')
-var Promise = require("bluebird");
+var Promise = require('bluebird')
+var moment = require('moment')
+
+var groupByDate = (activities, filter) => {
+  return activities.reduce(function (acc, date) {
+    var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
+
+    if(!acc[yearWeek]){
+      acc[yearWeek] = []
+    }
+    acc[yearWeek].push({date})
+    return acc
+  }, {})
+}
+
+var reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+var getHealthScore = (val) => {
+  var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
+  var score = markeurs.reduce(reducer)
+  var highScore = markeurs.length * 5
+
+  var dayScore = score / highScore * 100
+  return dayScore
+}
 
 //Controllers
 var userCtrl = {
@@ -46,7 +70,7 @@ var userCtrl = {
                   if (err) throw err
                   else {
                     req.session.user = newUser
-                    res.redirect('/user/' + newUser.id)                   
+                    res.redirect('/user/' + newUser._id)                   
                   }
                 })
               } else {
@@ -59,16 +83,6 @@ var userCtrl = {
     }
   },
   home: (req, res) => {
-    function getHealthScore (val) {
-      var reducer = (accumulator, currentValue) => accumulator + currentValue
-      var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
-      var score = markeurs.reduce(reducer)
-      var highScore = markeurs.length * 5
-
-      var dayScore = score / highScore * 100
-      return dayScore
-    }
-
     if (req.session.user) {
       // request Strava
       strava.code = req.session.strava
@@ -119,11 +133,30 @@ var userCtrl = {
       })
       .then((val) => {
         var element = val
-        element.healthScore = getHealthScore(element.health)
+        if (element.health) {
+          element.healthScore = getHealthScore(element.health)
+        } else {
+          element.healthScore = ''
+        }
         return element
       })
       .then((result) => {
-        res.render('partials/user/home', result)
+        var api = result   
+        var activitiesByDate = groupByDate(api.activities, "start_date_local")
+        var activitesByDateFormated = []
+
+        Object
+          .values(activitiesByDate)
+          .slice(0, 5)
+          .reverse()
+          .forEach((val) => {
+            activitesByDateFormated.push({activities: val})
+          })
+        activitesByDateFormated.forEach((val, key) => {
+          val.week = 'S' + moment(val.activities[0].date.start_date_local).week() + '-' + moment(val.activities[0].date.start_date_local).year()
+        })  
+        api.charge = activitesByDateFormated
+        res.render('partials/user/home', api)
       })
 
     } else {

@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="col-md-8 mx-auto mb-5 mt-5">
-      <form action="/activities/add" method="post">
+      <form action="/activities/add" method="post" id="activité">
         <!-- type -->        
         <div class="form-group">
           <label for="type">Sport*</label>
@@ -38,9 +38,27 @@
           <input type="number" class="form-control" id="distance" name="distance" min="0" value="0" step="0.01">
         </div>
         <!-- moving_time -->
-        <div class="form-group">
-          <label for="moving_time">Durée en min</label>
-          <input type="number" class="form-control" id="moving_time" name="moving_time" min="0" value="0" step="1">
+        <div class="row">
+          <div class="col-12">
+            <label>Durée (HH:MM:ss)</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <input type="number" class="form-control" id="moving_time_hours" name="moving_time_hours" min="0" value="0" step="1">
+            </div>            
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <input type="number" class="form-control" id="moving_time_minutes" name="moving_time_minutes" min="0" value="0" step="1">
+            </div>            
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <input type="number" class="form-control" id="moving_time_seconds" name="moving_time_seconds" min="0" value="0" step="1">
+            </div>            
+          </div>
         </div>
         <!-- total_elevation_gain -->
         <div class="form-group">
@@ -60,13 +78,30 @@
         <!-- start_date_local -->
         <div class="form-group">
           <label for="start_date_local">Date de l'activité*</label>
-          <input type="date" class="form-control" id="start_date_local" name="start_date_local" required>
+          <input type="date" class="form-control" id="date" name="start_date_local" autocomplete="on" required>
         </div>
+        <!-- rpe -->        
+        <div class="form-group">
+          <label for="type">Difficulté ressentie</label>
+          <select class="form-control" id="rpe" name="rpe" required>
+            <option value="0.5">Très très légère</option>
+            <option value="1">Très très légère</option>
+            <option value="2">Très légère</option>
+            <option value="3">Légère</option>
+            <option value="4" selected>Moyen</option>
+            <option value="5">Un peu dur</option>
+            <option value="6">Assez dur</option>
+            <option value="7">Dur</option>
+            <option value="8">Très dur</option>
+            <option value="9">Très très dur</option>
+            <option value="10">Aussi dur qu'une compétition</option>            
+          </select>
+        </div> 
         <!-- description -->
         <div class="form-group">
           <label for="description">Description</label>
           <textarea class="form-control" id="description" rows="3" name="description"></textarea>
-        </div>
+        </div>               
         <div class="row">
           <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
         </div>
