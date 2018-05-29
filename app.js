@@ -106,7 +106,7 @@ var hbs = exphbs.create({
       rpe: (val) => { return val / 10 * 100 },
       stravaDist: (val) => { var dist = val / 1000; return  Number.parseFloat(dist).toFixed(3) },
       adverageSpeed: (sport, dist, time) => {
-        if (sport.toUpperCase() === 'RUN') {
+        if (sport.toUpperCase() === 'RUN' || sport.toUpperCase() === 'TRAIL') {
           var speed = Number.parseFloat((time / 60) / (dist / 1000) ).toFixed(2)
           return String(speed).split('.')[0] + ':' + String(speed).split('.')[1] + 'min/Km'
         } else {
