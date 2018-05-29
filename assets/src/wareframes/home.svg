@@ -16,7 +16,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="home.svg">
+   sodipodi:docname="home.svg"
+   inkscape:export-filename="C:\Users\SPORT\Downloads\logo.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150">
   <defs
      id="defs2">
     <clipPath
@@ -62,20 +65,20 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.24748737"
-     inkscape:cx="849.52638"
-     inkscape:cy="899.6946"
+     inkscape:cx="1041.0434"
+     inkscape:cy="668.27346"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1360"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="1058"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-width="1440"
+     inkscape:window-height="810"
+     inkscape:window-x="301"
+     inkscape:window-y="155"
+     inkscape:window-maximized="0">
     <sodipodi:guide
        position="0,0"
        orientation="0,1885.9547"
@@ -39687,6 +39690,37 @@ gcjcY6PhKvc6VxjEL95//9k=
          id="path1344"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cscccccc" />
+      <g
+         id="g1406"
+         transform="translate(-155.01633,-226.64456)"
+         inkscape:export-filename="C:\Users\SPORT\Downloads\logo.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150">
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:15.34590912px;line-height:7.39892101px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#00b4b1;fill-opacity:1;stroke:none;stroke-width:0.82210231px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="131.96196"
+           y="161.35123"
+           id="text1396"
+           transform="matrix(0.68531653,0,0,0.68531653,-123.56694,-313.7235)"><tspan
+             sodipodi:role="line"
+             id="tspan1394"
+             x="131.96196"
+             y="161.35123"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Impact;-inkscape-font-specification:'Impact Bold';fill:#00b4b1;fill-opacity:1;stroke-width:0.82210231px">Feezify</tspan></text>
+        <text
+           id="text1400"
+           y="161.45377"
+           x="174.36972"
+           style="font-style:normal;font-weight:normal;font-size:9.31437397px;line-height:4.49085951px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.49898434px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"
+           transform="matrix(0.68531653,0,0,0.68531653,-123.56694,-313.7235)"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Androgyne;-inkscape-font-specification:'Androgyne Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.49898434px"
+             y="161.45377"
+             x="174.36972"
+             id="tspan1398"
+             sodipodi:role="line">.me</tspan></text>
+      </g>
     </g>
     <g
        inkscape:export-ydpi="150"
@@ -53310,5 +53344,13 @@ gcjcY6PhKvc6VxjEL95//9k=
          d="m -38.627556,-169.95834 51.329975,-6.01356 c 2e-6,0 4e-6,1e-5 4e-6,1e-5 v 13.8473 h -4e-6 -51.329975 -4e-6 c -5e-6,-28.82852 3e-6,16.99171 4e-6,-7.83375 z"
          style="opacity:1;fill:#00b4b1;fill-opacity:1;stroke:none;stroke-width:0.5972597;stroke-miterlimit:4;stroke-dasharray:2.38903885, 2.38903885;stroke-dashoffset:0;stroke-opacity:1" />
     </g>
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:1.05999994, 1.05999993999999997;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1392"
+       width="88.733482"
+       height="88.733482"
+       x="-93.009789"
+       y="-625.07983"
+       ry="1.2841922e-006" />
   </g>
 </svg>
