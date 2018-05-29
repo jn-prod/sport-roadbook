@@ -104,7 +104,7 @@
                   <span class="badge badge-grey">{{this.type}}</span>
                   <span class="badge badge-grey"><i class="fas fa-compass"></i> {{stravaDist this.distance}}Km</span>
                   <span class="badge badge-grey"><i class="fas fa-sort-up"></i>D+: {{this.total_elevation_gain}}m</span>
-                  <span class="badge badge-grey"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed this.distance this.moving_time}}Km/h</span>
+                  <span class="badge badge-grey"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed this.type this.distance this.moving_time}}</span>
                   <span class="badge badge-grey"><i class="far fa-clock"></i> {{secondToTime this.moving_time}}</span>
                   {{#if this.rpe}}
                     <span class="badge badge-grey">Difficulté {{rpe this.rpe}}%</span>
