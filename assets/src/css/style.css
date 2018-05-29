@@ -115,6 +115,23 @@ h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
   border-color: #f9e093 !important;
 }
 
+.badge-primary {
+  background-color: #00b4b1 !important;
+}
+
+.badge-grey {
+  background-color: #6c757d !important;
+}
+
+.badge-secondary {
+  background-color: #f9e093 !important;
+}
+
+.badge-charge {
+  font-size: 1.5em;
+  padding: 10px 10px 10px 10px;
+}
+
 .bg-light {
   background-color: #FFF !important;
 }

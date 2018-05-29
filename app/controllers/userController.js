@@ -136,11 +136,21 @@ var userCtrl = {
         return element
       })
       .then((result) => {
-        var api = result
-        
-        api.charge = groupByDate(api.activities, "start_date_local")
-        // api.charge = Object.values(api.charge)
-        console.log(api.charge)
+        var api = result   
+        var activitiesByDate = groupByDate(api.activities, "start_date_local")
+        var activitesByDateFormated = []
+
+        Object
+          .values(activitiesByDate)
+          .slice(0, 5)
+          .reverse()
+          .forEach((val) => {
+            activitesByDateFormated.push({activities: val})
+          })
+        activitesByDateFormated.forEach((val, key) => {
+          val.week = 'S' + moment(val.activities[0].date.start_date_local).week() + '-' + moment(val.activities[0].date.start_date_local).year()
+        })  
+        api.charge = activitesByDateFormated
         res.render('partials/user/home', api)
       })
 
