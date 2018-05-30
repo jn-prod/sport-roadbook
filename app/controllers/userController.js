@@ -48,7 +48,7 @@ var userCtrl = {
         // DB User find or create
         User
           .find({
-            'strava_id': data.id
+            'email': data.email
           })
           .limit(1)
           .exec((err, userStrava) => {
@@ -81,6 +81,9 @@ var userCtrl = {
         })
       })
     }
+  },
+  facebookAuth: (req,res) => {
+    
   },
   home: (req, res) => {
     if (req.session.user) {

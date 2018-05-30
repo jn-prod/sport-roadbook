@@ -11,6 +11,8 @@ router.get('/login', userCtrl.login);
 router.get('/logout', userCtrl.logout);
 // Get strava auth
 router.get('/strava-auth', userCtrl.stravaAuth);
+// Get facebook auth
+router.get('/facebook-auth', userCtrl.facebookAuth);
 // Get Homepage
 router.get('/:id', userCtrl.home);
 
