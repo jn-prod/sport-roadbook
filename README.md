@@ -36,3 +36,15 @@ $ npm run test
 ```sh
 $ npm run build
 ```
+
+### Generate local SSL
+more: https://www.kevinleary.net/self-signed-trusted-certificates-node-js-express-js/
+```sh
+$ cd certs
+$ openssl genrsa -out localhost.key 2048
+$ openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650
+```
+
+
+
+

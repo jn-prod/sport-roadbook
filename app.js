@@ -12,8 +12,7 @@ var express = require('express'),
     cookieSession = require('cookie-session'),
     path = require('path'),
     passport = require('passport'),
-    FacebookStrategy = require('passport-facebook').Strategy,
-    https = require('https');
+    FacebookStrategy = require('passport-facebook').Strategy;
 
 // Init App
 var app = express();
@@ -30,7 +29,7 @@ var mongoose = mongoose.connect(process.env.MLAB, (err, client) => {
 
 // Http to Https
 var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
-app.use(redirectToHTTPS([/localhost:(\d{4})/]));
+app.use(redirectToHTTPS());
 
 // Webpack
 if (process.env.LOCAL === 'true') {
@@ -69,7 +68,9 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
 
-// passport
+// passport facebook
+app.use(passport.initialize());
+
 var callbackURL;
 
 if (process.env.LOCAL) {
@@ -78,18 +79,17 @@ if (process.env.LOCAL) {
   callbackURL = "https://www.feezify.me/auth/facebook/callback"
 }
 
-var fbOpts = {
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: callbackURL,
-  profileFeilds: ['emails']
-}
-
-var fbCallback = (accessToken, refreshToken, profile, cb) => {
- console.log(accessToken, refreshToken, profile, cb)
-}
-
-passport.use(new FacebookStrategy(fbOpts, fbCallback))
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: callbackURL,
+    profileFields: ['id', 'displayName', 'photos', 'email']
+  }, (accessToken, refreshToken, profile, done) => {
+    process.nextTick(function () {
+      return done(null, profile);
+    });
+  }
+))
 
 // Locals
 app.use(function(req, res, next){
@@ -175,6 +175,24 @@ app.use(function(req, res, next){
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
-app.listen(app.get('port'), function () {
-  console.log('Launch App on http://localhost:' + process.env.PORT + '/')
-})
+if(process.env.LOCAL) {
+  var fs = require('fs')
+  var https = require('https')
+
+  var options = {
+      key: fs.readFileSync('./certs/localhost.key'),
+      cert: fs.readFileSync('./certs/localhost.cert'),
+      requestCert: false,
+      rejectUnauthorized: false
+  };
+
+  var httpsServer = https.createServer(options, app)
+
+  httpsServer.listen(app.get('port'), function () {
+    console.log('Launch App on http://localhost:' + app.get('port') + '/')
+  })
+} else {
+  app.listen(app.get('port'), function () {
+    console.log('Launch App on http://localhost:' + app.get('port') + '/')
+  })  
+}

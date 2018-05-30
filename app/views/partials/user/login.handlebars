@@ -8,7 +8,7 @@
             <div class="row">
               <div class="col-12">
                 {{#if env}}
-                  <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://localhost:3000/user/strava-auth&approval_prompt=force&scope=public" class="btn btn-primary btn-strava d-block"><i class="fas fa-user"></i> Se connecter avec Strava</a>
+                  <a href="/user/auth/strava" class="btn btn-primary btn-strava d-block"><i class="fas fa-user"></i> Se connecter avec Strava</a>
                 {{else}}
                   <a href="https://www.strava.com/oauth/authorize?client_id=25820&response_type=code&redirect_uri=http://www.feezify.me/user/strava-auth&approval_prompt=force&scope=public" class="btn btn-primary btn-strava d-block"><i class="fas fa-user"></i> Se connecter avec Strava</a>
                 {{/if}}                
@@ -16,7 +16,7 @@
             </div>
             <div class="row">
               <div class="col-12 mt-2">
-                <a href="/user/auth/facebook" class="btn btn-primary btn-facebook d-block"><i class="fas fa-user"></i> Se connecter avec Facebook</a>
+                <a href="/auth/facebook" class="btn btn-primary btn-facebook d-block"><i class="fas fa-user"></i> Se connecter avec Facebook</a>
               </div>
             </div>
           </div>

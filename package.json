@@ -38,6 +38,7 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
+    "fs": "0.0.1-security",
     "handlebars": "*",
     "helmet": "*",
     "mongodb": "*",
