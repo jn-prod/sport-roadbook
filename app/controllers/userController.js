@@ -5,6 +5,15 @@ var Health = require('../models/health')
 var Promise = require('bluebird')
 var moment = require('moment')
 
+var callbackURL;
+var passport = require('passport')
+
+if (process.env.LOCAL) {
+  callbackURL= "https://localhost:3000"
+} else {
+  callbackURL = "https://www.feezify.me"
+}
+
 var groupByDate = (activities, filter) => {
   return activities.reduce(function (acc, date) {
     var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
@@ -38,7 +47,10 @@ var userCtrl = {
       res.render('partials/user/login', {login: login})
     }
   },
-  stravaAuth: (req,res) => {
+  stravaRequest: (req,res) => {
+    res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_ID + '&response_type=code&redirect_uri=' + callbackURL + '/user/auth/strava/callback&approval_prompt=force&scope=public')
+  },
+  stravaCallback: (req,res) => {
     if (req.query.error === 'access_denied') {
       res.redirect('/')
     } else {
@@ -82,9 +94,17 @@ var userCtrl = {
       })
     }
   },
-  facebookCallback: (err, user, info) => {
-    console.log(res)
-    res.redirect('/')
+  facebookResponse: (req, res, next) => {
+    passport.authenticate('facebook',(err, user, info) => {
+      console.log(err, user, info)  
+      if (err) { res.redirect('/user/login') }
+      res.redirect('/')
+      // if (!user) { return res.redirect('/user/login'); }
+      // req.logIn(user, function(err) {
+      //   if (err) { return next(err); }
+      //   return res.redirect('/users/' + user.username);
+      // })
+    })(req, res, next)
   },
   home: (req, res) => {
     if (req.session.user) {
@@ -169,6 +189,7 @@ var userCtrl = {
   },
   logout: (req, res) => {
     req.session = null
+    req.logout();
     res.redirect('/')
   }
 }
