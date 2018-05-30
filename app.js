@@ -73,9 +73,9 @@ app.use(cookieSession({
 var callbackURL;
 
 if (process.env.LOCAL) {
-  callbackURL= "http://localhost:3000/auth/facebook/callback"
+  callbackURL= "https://localhost:3000/auth/facebook/callback"
 } else {
-  callbackURL = "http://www.feezify.me/auth/facebook/callback"
+  callbackURL = "https://www.feezify.me/auth/facebook/callback"
 }
 
 var fbOpts = {
