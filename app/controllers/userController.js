@@ -117,17 +117,16 @@ var userCtrl = {
               user.save((err, newUser) => {
                 if (err) throw err
                 else {
-                  req.session.user = newUser
-                  res.redirect('/user/' + newUser._id)                   
+                  res.locals.user = userFacebook[0]                 
                 }
               })
             } else {
-              req.session.user = userFacebook[0]
-              res.redirect('/user/' + userFacebook[0].id)
+              res.locals.user = userFacebook[0]
             }
+            console.log(res.locals.user.id)
+            console.log(res.redirect('/user/' + res.locals.user.id))
           }
-      })         
-      res.redirect('/')
+      })
     })(req, res, next)
   },
   home: (req, res) => {

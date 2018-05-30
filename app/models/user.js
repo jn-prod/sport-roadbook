@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 // User Schema
 var UserSchema = mongoose.Schema({
   strava_id: { type: Number },
+  facebook_id: { type: Number },
   username: { type: String, index:true },
   email: { type: String, unique: true, required: true },
   firstname: { type: String },
