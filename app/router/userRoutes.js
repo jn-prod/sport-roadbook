@@ -1,5 +1,6 @@
 var express = require('express'),
     router = express.Router();
+var passport = require('passport')
 
 //Controllers
 var userCtrl = require('../controllers/userController')
@@ -11,8 +12,10 @@ router.get('/login', userCtrl.login);
 router.get('/logout', userCtrl.logout);
 // Get strava auth
 router.get('/strava-auth', userCtrl.stravaAuth);
-// Get facebook auth
-router.get('/facebook-auth', userCtrl.facebookAuth);
+// Redirect the user to Facebook for authentication
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+// Get 
+router.get('/auth/facebook/callback', passport.authenticate('facebook'), userCtrl.facebookCallback);
 // Get Homepage
 router.get('/:id', userCtrl.home);
 

@@ -82,8 +82,9 @@ var userCtrl = {
       })
     }
   },
-  facebookAuth: (req,res) => {
-    
+  facebookCallback: (err, user, info) => {
+    console.log(res)
+    res.redirect('/')
   },
   home: (req, res) => {
     if (req.session.user) {

@@ -10,7 +10,10 @@ var express = require('express'),
     mongoose = require('mongoose'),
     cookieParser = require('cookie-parser'),
     cookieSession = require('cookie-session'),
-    path = require('path');
+    path = require('path'),
+    passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy,
+    https = require('https');
 
 // Init App
 var app = express();
@@ -24,6 +27,10 @@ var mongoose = mongoose.connect(process.env.MLAB, (err, client) => {
     console.log('MongoDB is connected')
   }
 });
+
+// Http to Https
+var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
+app.use(redirectToHTTPS([/localhost:(\d{4})/]));
 
 // Webpack
 if (process.env.LOCAL === 'true') {
@@ -61,6 +68,28 @@ app.use(cookieSession({
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
+
+// passport
+var callbackURL;
+
+if (process.env.LOCAL) {
+  callbackURL= "http://localhost:3000/auth/facebook/callback"
+} else {
+  callbackURL = "http://www.feezify.me/auth/facebook/callback"
+}
+
+var fbOpts = {
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  callbackURL: callbackURL,
+  profileFeilds: ['emails']
+}
+
+var fbCallback = (accessToken, refreshToken, profile, cb) => {
+ console.log(accessToken, refreshToken, profile, cb)
+}
+
+passport.use(new FacebookStrategy(fbOpts, fbCallback))
 
 // Locals
 app.use(function(req, res, next){
