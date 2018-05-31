@@ -95,49 +95,27 @@ var userCtrl = {
     }
   },
   facebookResponse: (req, res, next) => {
-    passport.authenticate('facebook',(err, user, info) => {
-      if (err) { res.redirect('/user/login') }
-      // find user in db
-      User
-        .find({
-          'email': user._json.email
-        })
-        .limit(1)
-        .exec((err, userFacebook) => {
-          if (err) {
-            throw err
-          } else {
-            if(userFacebook.length === 0) {
-              var user = new User({
-                  facebook_id: user._json.id,
-                  email: user._json.email,
-                  firstname: user._json.name.split(' ')[0],
-                  lastname : user._json.name.split(' ')[1],
-              })
-              user.save((err, newUser) => {
-                if (err) throw err
-                else {
-                  req.session.user = newUser
-                  res.redirect('/user/' + newUser._id)                   
-                }
-              })
-            } else {
-              req.session.user = userFacebook[0]
-              res.redirect('/user/' + userFacebook[0].id)
-            }
-          }
-      })         
-      res.redirect('/')
-    })(req, res, next)
+    passport.authenticate('facebook', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login'); }
+
+      req.session.user = user
+      return res.redirect('/user/' + user.id);
+    })(req, res, next);
+
   },
   home: (req, res) => {
     if (req.session.user) {
       // request Strava
       strava.code = req.session.strava
       var stravaAll = new Promise((resolve, reject) => {
-        strava.athlete.activities.get((err, stravaActivities) => {
-          resolve(stravaActivities)
-        })
+        if(strava.code) {
+          strava.athlete.activities.get((err, stravaActivities) => {
+            resolve(stravaActivities)
+          })          
+        } else {
+          resolve('')
+        }
       })
 
       // request db Activities
@@ -168,19 +146,30 @@ var userCtrl = {
       })
       .then((val) => {
         var allActivities = []
-        val.strava.forEach((val) => {
-          allActivities.push(val)
-        })
-        val.activities.forEach((val) =>  {
-          allActivities.push(val)
-        })
+        
+        //check if strava array isn't null
+        if(val.strava.length >= 1) {
+          val.strava.forEach((val) => {
+            allActivities.push(val)
+          })          
+        }
+        //check if activities array isn't null
+        if(val.activities.length >= 1) {
+          val.activities.forEach((val) =>  {
+            allActivities.push(val)
+          })          
+        }
+
         allActivities.sort((a,b )=> {
           return new Date(b.start_date_local) - new Date(a.start_date_local)
         })
+
         return {activities: allActivities, health: val.health}
       })
       .then((val) => {
         var element = val
+
+        // health score calcul
         if (element.health) {
           element.healthScore = getHealthScore(element.health)
         } else {
@@ -189,21 +178,26 @@ var userCtrl = {
         return element
       })
       .then((result) => {
-        var api = result   
-        var activitiesByDate = groupByDate(api.activities, "start_date_local")
-        var activitesByDateFormated = []
+        var api = result
 
-        Object
-          .values(activitiesByDate)
-          .slice(0, 5)
-          .reverse()
-          .forEach((val) => {
-            activitesByDateFormated.push({activities: val})
-          })
-        activitesByDateFormated.forEach((val, key) => {
-          val.week = 'S' + moment(val.activities[0].date.start_date_local).week() + '-' + moment(val.activities[0].date.start_date_local).year()
-        })  
-        api.charge = activitesByDateFormated
+        // charge calcul if activities array isn't null
+        if(api.activities.lentgh >= 1) {
+          var activitiesByDate = groupByDate(api.activities, "start_date_local")
+          var activitesByDateFormated = []
+
+          Object
+            .values(activitiesByDate)
+            .slice(0, 5)
+            .reverse()
+            .forEach((val) => {
+              activitesByDateFormated.push({activities: val})
+            })
+          activitesByDateFormated.forEach((val, key) => {
+            val.week = 'S' + moment(val.activities[0].date.start_date_local).week() + '-' + moment(val.activities[0].date.start_date_local).year()
+          })  
+          api.charge = activitesByDateFormated          
+        }
+
         res.render('partials/user/home', api)
       })
 
