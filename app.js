@@ -85,9 +85,9 @@ passport.use(new FacebookStrategy({
     callbackURL: callbackURL,
     profileFields: ['id', 'displayName', 'photos', 'email']
   }, (accessToken, refreshToken, profile, done) => {
-    process.nextTick(function () {
+    //process.nextTick(function () {
       return done(null, profile);
-    });
+    //});
   }
 ))
 
