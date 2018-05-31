@@ -32,7 +32,7 @@ var getHealthScore = (val) => {
   var score = markeurs.reduce(reducer)
   var highScore = markeurs.length * 5
 
-  var dayScore = score / highScore * 100
+  var dayScore = parseInt(score / highScore * 100)
   return dayScore
 }
 
@@ -197,6 +197,23 @@ var userCtrl = {
           api.charge = activitesByDateFormated          
         }
 
+        // filter activities array
+        if(req.query.start_date && req.query.end_date && api.activities.length >= 1) {
+          
+          var date = {
+            start: new Date(req.query.start_date),
+            end: new Date(req.query.end_date)
+          }
+
+          var filtredActivities = api.activities.filter((val)=>{
+            var activityDate = new Date(val.start_date_local)
+            if(activityDate >= date.start && activityDate <= date.end) {
+              return val
+            }
+          })
+
+          api.activities = filtredActivities
+        }
         res.render('partials/user/home', api)
       })
 
