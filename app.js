@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+// node_modules
 var express = require('express'),
     helmet = require('helmet'),
     exphbs = require('express-handlebars'),
@@ -72,50 +73,9 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var callbackURL;
-
-if (process.env.LOCAL) {
-  callbackURL= "https://localhost:3000/auth/facebook/callback"
-} else {
-  callbackURL = "https://www.feezify.me/auth/facebook/callback"
-}
-
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: callbackURL,
-    profileFields: ['id', 'displayName', 'photos', 'email']
-  }, (accessToken, refreshToken, profile, done) => {
-    var User = require('./app/models/user')
-
-    User
-      .find({
-        'email': profile._json.email
-      })
-      .limit(1)
-      .exec((err, userFacebook) => {
-        if (err) {
-          return done(err)
-        } else {
-          if(userFacebook.length === 0) {
-            var user = new User({
-                facebook_id: profile._json.id,
-                email: profile._json.email,
-                firstname: profile._json.name.split(' ')[0],
-                lastname : profile._json.name.split(' ')[1],
-            })
-            user.save((err, newUser) => {
-              if (err) throw err
-              else {
-                done(null, newUser)              
-              }
-            })
-          } else {
-            done(null, userFacebook[0])
-          }
-        }
-      })
-  }
+passport.use(new FacebookStrategy(
+  require('./custom_modules/facebook').token,
+  require('./custom_modules/facebook').accessResponse
 ))
 
 // Locals
@@ -131,48 +91,17 @@ app.use(function(req, res, next){
 });
 
 // Router
-var cms = require('./app/router/cmsRoutes');
-var users = require('./app/router/userRoutes');
-var activities = require('./app/router/activityRoutes')
-var health = require('./app/router/healthRoutes')
-app.use('/', cms)
-app.use('/user', users)
-app.use('/activities', activities)
-app.use('/health', health)
+app.use('/', require('./app/router/cmsRoutes'))
+app.use('/user', require('./app/router/userRoutes'))
+app.use('/activities', require('./app/router/activityRoutes'))
+app.use('/health', require('./app/router/healthRoutes'))
 
 // Handlebars
 var hbs = exphbs.create({
   defaultLayout:'main',
   layoutsDir:'app/views/layouts',
   partialsDir:'app/views/partials',
-  helpers: {
-      date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1 ) + '/' + val.getFullYear() },
-      dateStrava: (val) => { var date = new Date(val); return date.getDate() + '/' + (parseInt(date.getMonth()) + 1 ) + '/' + date.getFullYear() },
-      secondToTime: (val) => {
-        var sec_num = parseInt(val, 10)
-        var hours   = Math.floor(sec_num / 3600)
-        var minutes = Math.floor((sec_num - (hours * 3600)) / 60)
-        var seconds = sec_num - (hours * 3600) - (minutes * 60)
-
-        if (hours   < 10) {hours   = "0" + hours}
-        if (minutes < 10) {minutes = "0" + minutes}
-        if (seconds < 10) {seconds = "0" + seconds}
-        return hours + ':' + minutes + ':' + seconds
-      },
-      rpe: (val) => { return val / 10 * 100 },
-      stravaDist: (val) => { var dist = val / 1000; return  Number.parseFloat(dist).toFixed(3) },
-      adverageSpeed: (sport, dist, time) => {
-        if (sport.toUpperCase() === 'RUN' || sport.toUpperCase() === 'TRAIL') {
-          var speed = Number.parseFloat((time / 60) / (dist / 1000) ).toFixed(2)
-          var min = String(speed).split('.')[0]
-          var sec = parseInt(String(speed).split('.')[1] * 60 / 100)
-          return min + ':' + sec + 'min/Km'
-        } else {
-          return  Number.parseFloat((dist / 1000) / (time / 3600)).toFixed(2) + 'Km/h'
-        }
-      },
-      boolean: (val) => { if (val === true) { return 'oui'} else { return 'non'} }
-    }
+  helpers: require('./custom_modules/handlebars-helpers')
 });
 
 app.engine('handlebars', hbs.engine);

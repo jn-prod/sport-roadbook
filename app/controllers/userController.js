@@ -1,19 +1,18 @@
+// node_modules
+var Promise = require('bluebird')
+var moment = require('moment')
+var passport = require('passport')
+
+// custom_modules
+var domainUrl = require('../../custom_modules/domain-check')
 var strava = require ('../../custom_modules/strava')
+
+// models
 var User = require('../models/user')
 var Activity = require('../models/activity')
 var Health = require('../models/health')
-var Promise = require('bluebird')
-var moment = require('moment')
 
-var callbackURL;
-var passport = require('passport')
-
-if (process.env.LOCAL) {
-  callbackURL= "https://localhost:3000"
-} else {
-  callbackURL = "https://www.feezify.me"
-}
-
+// controllers functions
 var groupByDate = (activities, filter) => {
   return activities.reduce(function (acc, date) {
     var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
@@ -48,7 +47,7 @@ var userCtrl = {
     }
   },
   stravaRequest: (req,res) => {
-    res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_ID + '&response_type=code&redirect_uri=' + callbackURL + '/user/auth/strava/callback&approval_prompt=force&scope=public')
+    res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_ID + '&response_type=code&redirect_uri=' + domainUrl + '/user/auth/strava/callback&approval_prompt=force&scope=public')
   },
   stravaCallback: (req,res) => {
     if (req.query.error === 'access_denied') {
@@ -181,7 +180,7 @@ var userCtrl = {
         var api = result
 
         // charge calcul if activities array isn't null
-        if(api.activities.lentgh >= 1) {
+        if(api.activities.length >= 1) {
           var activitiesByDate = groupByDate(api.activities, "start_date_local")
           var activitesByDateFormated = []
 

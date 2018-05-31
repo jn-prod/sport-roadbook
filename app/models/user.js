@@ -1,3 +1,4 @@
+// node_modules
 var mongoose = require('mongoose');
 
 // User Schema
