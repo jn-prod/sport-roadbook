@@ -1,9 +1,11 @@
+// node_modules
 var express = require('express'),
     router = express.Router();
-//Controllers
+
+// Controllers
 var passport = require('passport')
 
-//Controllers
+// Controllers
 var cmsCtrl = require('../controllers/cmsController')
 var userCtrl = require('../controllers/userController')
 
