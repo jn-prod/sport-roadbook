@@ -70,6 +70,7 @@ app.use(cookieSession({
 
 // passport facebook
 app.use(passport.initialize());
+app.use(passport.session());
 
 var callbackURL;
 
@@ -85,9 +86,35 @@ passport.use(new FacebookStrategy({
     callbackURL: callbackURL,
     profileFields: ['id', 'displayName', 'photos', 'email']
   }, (accessToken, refreshToken, profile, done) => {
-    //process.nextTick(function () {
-      return done(null, profile);
-    //});
+    var User = require('./app/models/user')
+
+    User
+      .find({
+        'email': profile._json.email
+      })
+      .limit(1)
+      .exec((err, userFacebook) => {
+        if (err) {
+          return done(err)
+        } else {
+          if(userFacebook.length === 0) {
+            var user = new User({
+                facebook_id: profile._json.id,
+                email: profile._json.email,
+                firstname: profile._json.name.split(' ')[0],
+                lastname : profile._json.name.split(' ')[1],
+            })
+            user.save((err, newUser) => {
+              if (err) throw err
+              else {
+                done(null, newUser)              
+              }
+            })
+          } else {
+            done(null, userFacebook[0])
+          }
+        }
+      })
   }
 ))
 

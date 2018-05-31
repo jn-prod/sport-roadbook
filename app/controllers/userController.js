@@ -95,43 +95,14 @@ var userCtrl = {
     }
   },
   facebookResponse: (req, res, next) => {
-    var userPassport = () => {
-        passport.authenticate('facebook', (err, user, info) => {
-        if (err) { return next(err); }
-        if (!user) { return res.redirect('/user/login'); }
-        return user._json.email
-      }) //(req, res, next)
-    }
-   
-    console.log(userPassport) 
-    /*User
-      .find({
-        'email': userPassport._json.email
-      })
-      .limit(1)
-      .exec((err, userFacebook) => {
-        if (err) {
-          throw err
-        } else {
-          if(userFacebook.length === 0) {
-            var user = new User({
-                facebook_id: user._json.id,
-                email: user._json.email,
-                firstname: user._json.name.split(' ')[0],
-                lastname : user._json.name.split(' ')[1],
-            })
-            user.save((err, newUser) => {
-              if (err) throw err
-              else {
-                res.locals.user = userFacebook[0]                 
-              }
-            })
-          } else {
-            res.locals.user = userFacebook[0]
-          }
-          res.redirect('/user/' + res.locals.user.id)
-        }
-      }) */
+    passport.authenticate('facebook', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login'); }
+
+      req.session.user = user
+      return res.redirect('/user/' + user.id);
+    })(req, res, next);
+
   },
   home: (req, res) => {
     if (req.session.user) {
