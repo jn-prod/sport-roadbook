@@ -102,6 +102,7 @@ app.use('/', require('./app/router/cmsRoutes'))
 app.use('/user', require('./app/router/userRoutes'))
 app.use('/activities', require('./app/router/activityRoutes'))
 app.use('/health', require('./app/router/healthRoutes'))
+app.use('/auth', require('./app/router/authRoutes'))
 
 // Handlebars
 var hbs = exphbs.create({
