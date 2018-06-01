@@ -4,6 +4,7 @@ var moment = require('moment')
 var passport = require('passport')
 
 // custom_modules
+var domainUrl = require('../../custom_modules/domain-check')
 
 // var stravaApi = require('strava-v3');
 
@@ -57,13 +58,18 @@ var userCtrl = {
       var stravaId = req.session.user.strava_id
       var stravaToken = req.session.strava
 
-      stravaApi = require ('../../custom_modules/strava').stravaApi(stravaToken)
+      var stravaApi = new require("strava") ({
+        client_id: process.env.STRAVA_ID, 
+        client_secret: process.env.STRAVA_SECRET,
+        redirect_uri: domainUrl,
+        access_token: stravaToken
+      });
 
       var stravaAll = new Promise((resolve, reject) => {
         if(stravaId) {
-          stravaApi.athlete.activities.get({id: stravaId},(err, stravaActivities) => {
-            console.log(stravaActivities)
-            resolve(stravaActivities)
+          stravaApi.athlete.get((err, stravaActivities) => {
+            console.log(err, stravaActivities)
+            resolve(err, stravaActivities)
           })          
         } else {
           resolve('')

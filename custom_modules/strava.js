@@ -5,7 +5,7 @@ var User = require('../app/models/user')
 var domainUrl = require('./domain-check')
 
 var stravaApi = (token) => {
-  var strava = new require("strava")({
+  var strava = new require("strava") ({
     client_id: process.env.STRAVA_ID, 
     client_secret: process.env.STRAVA_SECRET,
     redirect_uri: domainUrl,
