@@ -58,7 +58,7 @@ var userCtrl = {
       var stravaApi = require('../../custom_modules/strava/stravaGetUserActivities')
 
       var stravaAll = new Promise((resolve, reject) => {
-        if(stravaId) {
+        if(stravaId && stravaCode) {
           stravaApi(stravaId, stravaCode, (done) => {
             resolve(done)
           })
