@@ -14,7 +14,7 @@ router.get('/logout', userCtrl.logout);
 // Redirect the user to strava for authentication
 router.get('/auth/strava', userCtrl.stravaRequest );
 // Get strava auth
-router.get('/auth/strava/callback', userCtrl.stravaCallback);
+router.get('/auth/strava/callback', userCtrl.stravaResponse);
 
 // Get facebook user
 router.get('/auth/facebook', userCtrl.facebookResponse);

@@ -5,7 +5,7 @@ var passport = require('passport')
 
 // custom_modules
 var domainUrl = require('../../custom_modules/domain-check')
-var strava = require ('../../custom_modules/strava')
+var strava // = require ('../../custom_modules/strava')
 
 // models
 var User = require('../models/user')
@@ -49,54 +49,19 @@ var userCtrl = {
   stravaRequest: (req,res) => {
     res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_ID + '&response_type=code&redirect_uri=' + domainUrl + '/user/auth/strava/callback&approval_prompt=force&scope=public')
   },
-  stravaCallback: (req,res) => {
-    if (req.query.error === 'access_denied') {
-      res.redirect('/')
-    } else {
-      req.session.strava = strava.code = req.query.code
-      // strava API call athlete
-      strava.athlete.get((err, data) => {
-        // DB User find or create
-        User
-          .find({
-            'email': data.email
-          })
-          .limit(1)
-          .exec((err, userStrava) => {
-            if (err) {
-              throw err
-            } else {
-              if(userStrava.length === 0) {
-                var user = new User({
-                    strava_id: data.id,
-                    username: data.username,
-                    email: data.email,
-                    firstname: data.firstname,
-                    lastname : data.lastname,
-                    sex: data.sex,
-                    country: data.country,
-                    city: data.city
-                })
-                user.save((err, newUser) => {
-                  if (err) throw err
-                  else {
-                    req.session.user = newUser
-                    res.redirect('/user/' + newUser._id)                   
-                  }
-                })
-              } else {
-                req.session.user = userStrava[0]
-                res.redirect('/user/' + userStrava[0].id)
-              }
-            }
-        })
-      })
-    }
+  stravaResponse: (req,res, next) => {
+    passport.authenticate('strava', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/user/login'); }
+
+      req.session.user = user
+      return res.redirect('/user/' + user.id);
+    })(req, res, next);
   },
   facebookResponse: (req, res, next) => {
     passport.authenticate('facebook', function(err, user, info) {
       if (err) { return next(err); }
-      if (!user) { return res.redirect('/login'); }
+      if (!user) { return res.redirect('/user/login'); }
 
       req.session.user = user
       return res.redirect('/user/' + user.id);
@@ -106,15 +71,16 @@ var userCtrl = {
   home: (req, res) => {
     if (req.session.user) {
       // request Strava
-      strava.code = req.session.strava
+      // strava.code = req.session.strava
       var stravaAll = new Promise((resolve, reject) => {
-        if(strava.code) {
-          strava.athlete.activities.get((err, stravaActivities) => {
-            resolve(stravaActivities)
-          })          
-        } else {
-          resolve('')
-        }
+        resolve('')
+        // if(strava.code) {
+        //   strava.athlete.activities.get((err, stravaActivities) => {
+        //     resolve(stravaActivities)
+        //   })          
+        // } else {
+        //   resolve('')
+        // }
       })
 
       // request db Activities
