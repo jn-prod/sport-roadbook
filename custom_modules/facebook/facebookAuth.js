@@ -1,8 +1,8 @@
 // models
-var User = require('../app/models/user')
+var User = require('../../app/models/user')
 
 // custom_modules
-var domainUrl = require('./domain-check')
+var domainUrl = require('../domain-check')
 
 // variables definition
 var callbackURL;

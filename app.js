@@ -74,15 +74,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new FacebookStrategy(
-  require('./custom_modules/facebook').token,
-  require('./custom_modules/facebook').accessResponse
+  require('./custom_modules/facebook/facebookAuth').token,
+  require('./custom_modules/facebook/facebookAuth').accessResponse
 ))
 
 // passport strava
 var StravaStrategy = require('passport-strava').Strategy;
 passport.use(new StravaStrategy(
-  require('./custom_modules/strava').token,
-  require('./custom_modules/strava').accessResponse
+  require('./custom_modules/strava/stravaAuth').token,
+  require('./custom_modules/strava/stravaAuth').accessResponse
 ));
 
 // Locals

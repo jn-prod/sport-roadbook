@@ -10,7 +10,7 @@ var User = require('../models/user')
 //Controllers
 var authCtrl = {
   stravaRequest: (req,res) => {
-    res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_ID + '&response_type=code&redirect_uri=' + domainUrl + '/auth/strava/callback&approval_prompt=force&scope=public')
+    res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_CLIENT_ID + '&response_type=code&redirect_uri=' + domainUrl + '/auth/strava/callback&approval_prompt=force&scope=public')
   },
   stravaResponse: (req,res, next) => {
     passport.authenticate('strava', function(err, user, info) {
