@@ -1,15 +1,15 @@
 // models
-var User = require('../app/models/user')
+var User = require('../../app/models/user')
 
 // custom_modules
-var domainUrl = require('./domain-check')
+var domainUrl = require('../domain-check')
 
 // middleware start
 var token = {
-  clientID: process.env.STRAVA_ID, 
-  clientSecret: process.env.STRAVA_SECRET,
+  clientID: process.env.STRAVA_CLIENT_ID, 
+  clientSecret: process.env.STRAVA_CLIENT_SECRET,
   redirect_uri: domainUrl,
-  access_token: process.env.STRAVA_ACCESS
+  access_token: process.env.STRAVA_ACCESS_TOKEN
 }
 
 var accessResponse = (accessToken, refreshToken, profile, done) => {

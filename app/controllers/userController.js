@@ -5,7 +5,6 @@ var passport = require('passport')
 
 // custom_modules
 var domainUrl = require('../../custom_modules/domain-check')
-var strava // = require ('../../custom_modules/strava')
 
 // models
 var User = require('../models/user')
@@ -46,43 +45,27 @@ var userCtrl = {
       res.render('partials/user/login', {login: login})
     }
   },
-  stravaRequest: (req,res) => {
-    res.redirect('https://www.strava.com/oauth/authorize?client_id=' + process.env.STRAVA_ID + '&response_type=code&redirect_uri=' + domainUrl + '/user/auth/strava/callback&approval_prompt=force&scope=public')
-  },
-  stravaResponse: (req,res, next) => {
-    passport.authenticate('strava', function(err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/user/login'); }
-
-      req.session.user = user
-      return res.redirect('/user/' + user.id);
-    })(req, res, next);
-  },
-  facebookResponse: (req, res, next) => {
-    passport.authenticate('facebook', function(err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/user/login'); }
-
-      req.session.user = user
-      return res.redirect('/user/' + user.id);
-    })(req, res, next);
-
+  logout: (req, res) => {
+    req.session = null
+    req.logout();
+    res.redirect('/')
   },
   home: (req, res) => {
     if (req.session.user) {
       // request Strava
-      // strava.code = req.session.strava
-      var stravaAll = new Promise((resolve, reject) => {
-        resolve('')
-        // if(strava.code) {
-        //   strava.athlete.activities.get((err, stravaActivities) => {
-        //     resolve(stravaActivities)
-        //   })          
-        // } else {
-        //   resolve('')
-        // }
-      })
+      var stravaId = req.session.user.strava_id
+      var stravaCode = req.session.strava
+      var stravaApi = require('../../custom_modules/strava/stravaGetUserActivities')
 
+      var stravaAll = new Promise((resolve, reject) => {
+        if(stravaId) {
+          stravaApi(stravaId, stravaCode, (done) => {
+            resolve(done)
+          })
+        } else {
+          resolve('')
+        }
+      })
       // request db Activities
       var dbActivitiesAll = new Promise((resolve, reject) => {
         Activity
@@ -186,11 +169,6 @@ var userCtrl = {
     } else {
       res.redirect('/user/login')
     }
-  },
-  logout: (req, res) => {
-    req.session = null
-    req.logout();
-    res.redirect('/')
   }
 }
 
