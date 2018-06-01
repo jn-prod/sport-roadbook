@@ -18,6 +18,7 @@ var authCtrl = {
       if (!user) { return res.redirect('/user/login'); }
 
       req.session.user = user
+      req.session.strava = req.query.code
       return res.redirect('/user/' + user.id);
     })(req, res, next);
   },

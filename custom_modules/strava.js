@@ -4,6 +4,16 @@ var User = require('../app/models/user')
 // custom_modules
 var domainUrl = require('./domain-check')
 
+var stravaApi = (token) => {
+  var strava = new require("strava")({
+    client_id: process.env.STRAVA_ID, 
+    client_secret: process.env.STRAVA_SECRET,
+    redirect_uri: domainUrl,
+    access_token: token
+  });
+  return strava
+}
+
 // middleware start
 var token = {
   clientID: process.env.STRAVA_ID, 
@@ -59,3 +69,5 @@ var accessResponse = (accessToken, refreshToken, profile, done) => {
 module.exports.token = token
 
 module.exports.accessResponse = accessResponse
+
+module.exports.stravaApi = stravaApi
