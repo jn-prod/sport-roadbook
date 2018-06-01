@@ -61,12 +61,12 @@
       </div>
     </div>
     <div class="col-md-9 mb-5">
-      {{#if activities}}
-        <div class="row">
-          <div class="col-12 mt-3 mb-2 text-primary ml-5">
-            <span class="h4">Charge de travail</span><span class="text-muted d-inline ml-2">(En semaines)</span>
-          </div>
+      <div class="row">
+        <div class="col-12 mt-3 mb-2 text-primary ml-5">
+          <span class="h4">Charge de travail</span><span class="text-muted d-inline ml-2">(En semaines)</span>
         </div>
+      </div>
+      {{#if charge}}
         <div class="row mt-2 mb-2">
           {{#each charge}}
             <div class="col-sm-2 mx-auto text-center">
@@ -83,32 +83,34 @@
             </div>
           {{/each}}          
         </div>
-        <div class="row">
-          <div class="col-12 mt-3 mb-2 text-primary ">
-            <span class="h4 ml-5">Détails des activités <span class="text-muted">({{activities.length}})</span></span>
-          </div>
+      {{/if}}
+      <div class="row">
+        <div class="col-12 mt-3 mb-2 text-primary ">
+          <span class="h4 ml-5">Détails des activités <span class="text-muted">({{activities.length}})</span></span>
         </div>
-        <div id="periodeButtonDiv" class="row">
-          <div class="col-9 mx-auto mb-2">
-            <span id="periodeButton" class="btn btn-secondary d-block w-100">Choisir une période</span>
-          </div>
+      </div>
+      <div id="periodeButtonDiv" class="row">
+        <div class="col-9 mx-auto mb-2">
+          <span id="periodeButton" class="btn btn-secondary d-block w-100">Choisir une période</span>
         </div>
-        <div id="periodeForm" class="row hidde">
-          <div class="col-md-9 mx-auto mb-3">
-            <form class="row mr-5">
-              <!-- start_date_local -->
-              <div class="col-lg-6">
-                <strong class="text-muted">Période du</strong><input type="date" class="form-control" id="date" name="start_date" required>
-              </div>                  
-              <div class="col-lg-6">
-                <strong class="text-muted">au</strong> <input type="date" class="form-control" id="date" name="end_date" required>
-              </div>
-              <div class="col-12 mt-2">
-                <button class="btn btn-secondary d-block w-100">Filter</button>
-              </div>
-            </form>             
-          </div>
-        </div>         
+      </div>
+      <div id="periodeForm" class="row hidde">
+        <div class="col-md-9 mx-auto mb-3">
+          <form class="row mr-5">
+            <!-- start_date_local -->
+            <div class="col-lg-6">
+              <strong class="text-muted">Période du</strong><input type="date" class="form-control" id="date" name="start_date" required>
+            </div>                  
+            <div class="col-lg-6">
+              <strong class="text-muted">au</strong> <input type="date" class="form-control" id="date" name="end_date" required>
+            </div>
+            <div class="col-12 mt-2">
+              <button class="btn btn-secondary d-block w-100">Filter</button>
+            </div>
+          </form>             
+        </div>
+      </div>         
+      {{#if activities}}
         {{#each activities}}
           <div class="row">
             <div class="col-10 mx-auto border border-primary mt-2">
