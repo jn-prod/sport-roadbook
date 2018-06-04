@@ -9,9 +9,28 @@
       <span class="h1"><i class="fas fa-heartbeat"></i> {{health_Score}}%</span>
     </div>
   </div>
-  <div class="row text-center ">
+  <input type="hidden" value="{{health_detail.humeur}}" class="score">
+  <input type="hidden" value="{{health_detail.sommeil}}" class="score">
+  <input type="hidden" value="{{health_detail.lassitude}}" class="score">
+  <input type="hidden" value="{{health_detail.recuperation}}" class="score">
+  <input type="hidden" value="{{health_detail.stress}}" class="score">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <canvas id="scoreHealthChart" width="400" height="400"></canvas>
+      <div class="row">
+        <div class="col-6 text-left">
+          <strong class="text-muted ml-5">Très Mauvais</strong>
+        </div>
+        <div class="col-6 text-right">
+          <strong class="text-muted">Excellent</strong>
+        </div>
+      </div>      
+    </div>
+  </div>
+  <div class="row text-center mt-5">
     <div class="col-12">
       <a href="/user/{{user.id}}" class="btn btn-primary mb-5">< Retour au journal</a>
     </div>
   </div>
+
 </div>
