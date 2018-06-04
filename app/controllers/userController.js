@@ -5,6 +5,7 @@ var passport = require('passport')
 
 // custom_modules
 var domainUrl = require('../../custom_modules/domain-check')
+var getHealthScore = require('../../custom_modules/health/healthScore')
 
 // models
 var User = require('../models/user')
@@ -22,17 +23,6 @@ var groupByDate = (activities, filter) => {
     acc[yearWeek].push({date})
     return acc
   }, {})
-}
-
-var reducer = (accumulator, currentValue) => accumulator + currentValue;
-
-var getHealthScore = (val) => {
-  var markeurs = [val.humeur, val.sommeil, val.lassitude, val.recuperation, val.stress, val.faim, val.soif]
-  var score = markeurs.reduce(reducer)
-  var highScore = markeurs.length * 5
-
-  var dayScore = parseInt(score / highScore * 100)
-  return dayScore
 }
 
 //Controllers
