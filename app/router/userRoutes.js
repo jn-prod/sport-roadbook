@@ -14,4 +14,7 @@ router.get('/logout', userCtrl.logout);
 // Get Homepage
 router.get('/:id', userCtrl.home);
 
+// Get Delete Account
+router.get('/delete/:id', userCtrl.delete);
+
 module.exports = router;
