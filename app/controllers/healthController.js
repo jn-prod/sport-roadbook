@@ -37,6 +37,13 @@ var healthCtrl = {
       .findOne({_id: req.params.id})
       .exec((err, healthDetail) => {
         var score = getHealthScore(healthDetail)
+        // var healthDetail = {
+        //   humeur: healthDetail.humeur,
+        //   sommeil: healthDetail.sommeil,
+        //   lassitude: healthDetail.lassitude,
+        //   recuperation: healthDetail.recuperation,
+        //   stress: healthDetail.stress
+        // }
         var healthStatus = {
           health_detail: healthDetail,
           health_Score: score
