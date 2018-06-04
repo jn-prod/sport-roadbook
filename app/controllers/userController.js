@@ -50,7 +50,19 @@ var userCtrl = {
     req.logout();
     res.redirect('/')
   },
+  delete: (req, res) => {
+    User.deleteOne({ _id: req.session.user._id }, (err) => {
+      if(err) {
+        res.redirect('/user/' + req.session.user._id)
+      } else {
+        req.session = null
+        req.logout();
+        res.redirect('/user/login')          
+      }
+    })
+  },
   home: (req, res) => {
+    // request user
     if (req.session.user) {
       // request Strava
       var stravaId = req.session.user.strava_id
@@ -86,11 +98,35 @@ var userCtrl = {
           })
       })
 
+      var dateNow = new Date(Date.now())
+
       // promise all requests
       Promise.props({
         strava : stravaAll,
         activities: dbActivitiesAll,
         health: dbHealthAll
+      })
+      .then((val) => {
+        // skip health form
+        if(req.query.skip === 'true') {
+          return val
+        } else {
+          // if no score today request it
+          if(val.health !== undefined) {
+            var lastDate = val.health.created_at
+            if(lastDate) {
+              if((lastDate.getFullYear() + '-' + lastDate.getMonth() + '-' + lastDate.getDate()) !== (dateNow.getFullYear() + '-' + dateNow.getMonth() + '-' + dateNow.getDate())) {
+                res.redirect('/health/add')
+              } else {
+                return val
+              }
+            } else {
+              res.redirect('/health/add')
+            } 
+          } else {
+            res.redirect('/health/add')
+          }
+        }
       })
       .then((val) => {
         var allActivities = []

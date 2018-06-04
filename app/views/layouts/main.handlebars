@@ -31,7 +31,7 @@
         <a id="nav-logo" href="/"><img src="/img/logo.png" alt=""></a>
         <div id="nav-right">
           {{#if user}}
-            <a href="/user/{{user._id}}" class="btn btn-primary">Journal</a>
+            <a href="/user/{{user._id}}?skip=true" class="btn btn-primary">Journal</a>
             <a href="/user/logout" class="btn btn-secondary">Se déconnecter</a>
           {{else}}
             {{#if login}}
@@ -49,7 +49,7 @@
     <footer>
       <div class="row">
         <div class="col-11 mx-auto text-center mt-2">
-          Réalisé avec <i class="fas fa-heart text-primary"></i> par <a title="Nicolas Jouanno - PRODUCT MANAGER, skills MARKETING, DESIGN & TECH" href="http://jn-prod.com" rel="nofollow" target="_blank" class="text-primary">Nicolas Jouanno</a> &copy; 2018 feezify.me - <a href="/mentions-legales" class="text-primary">Mentions légales</a></p>
+          Réalisé avec <i class="fas fa-heart text-primary"></i> par <a title="Nicolas Jouanno - PRODUCT MANAGER, skills MARKETING, DESIGN & TECH" href="http://jn-prod.com" rel="nofollow" target="_blank" class="text-primary">Nicolas Jouanno</a> &copy; 2018 feezify.me - <a href="/mentions-legales" class="text-primary">Mentions légales</a> - <a href="/user/delete/{{user._id}}" class="text-muted" id="delete_account">Supprimer mon compte</a></p>
         </div>
       </div>      
     </footer>
