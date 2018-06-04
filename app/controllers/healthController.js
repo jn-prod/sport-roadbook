@@ -2,6 +2,9 @@
 var User = require('../models/user')
 var Health = require('../models/health')
 
+// custom_modules
+var getHealthScore = require('../../custom_modules/health/healthScore')
+
 //Controllers
 var healthCtrl = {
   getAddStatus: (req, res) => {
@@ -25,9 +28,21 @@ var healthCtrl = {
     newHealth.save((err, health) => {
       if (err) throw err
       else {
-        res.redirect('/user/' + req.session.user._id)                   
+        res.redirect('/health/' + health._id)                   
       }
     })
+  },
+  getHealthScoreView: (req, res) => {
+    Health
+      .findOne({_id: req.params.id})
+      .exec((err, healthDetail) => {
+        var score = getHealthScore(healthDetail)
+        var healthStatus = {
+          health_detail: healthDetail,
+          health_Score: score
+        }
+        res.render('partials/health/view', healthStatus)
+      })
   }
 }
 

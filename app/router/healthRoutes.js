@@ -10,5 +10,7 @@ var healthCtrl = require('../controllers/healthController')
 router.get('/add', healthCtrl.getAddStatus);
 // post add activity form
 router.post('/add', healthCtrl.postAddStatus);
+// view activitie score
+router.get('/:id', healthCtrl.getHealthScoreView);
 
 module.exports = router;
