@@ -68,19 +68,12 @@
       </div>
       {{#if charge}}
         <div class="row mt-2 mb-2">
+          <div class="col-md-10 mx-auto">
+            <canvas id="healthScoreGraph"></canvas>
+          </div>
           {{#each charge}}
-            <div class="col-sm-2 mx-auto text-center">
-              <div class="row">
-                <div class="col-12">
-                  <span class="badge badge-primary badge-charge"><i class="fas fa-calendar text-secondary"></i> {{this.activities.length}}</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12 mx-auto">
-                  <strong class="text-muted">{{this.week}}</strong> 
-                </div>
-              </div>
-            </div>
+            <input type="hidden" value="{{this.activities.length}}" class="activitiesCharge">
+            <input type="hidden" value="{{this.week}}" class="activitiesWeek">
           {{/each}}          
         </div>
       {{/if}}
