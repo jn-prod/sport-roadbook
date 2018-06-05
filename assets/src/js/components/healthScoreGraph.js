@@ -1,49 +1,61 @@
 import Chart from 'chart.js'
 
+var domain = document.domain
+var url = window.document.URL
+var id = url.split('/')[url.split('/').length - 1]
+var json
+
 var ctx = document.getElementById('scoreHealthChart').getContext('2d')
-var score = []
-$('.score').each((key, val) => {
-  score.push(val.value)
-})
+var myChart
 
-console.log(score)
+if (domain === 'localhost') {
+  json = 'https://localhost:3000/health/data/' + id
+} else {
+  json = 'https://www.feezeify.me/health/data/' + id
+}
 
-var myChart = new Chart(ctx, {
-  // The type of chart we want to create
-  type: 'horizontalBar',
+$.getJSON(json, (res) => {
+  var healthScore = res
+  var score = Object.values(healthScore.health_detail)
+  var labels = Object.keys(healthScore.health_detail)
 
-  // The data for our dataset
-  data: {
-    labels: ['humeur', 'sommeil', 'lassitude', 'recuperation', 'stress'],
-    datasets: [{
-      label: 'Score',
-      data: score,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      xAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
+  myChart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'horizontalBar',
+
+    // The data for our dataset
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Score',
+        data: score,
+        backgroundColor: [
+          'rgba(0, 180, 177, 0.5)',
+          'rgba(0, 180, 177, 0.5)',
+          'rgba(0, 180, 177, 0.5)',
+          'rgba(0, 180, 177, 0.5)',
+          'rgba(0, 180, 177, 0.5)'
+        ],
+        borderColor: [
+          'rgba(0,144,142,1)',
+          'rgba(0,144,142,1)',
+          'rgba(0,144,142,1)',
+          'rgba(0,144,142,1)',
+          'rgba(0,144,142,1)'
+        ],
+        borderWidth: 1
       }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     }
-  }
+  })
 })
 
 export default myChart

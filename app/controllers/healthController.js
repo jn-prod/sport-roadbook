@@ -37,18 +37,25 @@ var healthCtrl = {
       .findOne({_id: req.params.id})
       .exec((err, healthDetail) => {
         var score = getHealthScore(healthDetail)
-        // var healthDetail = {
-        //   humeur: healthDetail.humeur,
-        //   sommeil: healthDetail.sommeil,
-        //   lassitude: healthDetail.lassitude,
-        //   recuperation: healthDetail.recuperation,
-        //   stress: healthDetail.stress
-        // }
         var healthStatus = {
           health_detail: healthDetail,
           health_Score: score
         }
         res.render('partials/health/view', healthStatus)
+      })
+  },
+  getHealthScoreData: (req, res) => {
+    Health
+      .findOne({_id: req.params.id})
+      .select({ _id: 0, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1,  stress:1 })
+      .exec((err, healthDetail) => {
+        var score = getHealthScore(healthDetail)
+        var healthStatus = {
+          health_detail: healthDetail,
+          health_Score: score
+        }
+        res.setHeader('Access-Control-Allow-Methods', 'GET');
+        res.send(JSON.stringify(healthStatus))
       })
   }
 }
