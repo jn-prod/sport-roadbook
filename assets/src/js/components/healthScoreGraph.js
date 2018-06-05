@@ -10,9 +10,9 @@ if (document.getElementById('scoreHealthChart')) {
   var myChart
 
   if (domain === 'localhost') {
-    json = 'https://localhost:3000/health/data/' + id
+    json = 'https://' + domain + ':3000/health/data/' + id
   } else {
-    json = 'https://www.feezeify.me/health/data/' + id
+    json = 'https://' + domain + '/health/data/' + id
   }
 
   $.getJSON(json, (res) => {
