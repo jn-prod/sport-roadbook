@@ -13,4 +13,7 @@ router.post('/add', healthCtrl.postAddStatus);
 // view activitie score
 router.get('/:id', healthCtrl.getHealthScoreView);
 
+// data activitie score
+router.get('/data/:id', healthCtrl.getHealthScoreData);
+
 module.exports = router;
