@@ -15,7 +15,8 @@ var HealthSchema = mongoose.Schema({
     poids: { type: Number },
     blessure: { type: Boolean },
     maladie: { type: Boolean },
-    competition_day: { type: Boolean },
+    competition_day: { type: Boolean }, // abandonné
+    day_highligths: { type: String },
     faim: { type: Number },
     soif: { type: Number },
     commentaires: { type: String },

@@ -51,7 +51,8 @@ if (document.getElementById('scoreHealthChart')) {
         scales: {
           xAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              max: 5
             }
           }]
         }
