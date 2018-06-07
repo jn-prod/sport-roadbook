@@ -4,6 +4,7 @@ var Health = require('../models/health')
 
 // custom_modules
 var getHealthScore = require('../../custom_modules/health/healthScore')
+var getHealthRisk = require('../../custom_modules/health/healthRisk')
 
 //Controllers
 var healthCtrl = {
@@ -37,9 +38,11 @@ var healthCtrl = {
       .findOne({_id: req.params.id})
       .exec((err, healthDetail) => {
         var score = getHealthScore(healthDetail)
+        var healthRisk = getHealthRisk(healthDetail)
         var healthStatus = {
           health_detail: healthDetail,
-          health_Score: score
+          health_Score: score,
+          health_risk: healthRisk
         }
         res.render('partials/health/view', healthStatus)
       })

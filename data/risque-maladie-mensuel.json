@@ -1,0 +1,51 @@
+[
+  {
+    "mois_num": 0,
+    "mois": "janvier",
+    "valeur": 4.783356626
+  },{
+    "mois_num": 1,
+    "mois": "février",
+    "valeur": -1.535225108
+  },{
+    "mois_num": 2,
+    "mois": "mars",
+    "valeur": 0.4108880084
+  },{
+    "mois_num": 3,
+    "mois": "avril",
+    "valeur": -0.5571398339
+  },{
+    "mois_num": 4,
+    "mois": "mai",
+    "valeur": -1.052468366
+  },{
+    "mois_num": 5,
+    "mois": "juin",
+    "valeur": -0.5923408464
+  },{
+    "mois_num": 6,
+    "mois": "juillet",
+    "valeur": 0.1016219705
+  },{
+    "mois_num": 7,
+    "mois": "août",
+    "valeur": -6.000724973
+  },{
+    "mois_num": 8,
+    "mois": "septembre",
+    "valeur": -0.9443509709
+  },{
+    "mois_num": 9,
+    "mois": "octobre",
+    "valeur": 2.14579505
+  },{
+    "mois_num": 10,
+    "mois": "novembre",
+    "valeur": 1.866701309
+  },{
+    "mois_num": 11,
+    "mois": "décembre",
+    "valeur": 1.373887135
+  }
+]

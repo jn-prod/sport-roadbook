@@ -20,6 +20,8 @@ var HealthSchema = mongoose.Schema({
     faim: { type: Number },
     soif: { type: Number },
     commentaires: { type: String },
+    latitude: { type: Number },
+    longitude: { type: Number },
 
     //log
     created_at : { type: Date, required: true, default: Date.now },
