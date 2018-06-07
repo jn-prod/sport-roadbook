@@ -5,7 +5,7 @@ var User = require('../../app/models/user')
 var domainUrl = require('../domain-check')
 
 // variables definition
-var callbackURL;
+var callbackURL
 
 // middleware start
 var token = {
@@ -25,23 +25,23 @@ var accessResponse = (accessToken, refreshToken, profile, done) => {
       if (err) {
         return done(err)
       } else {
-        if(userFacebook.length === 0) {
+        if (userFacebook.length === 0) {
           var user = new User({
-              facebook_id: profile._json.id,
-              email: profile._json.email,
-              firstname: profile._json.name.split(' ')[0],
-              lastname : profile._json.name.split(' ')[1],
+            facebook_id: profile._json.id,
+            email: profile._json.email,
+            firstname: profile._json.name.split(' ')[0],
+            lastname: profile._json.name.split(' ')[1]
           })
           user.save((err, newUser) => {
             if (err) throw err
             else {
-              done(null, newUser)              
+              done(null, newUser)
             }
           })
         } else {
-          if(!userFacebook[0].facebook_id) {
-            User.updateOne({ _id: userFacebook[0]._id}, {$set : {'facebook_id': profile._json.id} }, (err, user) => {
-              if(err) {
+          if (!userFacebook[0].facebook_id) {
+            User.updateOne({ _id: userFacebook[0]._id}, {$set: {'facebook_id': profile._json.id} }, (err, user) => {
+              if (err) {
                 return done(err)
               } else {
                 done(null, userFacebook[0])

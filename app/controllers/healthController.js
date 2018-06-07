@@ -1,19 +1,19 @@
 // models
 var User = require('../models/user')
 var Health = require('../models/health')
-var request = require('request');
+var request = require('request')
 // custom_modules
 var getHealthScore = require('../../custom_modules/health/healthScore')
 var getHealthRisk = require('../../custom_modules/health/healthRisk')
 var getMeteoByCoordonnees = require('../../custom_modules/openweathermap/getMeteoByCoordonnees')
 
-//Controllers
+// Controllers
 var healthCtrl = {
   getAddStatus: (req, res) => {
     if (req.session.user) {
       Health
         .find({user: req.session.user._id})
-        .sort( {"created_at": -1} )
+        .sort({'created_at': -1})
         .limit(1)
         .exec((err, dbHealth) => {
           var lastHealth = dbHealth[0]
@@ -31,7 +31,7 @@ var healthCtrl = {
       longitude: form.longitude
     }
     getMeteoByCoordonnees(form.location.latitude, form.location.longitude, (val) => {
-      if(val !== null) {
+      if (val !== null) {
         form.weather = val
         var newHealth = new Health(form)
         newHealth.save((err, health) => {
@@ -39,7 +39,7 @@ var healthCtrl = {
           else {
             res.redirect('/health/' + health._id)
           }
-        })        
+        })
       }
     })
   },
@@ -60,14 +60,14 @@ var healthCtrl = {
   getHealthScoreData: (req, res) => {
     Health
       .findOne({_id: req.params.id})
-      .select({ _id: 0, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1,  stress:1 })
+      .select({ _id: 0, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1, stress: 1 })
       .exec((err, healthDetail) => {
         var score = getHealthScore(healthDetail)
         var healthStatus = {
           health_detail: healthDetail,
           health_Score: score
         }
-        res.setHeader('Access-Control-Allow-Methods', 'GET');
+        res.setHeader('Access-Control-Allow-Methods', 'GET')
         res.send(JSON.stringify(healthStatus))
       })
   }

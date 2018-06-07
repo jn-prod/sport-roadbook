@@ -1,9 +1,9 @@
 // node_modules
-var request = require('request');
+var request = require('request')
 
 var meteoByCoordonnees = (latitude, longitude, callback) => {
   if (latitude && longitude) {
-    var meteoUrl = 'http://api.openweathermap.org/data/2.5/weather?APPID=' + process.env.OPENWEATHERMAP_API_KEY + '&lat=' + latitude + '&lon=' +  + longitude + '&units=metric'
+    var meteoUrl = 'http://api.openweathermap.org/data/2.5/weather?APPID=' + process.env.OPENWEATHERMAP_API_KEY + '&lat=' + latitude + '&lon=' + +longitude + '&units=metric'
     request(meteoUrl, (error, response, body) => {
       var body = JSON.parse(body)
       var currentWeather = {

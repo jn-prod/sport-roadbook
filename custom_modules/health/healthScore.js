@@ -1,13 +1,13 @@
-var reducer = (accumulator, currentValue) => accumulator + currentValue;
+var reducer = (accumulator, currentValue) => accumulator + currentValue
 
 var getHealthScore = (val) => {
   var blessure, maladie
-  if(val.blessure === false) {
+  if (val.blessure === false) {
     blessure = 5
   } else {
     blessure = 0
   }
-  if(val.maladie === false) {
+  if (val.maladie === false) {
     maladie = 5
   } else {
     maladie = 0

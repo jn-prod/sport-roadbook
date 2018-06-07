@@ -2,7 +2,7 @@
 var User = require('../models/user')
 var Activity = require('../models/activity')
 
-//Controllers
+// Controllers
 var activityCtrl = {
   getAddActivity: (req, res) => {
     if (req.session.user) {
@@ -24,7 +24,7 @@ var activityCtrl = {
     newActivity.save((err, activity) => {
       if (err) throw err
       else {
-        res.redirect('/user/' + req.session.user._id)                   
+        res.redirect('/user/' + req.session.user._id)
       }
     })
   }
