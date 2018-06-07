@@ -2,10 +2,10 @@ var helpers = {
   date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1) + '/' + val.getFullYear() },
   dateStrava: (val) => { var date = new Date(val); return date.getDate() + '/' + (parseInt(date.getMonth()) + 1) + '/' + date.getFullYear() },
   secondToTime: (val) => {
-    var sec_num = parseInt(val, 10)
-    var hours = Math.floor(sec_num / 3600)
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60)
-    var seconds = sec_num - (hours * 3600) - (minutes * 60)
+    var secNum = parseInt(val, 10)
+    var hours = Math.floor(secNum / 3600)
+    var minutes = Math.floor((secNum - (hours * 3600)) / 60)
+    var seconds = secNum - (hours * 3600) - (minutes * 60)
 
     if (hours < 10) { hours = '0' + hours }
     if (minutes < 10) { minutes = '0' + minutes }

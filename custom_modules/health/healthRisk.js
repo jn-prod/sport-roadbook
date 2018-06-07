@@ -1,4 +1,3 @@
-var healthScore = require(__dirname + '/healthScore')
 var monthlyRisk = require('../../data/risque-maladie-mensuel.json')
 
 var getMonthlyRiskVal = (array, testValue) => {
@@ -13,7 +12,6 @@ var getMonthlyRiskVal = (array, testValue) => {
 
 // le risque de maladie est-il supérieur à la moyenne française ?
 var getHealthRisk = (val) => {
-  var initScore = healthScore(val)
   var initScoreDate = val.created_at.getMonth()
   var riskCoef = getMonthlyRiskVal(monthlyRisk, initScoreDate)
 

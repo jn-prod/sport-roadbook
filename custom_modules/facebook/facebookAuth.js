@@ -4,9 +4,6 @@ var User = require('../../app/models/user')
 // custom_modules
 var domainUrl = require('../domain-check')
 
-// variables definition
-var callbackURL
-
 // middleware start
 var token = {
   clientID: process.env.FACEBOOK_APP_ID,
@@ -40,7 +37,7 @@ var accessResponse = (accessToken, refreshToken, profile, done) => {
           })
         } else {
           if (!userFacebook[0].facebook_id) {
-            User.updateOne({ _id: userFacebook[0]._id}, {$set: {'facebook_id': profile._json.id} }, (err, user) => {
+            User.updateOne({ _id: userFacebook[0]._id }, { $set: { 'facebook_id': profile._json.id } }, (err, user) => {
               if (err) {
                 return done(err)
               } else {

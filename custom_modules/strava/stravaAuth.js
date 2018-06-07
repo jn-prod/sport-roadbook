@@ -41,7 +41,7 @@ var accessResponse = (accessToken, refreshToken, profile, done) => {
           })
         } else {
           if (!userStrava[0].Strava_id) {
-            User.updateOne({ _id: userStrava[0]._id}, {$set: {'strava_id': profile._json.id} }, (err, user) => {
+            User.updateOne({ _id: userStrava[0]._id }, { $set: { 'strava_id': profile._json.id } }, (err, user) => {
               if (err) {
                 return done(err)
               } else {
