@@ -1,10 +1,11 @@
 // models
 var User = require('../models/user')
 var Health = require('../models/health')
-
+var request = require('request');
 // custom_modules
 var getHealthScore = require('../../custom_modules/health/healthScore')
 var getHealthRisk = require('../../custom_modules/health/healthRisk')
+var getMeteoByCoordonnees = require('../../custom_modules/openweathermap/getMeteoByCoordonnees')
 
 //Controllers
 var healthCtrl = {
@@ -25,11 +26,20 @@ var healthCtrl = {
   postAddStatus: (req, res) => {
     var form = req.body
     form.user = res.locals.user._id
-    var newHealth = new Health(form)
-    newHealth.save((err, health) => {
-      if (err) throw err
-      else {
-        res.redirect('/health/' + health._id)                   
+    form.location = {
+      latitude: form.latitude,
+      longitude: form.longitude
+    }
+    getMeteoByCoordonnees(form.location.latitude, form.location.longitude, (val) => {
+      if(val !== null) {
+        form.weather = val
+        var newHealth = new Health(form)
+        newHealth.save((err, health) => {
+          if (err) throw err
+          else {
+            res.redirect('/health/' + health._id)
+          }
+        })        
       }
     })
   },
