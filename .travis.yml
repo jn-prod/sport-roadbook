@@ -3,7 +3,7 @@ node_js:
   - "8.1"
 
 before_install:
-  - npm i -g npm@6.1.0
+  - npm i
 
 script:
   - pm2 start app.js
