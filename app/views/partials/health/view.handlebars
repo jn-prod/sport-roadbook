@@ -14,8 +14,32 @@
   <input type="hidden" value="{{health_detail.lassitude}}" class="score">
   <input type="hidden" value="{{health_detail.recuperation}}" class="score">
   <input type="hidden" value="{{health_detail.stress}}" class="score">
+  {{#if health_detail.weather}}
+    <div class="row">
+      <div class="col-12 text-center">
+        <span class="h4">Météo du jour chez vous</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-2 text-center text-md-right">
+        <img src="http://openweathermap.org/img/w/{{health_detail.weather.openweathermap_icon}}.png" alt="{{health_detail.weather.weather_main}}" class="img img-fluid">
+      </div>
+      <div class="col-md-6 text-center text-md-left">
+        <span class="d-block">Température minimale: {{health_detail.weather.main_temp_min}}°</span>
+        <span class="d-block">Température maximale: {{health_detail.weather.main_temp_max}}°</span>
+        <span class="d-block">Humidité: {{health_detail.weather.main_humidity}}%</span>
+        <span class="d-block">Vitesse du vent: {{health_detail.weather.wind_speed}}Km/h</span>        
+      </div>
+    </div>
+  {{/if}}
   <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-12 text-center mt-5">
+      <span class="h4">Détails de ma forme</span>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-6 mt-2 mx-auto">
       <canvas id="scoreHealthChart" width="400" height="400"></canvas>
       <div class="row">
         <div class="col-6 text-left">

@@ -20,8 +20,24 @@ var HealthSchema = mongoose.Schema({
     faim: { type: Number },
     soif: { type: Number },
     commentaires: { type: String },
-    latitude: { type: Number },
-    longitude: { type: Number },
+    location: {
+        latitude: { type: Number },
+        longitude: { type: Number }
+    },
+    weather: {
+        weather_main: { type: String },
+        openweathermap_icon: { type: String },
+        main_temp: { type: Number },
+        main_pressure: { type: Number },
+        main_humidity: { type: Number },
+        main_temp_min: { type: Number },
+        main_temp_max: { type: Number },
+        wind_speed: { type: Number },
+        wind_deg: { type: Number },
+        clouds: { type: Number },
+        sys_sunrise: { type: Date },
+        sys_sunset: { type: Date }
+    },
 
     //log
     created_at : { type: Date, required: true, default: Date.now },
