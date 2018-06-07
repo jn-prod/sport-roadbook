@@ -44,7 +44,6 @@ var healthCtrl = {
           health_Score: score,
           health_risk: healthRisk
         }
-        console.log(healthStatus.health_risk)
         res.render('partials/health/view', healthStatus)
       })
   },

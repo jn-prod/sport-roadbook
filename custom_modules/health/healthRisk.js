@@ -5,13 +5,13 @@ var getMonthlyRiskVal = (array, testValue) => {
   var monthNum
   array.forEach((val) => {
     if(val.mois_num === testValue) {
-      console.log(val.valeur)
       monthNum = val.valeur
     }
   })
   return monthNum 
 }
 
+// le risque de maladie est-il supérieur à la moyenne française ?
 var getHealthRisk = (val) => {
   var initScore = healthScore(val)
   var initScoreDate = val.created_at.getMonth()
