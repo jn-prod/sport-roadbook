@@ -1,4 +1,4 @@
-var healthScore = require('./healthscore')
+var healthScore = require(__dirname + '/healthscore')
 var monthlyRisk = require('../../data/risque-maladie-mensuel.json')
 
 var getMonthlyRiskVal = (array, testValue) => {
