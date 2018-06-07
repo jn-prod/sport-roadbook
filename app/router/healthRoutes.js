@@ -1,19 +1,19 @@
 // node_modules
 var express = require('express'),
-    router = express.Router();
+  router = express.Router()
 
-//Controllers
+// Controllers
 var healthCtrl = require('../controllers/healthController')
 
 // ---------------- INDEX ----------------
 // get add activity form
-router.get('/add', healthCtrl.getAddStatus);
+router.get('/add', healthCtrl.getAddStatus)
 // post add activity form
-router.post('/add', healthCtrl.postAddStatus);
+router.post('/add', healthCtrl.postAddStatus)
 // view activitie score
-router.get('/:id', healthCtrl.getHealthScoreView);
+router.get('/:id', healthCtrl.getHealthScoreView)
 
 // data activitie score
-router.get('/data/:id', healthCtrl.getHealthScoreData);
+router.get('/data/:id', healthCtrl.getHealthScoreData)
 
-module.exports = router;
+module.exports = router

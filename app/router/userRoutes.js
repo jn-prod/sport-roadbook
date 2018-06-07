@@ -1,20 +1,20 @@
 // node_modules
 var express = require('express'),
-    router = express.Router();
+  router = express.Router()
 
-//Controllers
+// Controllers
 var userCtrl = require('../controllers/userController')
 
 // ---------------- INDEX ----------------
 // Get login page
-router.get('/login', userCtrl.login);
+router.get('/login', userCtrl.login)
 // Get Log out
-router.get('/logout', userCtrl.logout);
+router.get('/logout', userCtrl.logout)
 
 // Get Homepage
-router.get('/:id', userCtrl.home);
+router.get('/:id', userCtrl.home)
 
 // Get Delete Account
-router.get('/delete/:id', userCtrl.delete);
+router.get('/delete/:id', userCtrl.delete)
 
-module.exports = router;
+module.exports = router

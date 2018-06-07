@@ -3,5 +3,4 @@ webpack.config.js
 ./node_modules/**
 **/node_modules/**
 /app/*
-/custom_modules/*
 /test/*
