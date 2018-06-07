@@ -7,5 +7,5 @@ before_install:
 
 script:
   - pm2 start app.js
-  - npm pretest
-  - npm test
+  - npm run pretest
+  - npm run test
