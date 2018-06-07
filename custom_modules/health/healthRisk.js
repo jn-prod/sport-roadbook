@@ -1,5 +1,5 @@
-var healthScore = require('./healthscore')
-var monthlyRisk = require('../../data/risque-maladie-mensuel')
+var healthScore = require('./healthscore.js')
+var monthlyRisk = require('../../data/risque-maladie-mensuel.json')
 
 var getMonthlyRiskVal = (array, testValue) => {
   var monthNum
