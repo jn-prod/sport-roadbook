@@ -21,4 +21,4 @@ var ActivitySchema = mongoose.Schema({
   updated_at: { type: Date }
 })
 
-var Activity = module.exports = mongoose.model('Activity', ActivitySchema)
+module.exports = mongoose.model('Activity', ActivitySchema)

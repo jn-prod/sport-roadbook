@@ -1,10 +1,8 @@
 // node_modules
 var Promise = require('bluebird')
 var moment = require('moment')
-var passport = require('passport')
 
 // custom_modules
-var domainUrl = require('../../custom_modules/domain-check')
 var getHealthScore = require('../../custom_modules/health/healthScore')
 
 // models
@@ -65,7 +63,7 @@ var userCtrl = {
             resolve(done)
           })
         } else {
-          resolve('')
+          resolve([])
         }
       })
       // request db Activities
@@ -73,6 +71,7 @@ var userCtrl = {
         Activity
           .find({user: req.session.user._id})
           .exec((err, dbActivites) => {
+            if (err) throw err
             resolve(dbActivites)
           })
       })
@@ -84,6 +83,7 @@ var userCtrl = {
           .sort({'created_at': -1})
           .limit(1)
           .exec((err, dbHealth) => {
+            if (err) throw err
             resolve(dbHealth[0])
           })
       })
