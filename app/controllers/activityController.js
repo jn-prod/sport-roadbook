@@ -1,5 +1,4 @@
 // models
-var User = require('../models/user')
 var Activity = require('../models/activity')
 
 // Controllers

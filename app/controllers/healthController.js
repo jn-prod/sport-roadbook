@@ -1,7 +1,5 @@
 // models
-var User = require('../models/user')
 var Health = require('../models/health')
-var request = require('request')
 // custom_modules
 var getHealthScore = require('../../custom_modules/health/healthScore')
 var getHealthRisk = require('../../custom_modules/health/healthRisk')
@@ -16,6 +14,7 @@ var healthCtrl = {
         .sort({'created_at': -1})
         .limit(1)
         .exec((err, dbHealth) => {
+          if (err) throw err
           var lastHealth = dbHealth[0]
           res.render('partials/health/add', {lastHealth: lastHealth})
         })
@@ -47,6 +46,7 @@ var healthCtrl = {
     Health
       .findOne({_id: req.params.id})
       .exec((err, healthDetail) => {
+        if (err) throw err
         var score = getHealthScore(healthDetail)
         var healthRisk = getHealthRisk(healthDetail)
         var healthStatus = {
@@ -62,6 +62,7 @@ var healthCtrl = {
       .findOne({_id: req.params.id})
       .select({ _id: 0, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1, stress: 1 })
       .exec((err, healthDetail) => {
+        if (err) throw err
         var score = getHealthScore(healthDetail)
         var healthStatus = {
           health_detail: healthDetail,

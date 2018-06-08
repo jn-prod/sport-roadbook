@@ -1,26 +1,23 @@
 require('dotenv').config()
 
 // node_modules
-var express = require('express'),
-  helmet = require('helmet'),
-  exphbs = require('express-handlebars'),
-  path = require('path')
-url = require('url'),
-bodyParser = require('body-parser'),
-mongo = require('mongodb'),
-mongoose = require('mongoose'),
-cookieParser = require('cookie-parser'),
-cookieSession = require('cookie-session'),
-path = require('path'),
-passport = require('passport'),
-FacebookStrategy = require('passport-facebook').Strategy
+var express = require('express')
+var helmet = require('helmet')
+var exphbs = require('express-handlebars')
+var path = require('path')
+var bodyParser = require('body-parser')
+var mongoose = require('mongoose')
+var cookieParser = require('cookie-parser')
+var cookieSession = require('cookie-session')
+var passport = require('passport')
+var FacebookStrategy = require('passport-facebook').Strategy
 
 // Init App
 var app = express()
 
 // MongoDB
 mongoose.Promise = require('bluebird')
-var mongoose = mongoose.connect(process.env.MLAB, (err, client) => {
+mongoose.connect(process.env.MLAB, (err, client) => {
   if (err) {
     console.error(err)
   } else {
@@ -117,23 +114,13 @@ app.set('views', path.join(__dirname, '/app/views/'))
 app.set('view engine', 'handlebars')
 
 // 404
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.status(404)
 
   // respond with html page
   if (req.accepts('html')) {
     res.redirect('/')
-    return
   }
-
-  // respond with json
-  if (req.accepts('json')) {
-    res.send({ error: 'Not found' })
-    return
-  }
-
-  // default to plain-text. send()
-  res.type('txt').send('Not found')
 })
 
 // Set Port
@@ -152,11 +139,11 @@ if (process.env.LOCAL) {
 
   var httpsServer = https.createServer(options, app)
 
-  httpsServer.listen(app.get('port'), function () {
+  httpsServer.listen(app.get('port'), () => {
     console.log('Launch App on http://localhost:' + app.get('port') + '/')
   })
 } else {
-  app.listen(app.get('port'), function () {
+  app.listen(app.get('port'), () => {
     console.log('Launch App on http://localhost:' + app.get('port') + '/')
   })
 }

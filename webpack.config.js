@@ -1,36 +1,35 @@
 const webpack = require('webpack')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-let config_watch, config_devtool, config_output, config_entry, config_mode
+let configWatch, configDevtool, configOutput, configEntry, configMode
 let config, minCss
 
 const env = (process.env.NODE_ENV === 'production')
 const local = (process.env.LOCAL === 'true')
 
 if (env) {
-  config_mode = 'production'
-  config_watch = false
-  config_devtool = false
-  config_entry = './assets/src/js/main.js'
-  config_output = {
+  configMode = 'production'
+  configWatch = false
+  configDevtool = false
+  configEntry = './assets/src/js/main.js'
+  configOutput = {
     path: path.resolve(__dirname, './assets/public/'),
     filename: 'app.js',
     publicPath: '/'
   }
   minCss = MiniCssExtractPlugin.loader
 } else {
-  config_mode = 'development'
-  config_watch = true
-  config_devtool = 'cheap-module-eval-source-map'
-  config_entry = [
+  configMode = 'development'
+  configWatch = true
+  configDevtool = 'cheap-module-eval-source-map'
+  configEntry = [
     'webpack-hot-middleware/client', // ?http://localhost:3000/
     './assets/src/js/main.js'
   ]
-  config_output = {
+  configOutput = {
     path: path.resolve('public/'),
     sourceMapFilename: '[file].map',
     filename: 'app.js',
@@ -41,11 +40,11 @@ if (env) {
 
 if (local || env) {
   config = {
-    entry: config_entry,
-    output: config_output,
-    devtool: config_devtool,
-    watch: config_watch,
-    mode: config_mode,
+    entry: configEntry,
+    output: configOutput,
+    devtool: configDevtool,
+    watch: configWatch,
+    mode: configMode,
     module: {
       rules: [
         {

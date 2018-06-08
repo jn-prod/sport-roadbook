@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
 var UserSchema = mongoose.Schema({
   strava_id: { type: Number },
   facebook_id: { type: Number },
-  username: { type: String},
+  username: { type: String },
   email: { type: String, unique: true, required: true, index: true },
   firstname: { type: String },
   lastname: { type: String },
@@ -20,4 +20,4 @@ var UserSchema = mongoose.Schema({
   updated_at: { type: Date }
 })
 
-var User = module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

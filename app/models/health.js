@@ -44,4 +44,4 @@ var HealthSchema = mongoose.Schema({
   updated_at: { type: Date }
 })
 
-var Health = module.exports = mongoose.model('Health', HealthSchema)
+module.exports = mongoose.model('Health', HealthSchema)
