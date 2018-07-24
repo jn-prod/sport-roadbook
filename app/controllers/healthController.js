@@ -47,29 +47,51 @@ var healthCtrl = {
       .findOne({_id: req.params.id})
       .exec((err, healthDetail) => {
         if (err) throw err
-        var score = getHealthScore(healthDetail)
-        var healthRisk = getHealthRisk(healthDetail)
-        var healthStatus = {
-          health_detail: healthDetail,
-          health_Score: score,
-          health_risk: healthRisk
+        if (String(req.session.user._id) === String(healthDetail.user)) {
+          var score = getHealthScore(healthDetail)
+          var healthRisk = getHealthRisk(healthDetail)
+          var healthStatus = {
+            health_detail: healthDetail,
+            health_Score: score,
+            health_risk: healthRisk
+          }
+          res.render('partials/health/view', healthStatus)          
+        } else {
+          res.redirect('/user/' + req.session.user._id)
         }
-        res.render('partials/health/view', healthStatus)
+
       })
   },
   getHealthScoreData: (req, res) => {
     Health
       .findOne({_id: req.params.id})
-      .select({ _id: 0, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1, stress: 1 })
+      .select({ _id: 0, user: 1, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1, stress: 1 })
       .exec((err, healthDetail) => {
         if (err) throw err
-        var score = getHealthScore(healthDetail)
-        var healthStatus = {
-          health_detail: healthDetail,
-          health_Score: score
+        if (String(req.session.user._id) === String(healthDetail.user)) {
+          var score = getHealthScore(healthDetail)
+          var healthStatus = {
+            health_detail: {
+              sommeil: 0,
+              recuperation: 0,
+              lassitude: 0,
+              humeur: 0,
+              stress: 0
+            },
+            health_Score: score
+          }
+
+          healthStatus.health_detail.sommeil = healthDetail.sommeil
+          healthStatus.health_detail.recuperation = healthDetail.recuperation
+          healthStatus.health_detail.lassitude = healthDetail.lassitude
+          healthStatus.health_detail.humeur = healthDetail.humeur
+          healthStatus.health_detail.stress = healthDetail.stress
+
+          res.setHeader('Access-Control-Allow-Methods', 'GET')
+          res.send(JSON.stringify(healthStatus))          
+        } else {
+          res.redirect('/user/' + req.session.user._id)
         }
-        res.setHeader('Access-Control-Allow-Methods', 'GET')
-        res.send(JSON.stringify(healthStatus))
       })
   }
 }
