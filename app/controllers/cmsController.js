@@ -4,7 +4,7 @@ var cmsCtrl = {
     if (req.session.user) {
       res.redirect('/user/' + req.session.user._id)
     } else {
-      res.render('partials/cms/index', {index: true})
+      res.redirect('/user/login')
     }
   },
   mentionsLegales: (req, res) => {
