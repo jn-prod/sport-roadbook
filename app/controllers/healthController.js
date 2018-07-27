@@ -55,11 +55,10 @@ var healthCtrl = {
             health_Score: score,
             health_risk: healthRisk
           }
-          res.render('partials/health/view', healthStatus)          
+          res.render('partials/health/view', healthStatus)
         } else {
           res.redirect('/user/' + req.session.user._id)
         }
-
       })
   },
   getHealthScoreData: (req, res) => {
@@ -88,7 +87,7 @@ var healthCtrl = {
           healthStatus.health_detail.stress = healthDetail.stress
 
           res.setHeader('Access-Control-Allow-Methods', 'GET')
-          res.send(JSON.stringify(healthStatus))          
+          res.send(JSON.stringify(healthStatus))
         } else {
           res.redirect('/user/' + req.session.user._id)
         }
