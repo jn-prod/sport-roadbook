@@ -11,6 +11,7 @@ var cookieParser = require('cookie-parser')
 var cookieSession = require('cookie-session')
 var passport = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy
+// var Liana = require('forest-express-mongoose')
 
 // Init App
 var app = express()
@@ -110,7 +111,7 @@ var hbs = exphbs.create({
 })
 
 app.engine('handlebars', hbs.engine)
-app.set('views', path.join(__dirname, '/app/views/'))
+app.set('views', path.join(__dirname, 'app/views'))
 app.set('view engine', 'handlebars')
 
 // 404
@@ -122,6 +123,14 @@ app.use((req, res, next) => {
     res.redirect('/')
   }
 })
+
+// FOREST SET UP
+// app.use(Liana.init({
+//   modelsDir: path.join(__dirname, '/app/models'), // Your models directory.
+//   envSecret: process.env.FOREST_ENV_SECRET,
+//   authSecret: process.env.FOREST_AUTH_SECRET,
+//   mongoose: mongoose // The database connection.
+// }))
 
 // Set Port
 app.set('port', (process.env.PORT || 3000))
@@ -140,10 +149,10 @@ if (process.env.LOCAL) {
   var httpsServer = https.createServer(options, app)
 
   httpsServer.listen(app.get('port'), () => {
-    console.log('Launch App on http://localhost:' + app.get('port') + '/')
+    console.log('Launch App on https://localhost:' + app.get('port') + '/')
   })
 } else {
   app.listen(app.get('port'), () => {
-    console.log('Launch App on http://localhost:' + app.get('port') + '/')
+    console.log('Launch App on https://localhost:' + app.get('port') + '/')
   })
 }

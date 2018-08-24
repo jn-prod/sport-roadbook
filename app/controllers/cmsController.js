@@ -1,6 +1,8 @@
 // Controllers
 var cmsCtrl = {
   index: (req, res) => {
+    // res.json({statut:'ok'})
+
     if (req.session.user) {
       res.redirect('/user/' + req.session.user._id)
     } else {
