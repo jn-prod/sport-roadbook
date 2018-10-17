@@ -1,0 +1,16 @@
+.nav-link {
+    border: solid;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 2px;
+    border-color: #FFF;
+}
+
+.nav-link:hover, .nav-link-selected {
+    border: solid;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-color: #000;
+}

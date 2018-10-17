@@ -28,21 +28,78 @@
         {{{body}}}
       </div>        
     {{else}}
-      <div class="container">
-      <div id="nav">
-        <a id="nav-logo" href="/"><img src="/img/logo.png" alt=""></a>
-        <div id="nav-right">
-          {{#if user}}
-            <a href="/user/{{user._id}}?skip=true" class="btn btn-primary">Journal</a>
-            <a href="/user/logout" class="btn btn-secondary">Se déconnecter</a>
-          {{else}}
-            {{#if login}}
-            {{else}}
-            <a href="/user/login" class="btn btn-primary"><i class="fas fa-user"></i> Se connecter</a>
-            {{/if}}
-          {{/if}}
-        </div>
-      </div> 
+      <header class="container">
+        <!-- Begin Menu Navigation
+        ================================================== -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white mediumnavigation nav-down">
+            <div class="container pr-0"> 
+              <!-- Site Title
+              ================================================== -->
+              <!-- Begin Logo -->
+              
+              <a class="navbar-brand row" href="{{ site.baseurl }}/index.html">
+                  
+                  <div class="mainheading">
+                      <span class=" h1 sitetitle text-center">feezify:me</span>
+                      <p class="lead">
+                          <em>by Nicolas Jouanno</em>
+                      </p>
+                  </div>
+
+              </a>
+
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarMediumish">
+                  <!-- Begin Menu -->
+                  <ul class="navbar-nav ml-auto">
+                    {{#if user}}
+                      <li class="nav-item">
+                        <a class="nav-link  font-primary text-uppercase mr-2" href="/user/{{user._id}}?skip=true">Journal</a>
+                      </li>
+                    {{else}}
+                      {{#if login}}
+                      {{else}}
+                        <li class="nav-item">
+                          <a class="nav-link  font-primary text-uppercase mr-2" href="/user/login">Se connecter</a>
+                        </li>
+                      {{/if}}
+                    {{/if}}
+
+                    <li class="nav-item">
+                      <a class="nav-link ml-md-3  font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/stories/index.html" rel="nofollow" target="_blank">Blog</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="btn btn-outline-primary ml-md-3  font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/index.html#cta"><i class="far fa-envelope mr-2"></i>S'abonner</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <div class="input-group mb-3">
+                        <button class="btn btn-outline-light ml-md-3 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v mr-1 text-muted"></i></button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="https://blog.nicolasjouanno.com/shop/index.html" rel="nofollow" target="_blank">Shopping</a>
+                          <a class="dropdown-item" href="https://blog.nicolasjouanno.com/pages/soutenir.html" rel="nofollow" target="_blank">Soutenir</a>
+                          <a class="dropdown-item" href="https://nicolasjouanno.com/creation-site-internet.html" rel="nofollow" target="_blank">Services</a>
+                          <a class="dropdown-item" href="https://nicolasjouanno.com/" rel="nofollow" target="_blank">A propos</a>
+                          {{#if user}}
+                            <a class="dropdown-item border border-bottom-0 border-right-0 border-left-0 mt-2 pt-2 text-danger" href="/user/logout" >Se déconnecter</a>
+                          {{/if}}
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <!-- End Menu -->
+              </div>
+
+            </div>
+        </nav>    
+      <!-- End Navigation
+      ================================================== -->    
+      </header>
+
       <div class="container">
         {{{body}}}
       </div>              

@@ -8,76 +8,6 @@
 /*https://flatuicolors.com/palette/nl*/
 /*Main: #00b4b1 Secondary: #f9e093 Default: #00908e */
 
-body {
-  background-color: #f9e093;
-}
-
-h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Raleway", "Helvetica", "sans-serif";
-  line-height: 1.1;
-  color: inherit;
-}
-
-#index {
-  background-image: linear-gradient(rgba(0,144,142,0.7), rgba(0,180,177,0.7)),url(../img/bg-min.jpg);
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-}
-
-#nav {
-  display: flex;
-  justify-content: flex-end;
-  padding: 50px 0 0 0;  
-}
-
-#nav-logo {
-  text-align: left;
-  flex:1;
-  margin: 0 0 0 50px;
-}
-
-#nav-right {
-  padding: 0 50px 0 0;
-}
-
-#index-banner {
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  align-items: center;
-}
-
-#index-right h1 {
-  text-align: left; 
-  font-family: 'Titillium Web', sans-serif;
-  line-height: 1.5;
-  color: #f9e093;
-  font-weight: 900;
-  font-style: normal;
-  font-size: 4em;
-}
-
-#index-right .btn {
-  text-align: center;
-  margin: auto;
-  display: block;
-  max-width: 220px;
-  box-shadow: 0px 3px 10px 0 rgba(0,0,0,0.5), 0 1px 0 0 rgba(0,0,0,0.03);
-}
-
-#index-left {
-  align-items:center;
-  display: flex;
-  justify-content: center;
-
-  margin:auto;
-}
-
-#index-left img {
-  max-height: 60vh;
-}
-
 #form_status {
   list-style: none;
   text-align: left;
@@ -86,29 +16,6 @@ h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
 
 .hidde {
   display: none !important;
-}
-
-.btn {
-  font-family: "Raleway", "Helvetica", "sans-serif";
-  border-radius: 0px;
-  border: none;
-  line-height: 2;
-}
-
-.btn-primary {
-  background-color: #00b4b1;
-}
-
-.btn-primary:hover{
-  background-color: #f9e093;
-}
-
-.text-primary {
-  color: #00b4b1 !important;
-}
-
-.text-secondary {
-  color: #f9e093 !important;
 }
 
 .border-primary {
@@ -136,10 +43,6 @@ h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
   padding: 10px 10px 10px 10px;
 }
 
-.bg-light {
-  background-color: #FFF !important;
-}
-
 #form-user {
   box-shadow: 0 3px 10px 0 rgba(0,0,0,0.07), 0 1px 0 0 rgba(0,0,0,0.03);
   padding: 50px 0 50px 0;
@@ -153,10 +56,12 @@ h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6 {
 
 .btn-strava {
   background-color: #fc4c02;
+  color: #FFF !important;
 }
 
 .btn-facebook {
   background-color: #3b5998;
+  color: #FFF !important;
 }
 
 #healthScoreGraph {

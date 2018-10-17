@@ -91,11 +91,12 @@ var userCtrl = {
       var dateNow = new Date(Date.now())
 
       // promise all requests
-      Promise.props({
-        strava: stravaAll,
-        activities: dbActivitiesAll,
-        health: dbHealthAll
-      })
+      Promise
+        .props({
+          strava: stravaAll,
+          activities: dbActivitiesAll,
+          health: dbHealthAll
+        })
         .then((val) => {
         // skip health form
           if (req.query.skip === 'true') {
@@ -120,13 +121,15 @@ var userCtrl = {
         })
         .then((val) => {
           var allActivities = []
-
           // check if strava array isn't null
-          if (val.strava.length >= 1) {
-            val.strava.forEach((val) => {
-              allActivities.push(val)
-            })
+          if (val.strava) {
+            if (val.strava.length >= 1) {
+              val.strava.forEach((val) => {
+                allActivities.push(val)
+              })
+            }
           }
+
           // check if activities array isn't null
           if (val.activities.length >= 1) {
             val.activities.forEach((val) => {
