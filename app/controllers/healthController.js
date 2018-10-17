@@ -30,7 +30,7 @@ var healthCtrl = {
     form.user = res.locals.user._id
 
     // get IP
-    var userIp = req.body.ip
+    var userIp = req.body.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress
     if (process.env.LOCAL) {
       userIp = process.env.IP
     }
