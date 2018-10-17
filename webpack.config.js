@@ -73,6 +73,16 @@ if (local || env) {
             minCss,
             'css-loader'
           ]
+        },
+        {
+          test: /\.(eot|ttf|woff|woff2)$/,
+          use: [{
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }]
         }
       ]
     },
@@ -92,7 +102,7 @@ if (local || env) {
     config.plugins.push(new MiniCssExtractPlugin({ filename: '[name].css' }))
   } else {
     config.plugins.push(new webpack.NamedModulesPlugin())
-    config.plugins.push(new CleanWebpackPlugin())
+    config.plugins.push(new CleanWebpackPlugin(['assets/public/app.js', 'assets/public/main.css', 'assets/public/fonts']))
     config.plugins.push(new webpack.HotModuleReplacementPlugin())
     config.plugins.push(new webpack.NoEmitOnErrorsPlugin())
     config.devServer = {

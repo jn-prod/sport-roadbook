@@ -8,6 +8,7 @@ var getMeteoByCoordonnees = require('../../custom_modules/openweathermap/getMete
 // Controllers
 var healthCtrl = {
   getAddStatus: (req, res) => {
+    // console.log(req.headers)
     if (req.session.user) {
       Health
         .find({user: req.session.user._id})
@@ -32,14 +33,14 @@ var healthCtrl = {
     getMeteoByCoordonnees(form.location.latitude, form.location.longitude, (val) => {
       if (val !== null) {
         form.weather = val
-        var newHealth = new Health(form)
-        newHealth.save((err, health) => {
-          if (err) throw err
-          else {
-            res.redirect('/health/' + health._id)
-          }
-        })
       }
+      var newHealth = new Health(form)
+      newHealth.save((err, health) => {
+        if (err) throw err
+        else {
+          res.redirect('/health/' + health._id)
+        }
+      })
     })
   },
   getHealthScoreView: (req, res) => {

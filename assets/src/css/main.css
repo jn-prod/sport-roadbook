@@ -1,114 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-@import url(https://fonts.googleapis.com/css?family=Anton);
-@import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900);
-@import url(https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i);
-@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i');
 
-/*COLORS*/
-/*https://flatuicolors.com/palette/nl*/
-/*Main: #00b4b1 Secondary: #f9e093 Default: #00908e */
-
-#form_status {
-  list-style: none;
-  text-align: left;
-  padding: 0 0 0 0;
-}
-
-.hidde {
-  display: none !important;
-}
-
-.border-primary {
-  border-color: #00b4b1 !important;
-}
-
-.border-secondary {
-  border-color: #f9e093 !important;
-}
-
-.badge-primary {
-  background-color: #00b4b1 !important;
-}
-
-.badge-grey {
-  background-color: #6c757d !important;
-}
-
-.badge-secondary {
-  background-color: #f9e093 !important;
-}
-
-.badge-charge {
-  font-size: 1.5em;
-  padding: 10px 10px 10px 10px;
-}
-
-#form-user {
-  box-shadow: 0 3px 10px 0 rgba(0,0,0,0.07), 0 1px 0 0 rgba(0,0,0,0.03);
-  padding: 50px 0 50px 0;
-  background-color: #FFF;
-  text-align: center;
-  height: auto;
-  display:flex;
-  align-items:center;
-  justify-content: center;
-}
-
-.btn-strava {
-  background-color: #fc4c02;
-  color: #FFF !important;
-}
-
-.btn-facebook {
-  background-color: #3b5998;
-  color: #FFF !important;
-}
-
-#healthScoreGraph {
-  max-height: 200px;
-}
-
-@media (max-width: 736px) {
-  #nav {
-    width: 100%;
-    display: block;
-    text-align: center;
-  }
-  #nav-logo {
-    margin: auto;
-  }  
-  #nav-right {
-    margin: 60px 0 20px 0;
-    padding: 0 0 0 0;
-    font-size: 1em;
-  }
-  #index-right {
-    margin: 0px 0 40px 0;
-    font-size: 1em;
-  }
-  #index-left {
-    margin: 50px 0 0 0;
-  }
-  #index{
-    height: auto;
-    display: block;
-  }
-  #index-banner{
-    margin: 50px 0 0 0;
-    font-size: 1em;
-    height: auto;
-  }    
-  #index-banner h1 {
-    font-size: 1em;
-    padding: 0 0 20px 0;
-  }  
-
-
-}
 @font-face {
   font-family: 'impact';
-  src: url(/fonts/Maximum_Impact.ttf) format('truetype');
+  src: url('../fonts/Maximum_Impact.ttf') format('truetype');
 }
 
  .mainheading {
@@ -179,7 +73,7 @@ pre {
     font-family: Merriweather;
 }
 .bg-header {
-    background-image: url(/c04d9feb7793b69850a32118ea879270.jpg);
+    background-image: url(../img/header.jpg);
     background-size: cover;
     background-position: 50%;    
 }
@@ -301,7 +195,7 @@ pre {
      color:rgba(0,0,0,.8);
 }
  .dot:after {
-     content:"\B7";
+     content:"·";
      margin-left:3px;
      margin-right:3px;
 }
@@ -714,7 +608,7 @@ pre {
 }
  @media (min-width:768px) {
      .jumbotron.bg-footer {
-         background-image: url(/1a60a44850d790af3ba57208b705719e.jpg);
+         background-image: url(../img/jumbotron.jpg);
          background-size:cover;
          background-position: center;
     }
@@ -837,20 +731,4 @@ pre {
 
 .font-primary{
     font-family: Merriweather !important;
-}
-.nav-link {
-    border: solid;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 2px;
-    border-color: #FFF;
-}
-
-.nav-link:hover, .nav-link-selected {
-    border: solid;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-color: #000;
 }
