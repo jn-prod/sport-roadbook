@@ -1,3 +1,5 @@
+// node_modules
+var request = require('request')
 // models
 var Health = require('../models/health')
 // custom_modules
@@ -26,20 +28,39 @@ var healthCtrl = {
   postAddStatus: (req, res) => {
     var form = req.body
     form.user = res.locals.user._id
-    form.location = {
-      latitude: form.latitude,
-      longitude: form.longitude
+
+    // get IP
+    var userIp = req.body.ip
+    if (process.env.LOCAL) {
+      userIp = process.env.IP
     }
-    getMeteoByCoordonnees(form.location.latitude, form.location.longitude, (val) => {
-      if (val !== null) {
-        form.weather = val
+
+    var apiIpUrl = 'http://api.ipapi.com/' + userIp + '?access_key=' + process.env.IPAPI_API_KEY
+
+    // get LOCATION
+    request(apiIpUrl, (error, response, body) => {
+      if (error) {
+        form.location = {latitude: null, longitude: null}
+        res.redirect('/health/add')
+      } else {
+        var apiLocation = JSON.parse(body)
+        form.location = {latitude: apiLocation.latitude, longitude: apiLocation.longitude}
       }
-      var newHealth = new Health(form)
-      newHealth.save((err, health) => {
-        if (err) throw err
-        else {
-          res.redirect('/health/' + health._id)
+
+      // get METEO
+      getMeteoByCoordonnees(form.location.latitude, form.location.longitude, (val) => {
+        if (val !== null) {
+          form.weather = val
         }
+
+        // save HEALTH
+        var newHealth = new Health(form)
+        newHealth.save((err, health) => {
+          if (err) throw err
+          else {
+            res.redirect('/health/' + health._id)
+          }
+        })
       })
     })
   },
