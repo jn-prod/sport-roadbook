@@ -8,7 +8,7 @@ var getMeteoByCoordonnees = require('../../custom_modules/openweathermap/getMete
 // Controllers
 var healthCtrl = {
   getAddStatus: (req, res) => {
-    // console.log(req.headers)
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     if (req.session.user) {
       Health
         .find({user: req.session.user._id})
@@ -17,7 +17,7 @@ var healthCtrl = {
         .exec((err, dbHealth) => {
           if (err) throw err
           var lastHealth = dbHealth[0]
-          res.render('partials/health/add', {lastHealth: lastHealth})
+          res.render('partials/health/add', {lastHealth: lastHealth, ip: ip})
         })
     } else {
       res.redirect('/user/login')
