@@ -131,8 +131,13 @@
           <label for="commentaires">Commentaires personnels</label>
           <textarea class="form-control" id="commentaires" rows="3" name="commentaires"></textarea>
         </div>
-        <div class="row">
-          <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+        <div class="row text-center">
+          <div class="col-sm-6">
+            <a href="/user/{{user._id}}?skip=true" class="btn btn-light text-muted mb-3">Passer ></a>
+          </div>          
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary pr-5 pl-5">Valider</button>
+          </div> 
         </div>
       </form>
     </div>
