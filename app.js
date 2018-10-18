@@ -11,7 +11,6 @@ var cookieParser = require('cookie-parser')
 var cookieSession = require('cookie-session')
 var passport = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy
-// var Liana = require('forest-express-mongoose')
 
 // Init App
 var app = express()
@@ -125,12 +124,12 @@ app.use((req, res, next) => {
 })
 
 // FOREST SET UP
-// app.use(Liana.init({
-//   modelsDir: path.join(__dirname, '/app/models'), // Your models directory.
-//   envSecret: process.env.FOREST_ENV_SECRET,
-//   authSecret: process.env.FOREST_AUTH_SECRET,
-//   mongoose: mongoose // The database connection.
-// }))
+app.use(require('forest-express-mongoose').init({
+  modelsDir: __dirname + '/app/models',
+  envSecret: process.env.FOREST_ENV_SECRET,
+  authSecret: process.env.FOREST_AUTH_SECRET,
+  mongoose: require('mongoose')
+}));
 
 // Set Port
 app.set('port', (process.env.PORT || 3000))

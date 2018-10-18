@@ -50,32 +50,10 @@ var userCtrl = {
     })
   },
   home: (req, res) => {
+    var dateNow = new Date(Date.now())
+
     // request user
     if (req.session.user) {
-      // request Strava
-      var stravaId = req.session.user.strava_id
-      var stravaCode = req.session.strava
-      var stravaApi = require('../../custom_modules/strava/stravaGetUserActivities')
-
-      var stravaAll = new Promise((resolve, reject) => {
-        if (stravaId && stravaCode) {
-          stravaApi(stravaId, stravaCode, (done) => {
-            resolve(done)
-          })
-        } else {
-          resolve([])
-        }
-      })
-      // request db Activities
-      var dbActivitiesAll = new Promise((resolve, reject) => {
-        Activity
-          .find({user: req.session.user._id})
-          .exec((err, dbActivites) => {
-            if (err) throw err
-            resolve(dbActivites)
-          })
-      })
-
       // request db Health
       var dbHealthAll = new Promise((resolve, reject) => {
         Health
@@ -83,12 +61,53 @@ var userCtrl = {
           .sort({'created_at': -1})
           .limit(1)
           .exec((err, dbHealth) => {
-            if (err) throw err
-            resolve(dbHealth[0])
+            var health = dbHealth[0]
+            if (err) {
+              reject(err)
+            }
+
+            // if no score today request it
+            if (dbHealth.lentgh > 0 || req.query.skip === 'true') {
+              var lastDate = health.created_at
+              if ((lastDate.getFullYear() + '-' + lastDate.getMonth() + '-' + lastDate.getDate()) === (dateNow.getFullYear() + '-' + dateNow.getMonth() + '-' + dateNow.getDate()) || req.query.skip === 'true') {
+                resolve(health)
+              } else {
+                res.redirect('/health/add')
+              }
+            } else {
+              res.redirect('/health/add')
+            }
           })
       })
 
-      var dateNow = new Date(Date.now())
+      // request Strava
+      var stravaAll = new Promise((resolve, reject) => {
+        var strava = {
+          stravaId: req.session.user.strava_id,
+          stravaCode: req.session.strava,
+          stravaApi: require('../../custom_modules/strava/stravaGetUserActivities')        
+        }
+
+        if (strava.stravaId && strava.stravaCode) {
+          strava.stravaApi(strava.stravaId, strava.stravaCode, (done) => {
+            resolve(done)
+          })
+        } else {
+          resolve([])
+        }
+      })
+
+      // request db Activities
+      var dbActivitiesAll = new Promise((resolve, reject) => {
+        Activity
+          .find({user: req.session.user._id})
+          .exec((err, dbActivites) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(dbActivites)
+          })
+      })
 
       // promise all requests
       Promise
@@ -96,28 +115,6 @@ var userCtrl = {
           strava: stravaAll,
           activities: dbActivitiesAll,
           health: dbHealthAll
-        })
-        .then((val) => {
-        // skip health form
-          if (req.query.skip === 'true') {
-            return val
-          } else {
-          // if no score today request it
-            if (val.health !== undefined) {
-              var lastDate = val.health.created_at
-              if (lastDate) {
-                if ((lastDate.getFullYear() + '-' + lastDate.getMonth() + '-' + lastDate.getDate()) !== (dateNow.getFullYear() + '-' + dateNow.getMonth() + '-' + dateNow.getDate())) {
-                  res.redirect('/health/add')
-                } else {
-                  return val
-                }
-              } else {
-                res.redirect('/health/add')
-              }
-            } else {
-              res.redirect('/health/add')
-            }
-          }
         })
         .then((val) => {
           var allActivities = []
@@ -144,15 +141,13 @@ var userCtrl = {
           return {activities: allActivities, health: val.health}
         })
         .then((val) => {
-          var element = val
-
           // health score calcul
-          if (element.health) {
-            element.healthScore = getHealthScore(element.health)
+          if (val.health) {
+            val.healthScore = getHealthScore(val.health)
           } else {
-            element.healthScore = ''
+            val.healthScore = ''
           }
-          return element
+          return val
         })
         .then((result) => {
           var api = result

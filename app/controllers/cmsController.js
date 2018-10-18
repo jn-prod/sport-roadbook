@@ -1,12 +1,10 @@
 // Controllers
 var cmsCtrl = {
   index: (req, res) => {
-    // res.json({statut:'ok'})
-
     if (req.session.user) {
-      res.redirect('/user/' + req.session.user._id)
+      res.redirect('/user/' + req.session.user)
     } else {
-      res.redirect('/user/login')
+      res.render('partials/cms/index')
     }
   },
   mentionsLegales: (req, res) => {
