@@ -85,7 +85,7 @@ var userCtrl = {
         var strava = {
           stravaId: req.session.user.strava_id,
           stravaCode: req.session.strava,
-          stravaApi: require('../../custom_modules/strava/stravaGetUserActivities')        
+          stravaApi: require('../../custom_modules/strava/stravaGetUserActivities')
         }
 
         if (strava.stravaId && strava.stravaCode) {
