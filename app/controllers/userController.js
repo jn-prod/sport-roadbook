@@ -67,9 +67,10 @@ var userCtrl = {
             }
 
             // if no score today request it
-            if (dbHealth.lentgh > 0 || req.query.skip === 'true') {
-              var lastDate = health.created_at
-              if ((lastDate.getFullYear() + '-' + lastDate.getMonth() + '-' + lastDate.getDate()) === (dateNow.getFullYear() + '-' + dateNow.getMonth() + '-' + dateNow.getDate()) || req.query.skip === 'true') {
+            if (dbHealth.length > 0 || req.query.skip === 'true') {
+              var lastDate = health.created_at.getFullYear() + '-' + health.created_at.getMonth() + '-' + health.created_at.getDate()
+              var today = dateNow.getFullYear() + '-' + dateNow.getMonth() + '-' + dateNow.getDate()
+              if (lastDate === today || req.query.skip === 'true') {
                 resolve(health)
               } else {
                 res.redirect('/health/add')
