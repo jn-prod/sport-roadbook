@@ -11,20 +11,28 @@ var cookieParser = require('cookie-parser')
 var cookieSession = require('cookie-session')
 var passport = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy
-// var Liana = require('forest-express-mongoose')
+var Liana = require('forest-express-mongoose')
 
 // Init App
 var app = express()
 
 // MongoDB
 mongoose.Promise = require('bluebird')
-mongoose.connect(process.env.MLAB, (err, client) => {
+mongoose.connect(process.env.MLAB, { useNewUrlParser: true }, (err, client) => {
   if (err) {
     console.error(err)
   } else {
     console.log('MongoDB is connected')
   }
 })
+
+// FOREST SET UP
+app.use(Liana.init({
+  modelsDir: path.join(__dirname, '/app/models'), // Your models directory.
+  envSecret: process.env.FOREST_ENV_SECRET,
+  authSecret: process.env.FOREST_AUTH_SECRET,
+  mongoose: mongoose // The database connection.
+}))
 
 // Http to Https
 var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
@@ -91,7 +99,6 @@ app.use(function (req, res, next) {
   } else {
     res.locals.env = false
   }
-
   next()
 })
 
@@ -123,14 +130,6 @@ app.use((req, res, next) => {
     res.redirect('/')
   }
 })
-
-// FOREST SET UP
-// app.use(Liana.init({
-//   modelsDir: path.join(__dirname, '/app/models'), // Your models directory.
-//   envSecret: process.env.FOREST_ENV_SECRET,
-//   authSecret: process.env.FOREST_AUTH_SECRET,
-//   mongoose: mongoose // The database connection.
-// }))
 
 // Set Port
 app.set('port', (process.env.PORT || 3000))
