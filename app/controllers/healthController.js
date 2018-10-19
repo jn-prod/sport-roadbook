@@ -13,13 +13,13 @@ var healthCtrl = {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
     if (req.session.user) {
       Health
-        .find({user: req.session.user._id})
-        .sort({'created_at': -1})
+        .find({ user: req.session.user._id })
+        .sort({ 'created_at': -1 })
         .limit(1)
         .exec((err, dbHealth) => {
           if (err) throw err
           var lastHealth = dbHealth[0]
-          res.render('partials/health/add', {lastHealth: lastHealth, ip: ip})
+          res.render('partials/health/add', { lastHealth: lastHealth, ip: ip })
         })
     } else {
       res.redirect('/user/login')
@@ -40,11 +40,11 @@ var healthCtrl = {
     // get LOCATION
     request(apiIpUrl, (error, response, body) => {
       if (error) {
-        form.location = {latitude: null, longitude: null}
+        form.location = { latitude: null, longitude: null }
         res.redirect('/health/add')
       } else {
         var apiLocation = JSON.parse(body)
-        form.location = {latitude: apiLocation.latitude, longitude: apiLocation.longitude}
+        form.location = { latitude: apiLocation.latitude, longitude: apiLocation.longitude }
       }
 
       // get METEO
@@ -66,7 +66,7 @@ var healthCtrl = {
   },
   getHealthScoreView: (req, res) => {
     Health
-      .findOne({_id: req.params.id})
+      .findOne({ _id: req.params.id })
       .exec((err, healthDetail) => {
         if (err) throw err
         if (String(req.session.user._id) === String(healthDetail.user)) {
@@ -85,7 +85,7 @@ var healthCtrl = {
   },
   getHealthScoreData: (req, res) => {
     Health
-      .findOne({_id: req.params.id})
+      .findOne({ _id: req.params.id })
       .select({ _id: 0, user: 1, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1, stress: 1 })
       .exec((err, healthDetail) => {
         if (err) throw err
