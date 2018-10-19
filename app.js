@@ -47,7 +47,7 @@ if (process.env.LOCAL === 'true') {
   var webpackHotMiddleware = require('webpack-hot-middleware')
   app.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
-    stats: {colors: true},
+    stats: { colors: true },
     reload: true,
     inline: true
   })

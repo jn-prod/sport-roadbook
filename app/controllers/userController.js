@@ -18,7 +18,7 @@ var groupByDate = (activities, filter) => {
     if (!acc[yearWeek]) {
       acc[yearWeek] = []
     }
-    acc[yearWeek].push({date})
+    acc[yearWeek].push({ date })
     return acc
   }, {})
 }
@@ -30,7 +30,7 @@ var userCtrl = {
       res.redirect('/user/' + req.session.user._id)
     } else {
       var login = true
-      res.render('partials/user/login', {login: login})
+      res.render('partials/user/login', { login: login })
     }
   },
   logout: (req, res) => {
@@ -57,8 +57,8 @@ var userCtrl = {
       // request db Health
       var dbHealthAll = new Promise((resolve, reject) => {
         Health
-          .find({user: req.session.user._id})
-          .sort({'created_at': -1})
+          .find({ user: req.session.user._id })
+          .sort({ 'created_at': -1 })
           .limit(1)
           .exec((err, dbHealth) => {
             var health = dbHealth[0]
@@ -101,7 +101,7 @@ var userCtrl = {
       // request db Activities
       var dbActivitiesAll = new Promise((resolve, reject) => {
         Activity
-          .find({user: req.session.user._id})
+          .find({ user: req.session.user._id })
           .exec((err, dbActivites) => {
             if (err) {
               reject(err)
@@ -139,7 +139,7 @@ var userCtrl = {
             return new Date(b.start_date_local) - new Date(a.start_date_local)
           })
 
-          return {activities: allActivities, health: val.health}
+          return { activities: allActivities, health: val.health }
         })
         .then((val) => {
           // health score calcul
@@ -163,7 +163,7 @@ var userCtrl = {
               .slice(0, 5)
               .reverse()
               .forEach((val) => {
-                activitesByDateFormated.push({activities: val})
+                activitesByDateFormated.push({ activities: val })
               })
             activitesByDateFormated.forEach((val, key) => {
               val.week = 'S' + moment(val.activities[0].date.start_date_local).week() + '-' + moment(val.activities[0].date.start_date_local).year()

@@ -111,9 +111,9 @@ if (local || env) {
       publicPath: '/',
       inline: true,
       noInfo: true,
-      stats: {colors: true},
+      stats: { colors: true },
       hot: true,
-      headers: {'Access-Control-Allow-Origin': '*'},
+      headers: { 'Access-Control-Allow-Origin': '*' },
       compress: true,
       port: 8080
     }

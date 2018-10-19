@@ -6,7 +6,7 @@ var stravaUserActivities = (stravaId, stravaCode, done) => {
     if (err) {
       done(null)
     } else {
-      stravaApi.athlete.listActivities({'access_token': userToken}, (err, activities, limits) => {
+      stravaApi.athlete.listActivities({ 'access_token': userToken }, (err, activities, limits) => {
         if (err) {
           done(null)
         } else {
