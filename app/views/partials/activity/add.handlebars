@@ -27,58 +27,68 @@
             <option>Autre</option>
           </select>
         </div>
+        <!-- start_date_local -->
+        <div class="form-group">
+          <label for="start_date_local">Date de l'activité*</label>
+          <input type="date" class="form-control" id="date" name="start_date_local" autocomplete="on" placeholder="jj/mm/aaaa" required>
+        </div>
         <!-- name -->
         <div class="form-group">
           <label for="name">Nom de la scéance*</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="ex: fractionné court" required>
         </div>
-        <!-- distance -->
+        <!-- description -->
         <div class="form-group">
-          <label for="distance">Distance en KM</label>
-          <input type="number" class="form-control" id="distance" name="distance" min="0" value="0" step="0.01">
-        </div>
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+        </div> 
         <!-- moving_time -->
         <div class="row">
           <div class="col-12">
-            <label>Durée (HH:MM:ss)</label>
+            <label>Durée (HH:MM:ss)*</label>
           </div>
         </div>
         <div class="row">
           <div class="col-4">
             <div class="form-group">
-              <input type="number" class="form-control" id="moving_time_hours" name="moving_time_hours" min="0" value="0" step="1">
+              <input type="number" class="form-control" id="moving_time_hours" name="moving_time_hours" min="0" placeholder="00" step="1" required>
             </div>            
           </div>
           <div class="col-4">
             <div class="form-group">
-              <input type="number" class="form-control" id="moving_time_minutes" name="moving_time_minutes" min="0" value="0" step="1">
+              <input type="number" class="form-control" id="moving_time_minutes" name="moving_time_minutes" min="0" placeholder="00" step="1" required>
             </div>            
           </div>
           <div class="col-4">
             <div class="form-group">
-              <input type="number" class="form-control" id="moving_time_seconds" name="moving_time_seconds" min="0" value="0" step="1">
+              <input type="number" class="form-control" id="moving_time_seconds" name="moving_time_seconds" min="0" placeholder="00" step="1" required>
             </div>            
           </div>
+        </div>
+        <!-- fc moyenne -->
+        <div class="form-group">
+          <label for="fc_moyenne">Fréquence cardiaque moyenne (en Battement Par Minutes)</label><span class="text-muted d-block">Recommendé: Utilisé pour l’indice d’intensité</span>
+          <input type="number" class="form-control" id="fc_moyenne" name="fc_moyenne" min="0" placeholder="0" step="1">
+        </div>
+        <!-- distance -->
+        <div class="form-group">
+          <label for="distance">Distance en KM</label>
+          <input type="number" class="form-control" id="distance" name="distance" min="0" placeholder="0" step="0.01">
         </div>
         <!-- total_elevation_gain -->
         <div class="form-group">
           <label for="total_elevation_gain">Dénivelé cumulé en m</label>
-          <input type="number" class="form-control" id="total_elevation_gain" name="total_elevation_gain" min="0" step="1" value="0">
+          <input type="number" class="form-control" id="total_elevation_gain" name="total_elevation_gain" min="0" step="1" placeholder="0">
         </div>
         <!-- average_speed -->
         <div class="form-group">
           <label for="average_speed">Vitesse moyenne en Km/h</label>
-          <input type="number" class="form-control" id="average_speed" name="average_speed" min="0" value="0" step="0.01">
+          <input type="number" class="form-control" id="average_speed" name="average_speed" min="0" placeholder="0" step="0.01">
         </div>
         <!-- calories -->
         <div class="form-group">
           <label for="calories">Calories dépensées</label>
-          <input type="number" class="form-control" id="calories" name="calories" min="0" value="0" step="1">
-        </div>
-        <!-- start_date_local -->
-        <div class="form-group">
-          <label for="start_date_local">Date de l'activité*</label>
-          <input type="date" class="form-control" id="date" name="start_date_local" autocomplete="on" placeholder="jj/mm/aaaa" required>
+          <input type="number" class="form-control" id="calories" name="calories" min="0" placeholder="0" step="1">
         </div>
         <!-- rpe -->        
         <div class="form-group">
@@ -95,11 +105,6 @@
             <option value="9">Très très dur</option>
             <option value="10">Aussi dur qu'une compétition</option>            
           </select>
-        </div> 
-        <!-- description -->
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea class="form-control" id="description" rows="3" name="description"></textarea>
         </div>               
         <div class="row">
           <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>

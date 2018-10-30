@@ -14,6 +14,8 @@ var UserSchema = mongoose.Schema({
   city: { type: String },
   size: { type: Number },
   date_of_birth: { type: Date },
+  fc_max: { type: Number, default: 200 },
+  tss: { type: Number },
 
   // log
   created_at: { type: Date, required: true, default: Date.now },
