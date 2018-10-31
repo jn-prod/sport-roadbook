@@ -57,7 +57,7 @@ var activityCtrl = {
       strava.stravaApi(strava.stravaId, strava.stravaCode, (activities) => {
         activities.forEach((stravaActivity) => {
           Activity
-            .findOne({'strava_id': stravaActivity.id})
+            .findOne({ 'strava_id': stravaActivity.id })
             .exec((err, res) => {
               if (err) throw err
               if (res === null) {
