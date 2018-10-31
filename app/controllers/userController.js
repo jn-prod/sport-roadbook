@@ -10,19 +10,6 @@ var User = require('../models/user')
 var Activity = require('../models/activity')
 var Health = require('../models/health')
 
-// controllers functions
-var groupByDate = (activities, filter) => {
-  return activities.reduce(function (acc, date) {
-    var yearWeek = moment(date[filter]).year() + '-' + moment(date[filter]).week()
-
-    if (!acc[yearWeek]) {
-      acc[yearWeek] = []
-    }
-    acc[yearWeek].push({ date })
-    return acc
-  }, {})
-}
-
 // Controllers
 var userCtrl = {
   login: (req, res) => {
@@ -50,6 +37,8 @@ var userCtrl = {
     })
   },
   home: (req, res) => {
+    var userId = req.params.user
+
     var dateNow = new Date(Date.now())
 
     // request user
@@ -57,7 +46,7 @@ var userCtrl = {
       // request db Health
       var dbHealthAll = new Promise((resolve, reject) => {
         Health
-          .find({ user: req.session.user._id })
+          .find({ user: userId })
           .sort({ 'created_at': -1 })
           .limit(1)
           .exec((err, dbHealth) => {
@@ -81,27 +70,11 @@ var userCtrl = {
           })
       })
 
-      // request Strava
-      var stravaAll = new Promise((resolve, reject) => {
-        var strava = {
-          stravaId: req.session.user.strava_id,
-          stravaCode: req.session.strava,
-          stravaApi: require('../../custom_modules/strava/stravaGetUserActivities')
-        }
-
-        if (strava.stravaId && strava.stravaCode) {
-          strava.stravaApi(strava.stravaId, strava.stravaCode, (done) => {
-            resolve(done)
-          })
-        } else {
-          resolve([])
-        }
-      })
-
       // request db Activities
       var dbActivitiesAll = new Promise((resolve, reject) => {
         Activity
-          .find({ user: req.session.user._id })
+          .find({ user: userId })
+          .sort({ 'start_date_local': -1 })
           .exec((err, dbActivites) => {
             if (err) {
               reject(err)
@@ -110,36 +83,69 @@ var userCtrl = {
           })
       })
 
+      var dbCharge = new Promise((resolve, reject) => {
+        Activity
+          .aggregate([
+            {
+              $match: { user: require('mongoose').Types.ObjectId(userId) }
+            },{
+              $project: {
+                'activity_date': { 
+                  week: { $week: "$start_date_local" },
+                  year: { $year: '$start_date_local' }
+                }
+              }
+            },{
+              $group: { _id: '$activity_date', count: { $sum: 1 } }
+            }
+          ])
+          .sort({ '_id.year': -1, '_id.week': -1 })
+          .limit(10)
+          .exec((err, docs) => {
+            if (err) {
+              reject(err)
+            }
+
+            var activitiesByweek = []
+            console.log(docs)
+            for (var i = 0; i < docs.length; i++) {
+              if (i === 0) {
+                activitiesByweek.push({
+                  week: docs[i]._id.week,
+                  year: docs[i]._id.year,
+                  text: 'S' + docs[i]._id.week + '-' + docs[i]._id.year,
+                  count: docs[i].count
+                })                
+              } else {
+                if ((activitiesByweek[i - 1].week - 1) === docs[i]._id.week) {
+                  activitiesByweek.push({
+                    week: docs[i]._id.week,
+                    year: docs[i]._id.year,
+                    text: 'S' + docs[i]._id.week + '-' + docs[i]._id.year,
+                    count: docs[i].count
+                  }) 
+                } else {
+                  activitiesByweek.push({
+                    week: docs[i]._id.week,
+                    year: docs[i]._id.year,
+                    text: 'S' + (activitiesByweek[i - 1].week - 1) + '-' + docs[i]._id.year,
+                    count: 0
+                  }) 
+                }
+              }
+            }
+
+            activitiesByweek.reverse()
+            resolve(activitiesByweek)
+          })
+      })
+
       // promise all requests
       Promise
         .props({
-          strava: stravaAll,
           activities: dbActivitiesAll,
-          health: dbHealthAll
-        })
-        .then((val) => {
-          var allActivities = []
-          // check if strava array isn't null
-          if (val.strava) {
-            if (val.strava.length >= 1) {
-              val.strava.forEach((val) => {
-                allActivities.push(val)
-              })
-            }
-          }
-
-          // check if activities array isn't null
-          if (val.activities.length >= 1) {
-            val.activities.forEach((val) => {
-              allActivities.push(val)
-            })
-          }
-
-          allActivities.sort((a, b) => {
-            return new Date(b.start_date_local) - new Date(a.start_date_local)
-          })
-
-          return { activities: allActivities, health: val.health }
+          health: dbHealthAll,
+          charge: dbCharge
         })
         .then((val) => {
           // health score calcul
@@ -152,24 +158,6 @@ var userCtrl = {
         })
         .then((result) => {
           var api = result
-
-          // charge calcul if activities array isn't null
-          if (api.activities.length >= 1) {
-            var activitiesByDate = groupByDate(api.activities, 'start_date_local')
-            var activitesByDateFormated = []
-
-            Object
-              .values(activitiesByDate)
-              .slice(0, 5)
-              .reverse()
-              .forEach((val) => {
-                activitesByDateFormated.push({ activities: val })
-              })
-            activitesByDateFormated.forEach((val, key) => {
-              val.week = 'S' + moment(val.activities[0].date.start_date_local).week() + '-' + moment(val.activities[0].date.start_date_local).year()
-            })
-            api.charge = activitesByDateFormated
-          }
 
           // filter activities array
           if (req.query.start_date && req.query.end_date && api.activities.length >= 1) {

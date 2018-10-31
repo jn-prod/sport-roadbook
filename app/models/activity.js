@@ -16,6 +16,9 @@ var ActivitySchema = mongoose.Schema({
   calories: { type: Number },
   rpe: { type: Number },
   fc_moyenne: { type: Number },
+  
+  // import id
+  strava_id: { type: Number },
 
   // log
   created_at: { type: Date, required: true, default: Date.now },

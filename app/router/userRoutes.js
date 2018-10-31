@@ -12,7 +12,7 @@ router.get('/login', userCtrl.login)
 router.get('/logout', userCtrl.logout)
 
 // Get Homepage
-router.get('/:id', userCtrl.home)
+router.get('/:user', userCtrl.home)
 
 // Get Delete Account
 router.get('/delete/:id', userCtrl.delete)

@@ -45,6 +45,50 @@ var activityCtrl = {
         res.redirect('/user/' + req.session.user._id)
       }
     })
+  },
+  getStravaActivities: (req, res) => {
+    var strava = {
+      stravaId: req.session.user.strava_id,
+      stravaCode: req.session.strava,
+      stravaApi: require('../../custom_modules/strava/stravaGetUserActivities')
+    }
+
+    if (strava.stravaId && strava.stravaCode) {
+      strava.stravaApi(strava.stravaId, strava.stravaCode, (activities) => {
+        activities.forEach((stravaActivity) => {
+          Activity
+            .findOne({'strava_id': stravaActivity.id})
+            .exec((err, res) => {
+              if (err) throw err
+              if (res === null) {
+                var activity = {
+                  user: req.session.user._id,
+                  type: stravaActivity.type,
+                  name: stravaActivity.name,
+                  distance: stravaActivity.distance,
+                  moving_time: stravaActivity.moving_time,
+                  total_elevation_gain: stravaActivity.total_elevation_gain,
+                  start_date_local: stravaActivity.start_date_local,
+                  average_speed: stravaActivity.average_speed,
+                  calories: stravaActivity.calories,
+                  fc_moyenne: stravaActivity.average_heartrate,
+                  strava_id: stravaActivity.id,
+                }
+                var newActivity = new Activity(activity)
+                newActivity.save((err, savedActivity) => {
+                if (err) throw err
+                else {
+                  console.log(savedActivity.id + ': saved')
+                }
+              })
+              }
+            })
+        })
+        res.redirect('/user/' + req.session.user._id)
+      })
+    } else {
+      res.redirect('/user/' + req.session.user._id)
+    }
   }
 }
 
