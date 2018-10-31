@@ -19,7 +19,7 @@ var activityCtrl = {
     var form = req.body
     form.user = res.locals.user._id
     form.distance = form.distance * 1000
-    
+
     // convertion du temps HH:mm:ss en secondes
     form.moving_time = convertTime(form.moving_time_hours, form.moving_time_minutes, form.moving_time_seconds)
 
@@ -29,15 +29,15 @@ var activityCtrl = {
       var seuil
       if (form.user.fc_max !== undefined) {
         seuil = form.user.fc_max * 0.80
-      } else if(form.user.date_of_birth) {
+      } else if (form.user.date_of_birth) {
         seuil = (220 - (today.getFullYear() - form.user.date_of_birth.getFullYear())) * 0.80
       } else {
         seuil = 200 * 0.80
       }
       var intensityFactor = form.fc_moyenne / seuil
-      form.tss = ((form.moving_time * form.fc_moyenne * intensityFactor) / ( seuil * 3600)) * 100
+      form.tss = ((form.moving_time * form.fc_moyenne * intensityFactor) / (seuil * 3600)) * 100
     }
-    
+
     var newActivity = new Activity(form)
     newActivity.save((err, activity) => {
       if (err) throw err
@@ -72,15 +72,15 @@ var activityCtrl = {
                   average_speed: stravaActivity.average_speed,
                   calories: stravaActivity.calories,
                   fc_moyenne: stravaActivity.average_heartrate,
-                  strava_id: stravaActivity.id,
+                  strava_id: stravaActivity.id
                 }
                 var newActivity = new Activity(activity)
                 newActivity.save((err, savedActivity) => {
-                if (err) throw err
-                else {
-                  console.log(savedActivity.id + ': saved')
-                }
-              })
+                  if (err) throw err
+                  else {
+                    console.log(savedActivity.id + ': saved')
+                  }
+                })
               }
             })
         })

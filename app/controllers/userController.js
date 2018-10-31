@@ -1,6 +1,5 @@
 // node_modules
 var Promise = require('bluebird')
-var moment = require('moment')
 
 // custom_modules
 var getHealthScore = require('../../custom_modules/health/healthScore')
@@ -37,6 +36,14 @@ var userCtrl = {
     })
   },
   home: (req, res) => {
+    var getWeekNumber = (d) => {
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7))
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
+      var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+      return weekNo
+    }
+
     var userId = req.params.user
 
     var dateNow = new Date(Date.now())
@@ -88,14 +95,14 @@ var userCtrl = {
           .aggregate([
             {
               $match: { user: require('mongoose').Types.ObjectId(userId) }
-            },{
+            }, {
               $project: {
-                'activity_date': { 
-                  week: { $week: "$start_date_local" },
+                'activity_date': {
+                  week: { $week: '$start_date_local' },
                   year: { $year: '$start_date_local' }
                 }
               }
-            },{
+            }, {
               $group: { _id: '$activity_date', count: { $sum: 1 } }
             }
           ])
@@ -106,37 +113,27 @@ var userCtrl = {
               reject(err)
             }
 
-            var activitiesByweek = []
-            console.log(docs)
-            for (var i = 0; i < docs.length; i++) {
-              if (i === 0) {
-                activitiesByweek.push({
-                  week: docs[i]._id.week,
-                  year: docs[i]._id.year,
-                  text: 'S' + docs[i]._id.week + '-' + docs[i]._id.year,
-                  count: docs[i].count
-                })                
-              } else {
-                if ((activitiesByweek[i - 1].week - 1) === docs[i]._id.week) {
-                  activitiesByweek.push({
-                    week: docs[i]._id.week,
-                    year: docs[i]._id.year,
-                    text: 'S' + docs[i]._id.week + '-' + docs[i]._id.year,
-                    count: docs[i].count
-                  }) 
-                } else {
-                  activitiesByweek.push({
-                    week: docs[i]._id.week,
-                    year: docs[i]._id.year,
-                    text: 'S' + (activitiesByweek[i - 1].week - 1) + '-' + docs[i]._id.year,
-                    count: 0
-                  }) 
-                }
-              }
+            var finalActivitiesCharge = []
+            var currentWeekNum = getWeekNumber(new Date(Date.now()))
+
+            for (var i = 0; i < 10; i++) {
+              finalActivitiesCharge.push({
+                week: (currentWeekNum * 1) - i,
+                text: 'S' + (currentWeekNum - i) + '-' + (new Date()).getFullYear(),
+                count: 0
+              })
             }
 
-            activitiesByweek.reverse()
-            resolve(activitiesByweek)
+            docs.forEach((dbVal) => {
+              finalActivitiesCharge.forEach((finalVal) => {
+                if (finalVal.week === dbVal._id.week) {
+                  finalVal.count = dbVal.count
+                }
+              })
+            })
+
+            finalActivitiesCharge.reverse()
+            resolve(finalActivitiesCharge)
           })
       })
 

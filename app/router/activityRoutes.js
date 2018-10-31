@@ -10,7 +10,7 @@ var activityCtrl = require('../controllers/activityController')
 router.get('/add', activityCtrl.getAddActivity)
 // post add activity form
 router.post('/add', activityCtrl.postAddActivity)
-// get all strava activities 
+// get all strava activities
 router.get('/get/:user/strava/all', activityCtrl.getStravaActivities)
 
 module.exports = router
