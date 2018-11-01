@@ -86,6 +86,15 @@ var userCtrl = {
             if (err) {
               reject(err)
             }
+
+            dbActivites.forEach((val) => {
+              // calcul du TSS
+              if (val.moving_time * 1 > 0 && val.fc_moyenne * 1 > 0) {
+                val.tss = 'NC'
+              } else {
+                val.tss = 'NC'
+              }
+            })
             resolve(dbActivites)
           })
       })
