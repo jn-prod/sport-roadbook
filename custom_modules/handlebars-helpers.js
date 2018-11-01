@@ -12,6 +12,13 @@ var helpers = {
     if (seconds < 10) { seconds = '0' + seconds }
     return hours + ':' + minutes + ':' + seconds
   },
+  secondToTimeData: (val) => {
+    var secNum = parseInt(val, 10)
+    var hours = Math.floor(secNum / 3600)
+    var minutes = Math.floor((secNum - (hours * 3600)) / 60) / 60
+
+    return (hours + minutes).toFixed(2)
+  },
   rpe: (val) => { return val / 10 * 100 },
   stravaDist: (val) => { var dist = val / 1000; return Number.parseFloat(dist).toFixed(3) },
   adverageSpeed: (sport, dist, time) => {

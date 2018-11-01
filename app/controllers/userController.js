@@ -100,10 +100,15 @@ var userCtrl = {
                 'activity_date': {
                   week: { $week: '$start_date_local' },
                   year: { $year: '$start_date_local' }
-                }
+                },
+                'dailyDuration': '$moving_time'
               }
             }, {
-              $group: { _id: '$activity_date', count: { $sum: 1 } }
+              $group: {
+                _id: '$activity_date',
+                count: { $sum: 1 },
+                'weeklyDuration': { $sum: '$dailyDuration' }
+              }
             }
           ])
           .sort({ '_id.year': -1, '_id.week': -1 })
@@ -120,14 +125,16 @@ var userCtrl = {
               finalActivitiesCharge.push({
                 week: (currentWeekNum * 1) - i,
                 text: 'S' + (currentWeekNum - i) + '-' + (new Date()).getFullYear(),
-                count: 0
+                count: 0,
+                weeklyDuration: 0
               })
             }
 
             docs.forEach((dbVal) => {
               finalActivitiesCharge.forEach((finalVal) => {
-                if (finalVal.week === dbVal._id.week) {
+                if (finalVal.week === (dbVal._id.week + 1)) {
                   finalVal.count = dbVal.count
+                  finalVal.weeklyDuration = dbVal.weeklyDuration
                 }
               })
             })

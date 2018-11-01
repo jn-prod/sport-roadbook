@@ -63,8 +63,8 @@
     </div>
     <div class="col-md-9 mb-5">
       <div class="row">
-        <div class="col-12 mt-3 mb-2 pt-4 text-primary ml-5">
-          <span class="h4">Nombre d'entrainements</span><span class="text-muted d-inline ml-2">( /semaine des 10 dernières semaines )</span>
+        <div class="col-12 mt-3 mb-2 pt-4 text-primary text-center">
+          <span class="h4 d-block">Volume d'activité</span><small class="text-muted d-inline ml-2">( /semaine, en heures, période des 10 dernières semaines )</small>
         </div>
       </div>
       {{#if charge}}
@@ -73,13 +73,13 @@
             <canvas id="healthScoreGraph"></canvas>
           </div>
           {{#each charge}}
-            <input type="hidden" value="{{this.count}}" class="activitiesCharge">
+            <input type="hidden" value="{{secondToTimeData this.weeklyDuration}}" class="activitiesCharge">
             <input type="hidden" value="{{this.text}}" class="activitiesWeek">
           {{/each}}          
         </div>
       {{/if}}
       <div class="row">
-        <div class="col-12 mt-3 mb-2 text-primary ">
+        <div class="col-12 mt-3 mb-2 text-primary text-center">
           <span class="h4 ml-5 d-block mt-5 mb-2">Détails des {{activities.length}} activités</span>
         </div>
       </div>
