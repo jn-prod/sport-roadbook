@@ -1,6 +1,6 @@
 // models
 var Activity = require('../models/activity')
-var today = new Date(Date.now())
+// var today = new Date(Date.now())
 
 // Controllers
 var activityCtrl = {
