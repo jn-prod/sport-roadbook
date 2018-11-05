@@ -60,7 +60,7 @@ var activityCtrl = {
                   average_speed: stravaActivity.average_speed,
                   calories: stravaActivity.calories,
                   fc_moyenne: stravaActivity.average_heartrate,
-                  max_heartrate: stravaActivity.max_heartrate,
+                  fc_max: stravaActivity.max_heartrate,
                   strava_id: stravaActivity.id
                 }
                 var newActivity = new Activity(activity)
@@ -73,14 +73,14 @@ var activityCtrl = {
               }
 
               // update activity
-              if (res.max_heartrate !== stravaActivity.max_heartrate) {
+              if (res.fc_max !== stravaActivity.max_heartrate) {
                 Activity
                   .findOneAndUpdate({
                     'strava_id': stravaActivity.id
                   }, {
-                    $set: { max_heartrate: stravaActivity.max_heartrate }
-                  }, (res) => {
-                    console.log(res)
+                    $set: { fc_max: stravaActivity.max_heartrate }
+                  }, (err) => {
+                    if (err) throw err
                   })
               }
             })

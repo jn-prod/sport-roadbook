@@ -129,7 +129,9 @@
                     <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
                   {{/if}}                   
                   {{#if this.fc_moyenne}}
-                    <span class="badge badge-light d-block text-left mt-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm / max : {{ this.max_heartrate}} bpm</span>
+                    <span class="badge badge-light d-block text-left mt-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
+                    {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
+                    </span>
                   {{/if}} 
                 </div>
               </div>
