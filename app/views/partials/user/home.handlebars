@@ -6,15 +6,18 @@
           <div class="row">
             <div class="col-12">
               <span class="d-block h4 ">{{user.firstname}} {{user.lastname}}</span>
+              <span class="d-block mt-2 mb-2">
+                <i class="fas fa-map-marker mr-2 text-capitalize"></i> {{user.city}}, {{user.country}}
+              </span>
+              {{#if fc_max}}
+                <span class="d-block mt-2">
+                  <i class="fas fa-heartbeat text-danger"></i> Fc max : {{fc_max}}bpm
+                </span>              
+              {{/if}}
             </div>            
           </div>
           <div class="row">
-            <div class="col-12">
-              <span class="d-block text-capitalize mb-3"><i class="fas fa-map-marker mr-2"></i> {{user.city}}, {{user.country}}</span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
+            <div class="col-12 mt-4">
               <a href="/health/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-file-medical-alt"></i> Tester ma forme</a>
             </div>
           </div>          
@@ -127,12 +130,15 @@
                   {{/if}} 
                   {{#if this.calories}}
                     <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
-                  {{/if}}                   
+                  {{/if}}
+                  {{#if this.tss}}
+                    <span class="badge badge-light d-block text-left mt-2">Itensité: {{this.tss}}</span>
+                  {{/if}}                                  
                   {{#if this.fc_moyenne}}
                     <span class="badge badge-light d-block text-left mt-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
                     {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
                     </span>
-                  {{/if}} 
+                  {{/if}}
                 </div>
               </div>
             </div>
