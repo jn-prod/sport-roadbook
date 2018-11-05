@@ -9,7 +9,7 @@ var stravaAuthenticate = (req, res, next) => {
     } else {
       req.session.strava = req.query.code
       req.session.user = user
-      res.redirect('/activities/get/' + user.id + '/strava/all')
+      res.redirect('/user/' + user.id + '/wait')
     }
   })(req, res, next)
 }

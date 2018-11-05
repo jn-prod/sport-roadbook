@@ -14,6 +14,9 @@ router.get('/logout', userCtrl.logout)
 // Get Homepage
 router.get('/:user', userCtrl.home)
 
+// get wait
+router.get('/:user/wait', userCtrl.wait)
+
 // Get Delete Account
 router.get('/delete/:id', userCtrl.delete)
 
