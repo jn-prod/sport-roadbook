@@ -193,6 +193,9 @@ var userCtrl = {
     } else {
       res.redirect('/user/login')
     }
+  },
+  wait: (rq, res) => {
+    res.render('partials/user/wait')
   }
 }
 

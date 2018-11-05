@@ -109,12 +109,12 @@
           <div class="row">
             <div class="col-10 mx-auto border border-primary mt-2 bg-light">
               <div class="row">
-                <div class="col-md-2 text-center text-muted mt-2 mb-2">
+                <div class="col-md-2 text-center text-muted mt-2 mb-2 my-auto">
                   <i class="far fa-calendar fa-2x"></i>
-                  <span class="d-block text-center">{{dateStrava this.start_date_local}}</span>
+                  <small class="d-block text-center">{{dateStrava this.start_date_local}}</small>                    
                 </div>
                 <div class="col-md-10 mt-2 mb-2">
-                  <strong class="d-block text-capitalize">
+                  <strong class="d-block text-capitalize mb-2">
                     {{this.name}}
                   </strong>
                   <span class="badge badge-grey">{{this.type}}</span>
@@ -125,12 +125,14 @@
                   {{#if this.rpe}}
                     <span class="badge badge-grey"><i class="fas fa-file-medical-alt"></i> {{rpe this.rpe}} %</span>
                   {{/if}} 
-                  {{#if this.fc_moyenne}}
-                    <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.fc_moyenne}} BPM</span>
-                  {{/if}} 
                   {{#if this.calories}}
                     <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
-                  {{/if}}    
+                  {{/if}}                   
+                  {{#if this.fc_moyenne}}
+                    <span class="badge badge-light d-block text-left mt-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
+                    {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
+                    </span>
+                  {{/if}} 
                 </div>
               </div>
             </div>
