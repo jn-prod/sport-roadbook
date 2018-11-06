@@ -169,8 +169,42 @@ var userCtrl = {
           }
           return val
         })
+        .then((val) => {
+          var fcMax = []
+          if (val.activities.length > 0) {
+            val.activities.forEach((activity) => {
+              if (activity.fc_max === undefined) {
+                fcMax.push(0)
+              } else {
+                fcMax.push(activity.fc_max)
+              }
+            })
+          } else {
+            fcMax = null
+          }
+
+          // fc max defintion
+          if (fcMax.length === 1) {
+            val.fc_max = fcMax[0]
+          } else if (fcMax.length > 0) {
+            val.fc_max = fcMax.reduce((a, b) => {
+              return Math.max(a, b)
+            })
+          } else {
+            val.fc_max = null
+          }
+
+          return val
+        })
         .then((result) => {
           var api = result
+
+          // tss
+          if (api.fc_max > 0) {
+            api.activities.forEach((activity) => {
+              activity.tss = require('../../custom_modules/activity/tss')(activity.fc_moyenne, activity.moving_time, api.fc_max)
+            })
+          }
 
           // filter activities array
           if (req.query.start_date && req.query.end_date && api.activities.length >= 1) {
