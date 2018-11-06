@@ -110,16 +110,22 @@
       {{#if activities}}
         {{#each activities}}
           <div class="row">
-            <div class="col-10 mx-auto border border-primary mt-2 bg-light">
+            <div class="col-11 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
               <div class="row">
-                <div class="col-md-2 text-center text-muted mt-2 mb-2 my-auto">
-                  <i class="far fa-calendar fa-2x"></i>
-                  <small class="d-block text-center">{{dateStrava this.start_date_local}}</small>                    
+                <div class="col-md-2 text-center  mt-2 mb-2 my-auto text-center">
+                  <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
+                  <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
                 </div>
-                <div class="col-md-10 mt-2 mb-2">
+                <div class="col-md-8 mt-2 mb-2">
                   <strong class="d-block text-capitalize mb-2">
                     {{this.name}}
                   </strong>
+                                
+                  {{#if this.fc_moyenne}}
+                    <span class="badge badge-light d-block text-left mt-2 mb-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
+                    {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
+                    </span>
+                  {{/if}}
                   <span class="badge badge-grey">{{this.type}}</span>
                   <span class="badge badge-grey"><i class="fas fa-compass"></i> {{stravaDist this.distance}} Km</span>
                   <span class="badge badge-grey"><i class="fas fa-sort-up"></i>D+: {{this.total_elevation_gain}} m</span>
@@ -132,13 +138,14 @@
                     <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
                   {{/if}}
                   {{#if this.tss}}
-                    <span class="badge badge-light d-block text-left mt-2">Itensité: {{this.tss}}</span>
-                  {{/if}}                                  
-                  {{#if this.fc_moyenne}}
-                    <span class="badge badge-light d-block text-left mt-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
-                    {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
-                    </span>
-                  {{/if}}
+                    <small class="text-muted d-block mt-2">*{{tss_sentence this.tss}}</small>
+                  {{/if}} 
+                </div>
+                <div class="col-md-2 my-auto text-center">
+                  {{#if this.tss}}
+                    <small class="d-block text-muted">Mesure d'effort</small>
+                    <span class="d-block mt-3"><strong>{{this.tss}}</strong>*</span>
+                  {{/if}}                  
                 </div>
               </div>
             </div>
