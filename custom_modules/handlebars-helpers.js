@@ -1,5 +1,8 @@
 var helpers = {
   date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1) + '/' + val.getFullYear() },
+  getDay: (val) => { return val.getDate() },
+  getMonth: (val) => { return parseInt(val.getMonth()) + 1 },
+  getYear: (val) => { return val.getFullYear() },
   dateStrava: (val) => { var date = new Date(val); return date.getDate() + '/' + (parseInt(date.getMonth()) + 1) + '/' + date.getFullYear() },
   secondToTime: (val) => {
     var secNum = parseInt(val, 10)
@@ -29,6 +32,18 @@ var helpers = {
       return min + ':' + sec + 'min/Km'
     } else {
       return Number.parseFloat((dist / 1000) / (time / 3600)).toFixed(2) + 'Km/h'
+    }
+  },
+  tss_sentence: (val) => {
+    var tss = val * 1
+    if (tss >= 0 && tss < 150) {
+      return 'Activité peu intensive, pas de fatigue résiduelle.'
+    } else if (tss >= 150 && tss < 300) {
+      return 'Activité modérée, fatigue et douleurs musculaires possible les jours qui suivent.'
+    } else if (tss >= 300 && tss < 450) {
+      return 'Activité intensive, fatigue et douleurs musculaires les jours qui suivent.'
+    } else if (tss >= 450) {
+      return 'Activité très intensive, fatigue et douleurs musculaires nécessitant du repos sur plusieurs jours'
     }
   },
   boolean: (val) => { if (val === true) { return 'oui' } else { return 'non' } }
