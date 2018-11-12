@@ -40,8 +40,8 @@ var activityCtrl = {
     }
 
     if (strava.stravaId && strava.stravaCode) {
-      strava.stravaApi(strava.stravaId, strava.stravaCode, (activities) => {
-        activities.forEach((stravaActivity) => {
+      strava.stravaApi(strava.stravaId, strava.stravaCode, (stravaActivities) => {
+        stravaActivities.forEach((stravaActivity) => {
           Activity
             .findOne({ 'strava_id': stravaActivity.id })
             .exec((err, res) => {
@@ -71,25 +71,12 @@ var activityCtrl = {
                   }
                 })
               }
-
-              // update activity
-              if (res.fc_max !== stravaActivity.max_heartrate) {
-                Activity
-                  .findOneAndUpdate({
-                    'strava_id': stravaActivity.id
-                  }, {
-                    $set: { fc_max: stravaActivity.max_heartrate }
-                  }, (err) => {
-                    if (err) throw err
-                  })
-              }
             })
         })
-        res.redirect('/user/' + req.session.user._id)
       })
-    } else {
-      res.redirect('/user/' + req.session.user._id)
     }
+    // finale redirection
+    res.redirect('/user/' + req.session.user._id)
   }
 }
 
