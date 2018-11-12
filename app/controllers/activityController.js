@@ -77,6 +77,18 @@ var activityCtrl = {
     }
     // finale redirection
     res.redirect('/user/' + req.session.user._id)
+  },
+  deleteActivitiy: (req, res) => {
+    Activity
+      .findOneAndUpdate({
+        _id: req.params.activity
+      }, {
+        $set: { user: null }
+      }, (err) => {
+        if (err) throw err
+      })
+    // finale redirection
+    res.redirect('/user/' + req.session.user._id)
   }
 }
 

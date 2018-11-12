@@ -1,56 +1,28 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3 text-center bg-light">
-      <div class="row sticky-top pt-5 ">
+      <div class="row sticky-top pt-5">
         <div class="col-12">
-          <div class="row">
-            <div class="col-12">
-              <span class="d-block h4 ">{{user.firstname}} {{user.lastname}}</span>
-              <span class="d-block mt-2 mb-2">
-                <i class="fas fa-map-marker mr-2 text-capitalize"></i> {{user.city}}, {{user.country}}
-              </span>
-              {{#if fc_max}}
-                <span class="d-block mt-2">
-                  <i class="fas fa-heartbeat text-danger"></i> Fc max : {{fc_max}}bpm
-                </span>              
-              {{/if}}
-            </div>            
-          </div>
-          <div class="row">
-            <div class="col-12 mt-4">
-              <a href="/health/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-file-medical-alt"></i> Tester ma forme</a>
-            </div>
-          </div>          
-          <div class="row">
-            <div class="col-12">
-              <a href="/activities/add" class="btn btn-primary mt-2 d-block"><i class="fas fa-calendar"></i> Ajouter une activité</a>
-            </div>
-          </div>
-
           {{#if health}}
             <div class="row">
-              <div class="col-12 mt-5">
-                <span class="d-block h4 ">Mon score forme</span>
+              <div class="col-12">
+                <span class="d-block h4 ">Ma forme</span>
+                <small><span class="text-muted mb-3 d-block">du {{date health.created_at}}</span></small>
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <a href="/health/{{health.id}}"><span class="h1 text-dark"><i class="fas fa-heartbeat"></i> {{healthScore}}%</span></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-5">
-                <span class="d-block h4 ">Dernière forme <span class="text-muted">{{date health.created_at}}</span></span>
+                <a href="/health/{{health.id}}"><span class="h1 text-dark d-block mb-3"><i class="fas fa-heartbeat"></i> {{healthScore}}%</span></a>
               </div>
             </div>
             <div class="row">
               <div class="col-12 mt-2">
                 <ul id="form_status">
-                  <li>Poids: {{health.poids}} Kg</li>
-                  <li>Pouls: {{health.pouls}} Bpm</li>
-                  <li>Blessure: {{boolean health.blessure}}</li>
-                  <li>Maladie: {{boolean health.maladie}}</li>
-                  <li class="bg-light">Commentaire: {{health.commentaires}}</li>
+                  <li class=" text-center">Poids: {{health.poids}} Kg</li>
+                  <li class=" text-center">Pouls: {{health.pouls}} Bpm</li>
+                  <li class=" text-center">Blessure: {{boolean health.blessure}}</li>
+                  <li class=" text-center">Maladie: {{boolean health.maladie}}</li>
+                  <li class="bg-light  text-center">Commentaire: {{health.commentaires}}</li>
                 </ul>
               </div>
             </div>
@@ -60,6 +32,11 @@
               Vous n'avez pas encore enregistré de forme
             </div>
           </div>
+          {{/if}}
+          {{#if fc_max}}
+            <span class="d-block mt-2">
+              <i class="fas fa-heartbeat text-danger"></i> Fc max : {{fc_max}}bpm
+            </span>              
           {{/if}}
         </div>
       </div>
@@ -145,7 +122,8 @@
                   {{#if this.tss}}
                     <small class="d-block text-muted">Mesure d'effort</small>
                     <span class="d-block mt-3"><strong>{{this.tss}}</strong>*</span>
-                  {{/if}}                  
+                  {{/if}}
+                  <a href="/activities/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-activity"><i class="far fa-trash-alt"></i></a>            
                 </div>
               </div>
             </div>

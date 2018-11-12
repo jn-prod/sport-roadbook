@@ -18,6 +18,7 @@ import './components/periodeFormFilter'
 import './components/deleteAccount'
 import './components/healthScoreGraph'
 import './components/activitiesChargesGraph'
+import './components/delete-activity'
 // import './components/addInputLocation'
 
 if (module.hot) {
