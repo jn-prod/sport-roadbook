@@ -1,135 +1,60 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-3 text-center bg-light">
-      <div class="row sticky-top pt-5">
-        <div class="col-12">
-          {{#if health}}
-            <div class="row">
-              <div class="col-12">
-                <span class="d-block h4 ">Ma forme</span>
-                <small><span class="text-muted mb-3 d-block">du {{date health.created_at}}</span></small>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <a href="/health/{{health.id}}"><span class="h1 text-dark d-block mb-3"><i class="fas fa-heartbeat"></i> {{healthScore}}%</span></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2">
-                <ul id="form_status">
-                  <li class=" text-center">Poids: {{health.poids}} Kg</li>
-                  <li class=" text-center">Pouls: {{health.pouls}} Bpm</li>
-                  <li class=" text-center">Blessure: {{boolean health.blessure}}</li>
-                  <li class=" text-center">Maladie: {{boolean health.maladie}}</li>
-                  <li class="bg-light  text-center">Commentaire: {{health.commentaires}}</li>
-                </ul>
-              </div>
-            </div>
-          {{else}}
+<div class="row pt-5 mb-2">
+  <div class="col-sm-3 mx-auto bg-light">
+    <div class="d-block h4 text-primary text-center">
+      Aujourd'hui
+    </div> 
+  </div>
+  <div class="col-sm-3 mx-auto bg-light">
+    <div class="d-block h4 text-primary text-center">
+      Forme
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        {{#if health}}
           <div class="row">
             <div class="col-12">
-              Vous n'avez pas encore enregistré de forme
+              <span class="d-block h4 ">Ma forme</span>
+              <small><span class="text-muted mb-3 d-block">du {{date health.created_at}}</span></small>
             </div>
           </div>
-          {{/if}}
-          {{#if fc_max}}
-            <span class="d-block mt-2">
-              <i class="fas fa-heartbeat text-danger"></i> Fc max : {{fc_max}}bpm
-            </span>              
-          {{/if}}
-        </div>
-      </div>
-    </div>
-    <div class="col-md-9 mb-5">
-      <div class="row">
-        <div class="col-12 mt-3 mb-2 pt-4 text-primary text-center">
-          <span class="h4 d-block">Volume d'activité</span><small class="text-muted d-inline ml-2">( /semaine, en heures, période des 10 dernières semaines )</small>
-        </div>
-      </div>
-      {{#if charge}}
-        <div class="row mt-2 mb-2">
-          <div class="col-md-10 mx-auto">
-            <canvas id="healthScoreGraph"></canvas>
-          </div>
-          {{#each charge}}
-            <input type="hidden" value="{{secondToTimeData this.weeklyDuration}}" class="activitiesCharge">
-            <input type="hidden" value="{{this.text}}" class="activitiesWeek">
-          {{/each}}          
-        </div>
-      {{/if}}
-      <div class="row">
-        <div class="col-12 mt-3 mb-2 text-primary text-center">
-          <span class="h4 ml-5 d-block mt-5 mb-2">Détails des {{activities.length}} activités</span>
-        </div>
-      </div>
-      <div id="periodeButtonDiv" class="row">
-        <div class="col-9 mx-auto mb-3">
-          <span id="periodeButton" class="btn btn-secondary d-block w-100">Choisir une période</span>
-        </div>
-      </div>
-      <div id="periodeForm" class="row hidde">
-        <div class="col-md-9 mx-auto mb-3">
-          <form class="row mr-5">
-            <!-- start_date_local -->
-            <div class="col-lg-6">
-              <strong class="text-muted">Période du</strong><input type="date" class="form-control" id="date" name="start_date" required>
-            </div>                  
-            <div class="col-lg-6">
-              <strong class="text-muted">au</strong> <input type="date" class="form-control" id="date" name="end_date" required>
-            </div>
-            <div class="col-12 mt-2">
-              <button class="btn btn-secondary d-block w-100">Filter</button>
-            </div>
-          </form>             
-        </div>
-      </div>         
-      {{#if activities}}
-        {{#each activities}}
           <div class="row">
-            <div class="col-11 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
-              <div class="row">
-                <div class="col-md-2 text-center  mt-2 mb-2 my-auto text-center">
-                  <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
-                  <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
-                </div>
-                <div class="col-md-8 mt-2 mb-2">
-                  <strong class="d-block text-capitalize mb-2">
-                    {{this.name}}
-                  </strong>
-                                
-                  {{#if this.fc_moyenne}}
-                    <span class="badge badge-light d-block text-left mt-2 mb-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
-                    {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
-                    </span>
-                  {{/if}}
-                  <span class="badge badge-grey">{{this.type}}</span>
-                  <span class="badge badge-grey"><i class="fas fa-compass"></i> {{stravaDist this.distance}} Km</span>
-                  <span class="badge badge-grey"><i class="fas fa-sort-up"></i>D+: {{this.total_elevation_gain}} m</span>
-                  <span class="badge badge-grey"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed this.type this.distance this.moving_time}}</span>
-                  <span class="badge badge-grey"><i class="far fa-clock"></i> {{secondToTime this.moving_time}}</span>
-                  {{#if this.rpe}}
-                    <span class="badge badge-grey"><i class="fas fa-file-medical-alt"></i> {{rpe this.rpe}} %</span>
-                  {{/if}} 
-                  {{#if this.calories}}
-                    <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
-                  {{/if}}
-                  {{#if this.tss}}
-                    <small class="text-muted d-block mt-2">*{{tss_sentence this.tss}}</small>
-                  {{/if}} 
-                </div>
-                <div class="col-md-2 my-auto text-center">
-                  {{#if this.tss}}
-                    <small class="d-block text-muted">Mesure d'effort</small>
-                    <span class="d-block mt-3"><strong>{{this.tss}}</strong>*</span>
-                  {{/if}}
-                  <a href="/activities/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-activity"><i class="far fa-trash-alt"></i></a>            
-                </div>
-              </div>
+            <div class="col-12">
+              <a href="/health/{{health.id}}"><span class="h1 text-dark d-block mb-3"><i class="fas fa-heartbeat"></i> {{healthScore}}%</span></a>
             </div>
           </div>
-        {{/each}}
-      {{/if}}
+          <div class="row">
+            <div class="col-12 mt-2">
+              <ul id="form_status">
+                <li class=" text-center">Poids: {{health.poids}} Kg</li>
+                <li class=" text-center">Pouls: {{health.pouls}} Bpm</li>
+                <li class=" text-center">Blessure: {{boolean health.blessure}}</li>
+                <li class=" text-center">Maladie: {{boolean health.maladie}}</li>
+                <li class="bg-light  text-center">Commentaire: {{health.commentaires}}</li>
+              </ul>
+            </div>
+          </div>
+        {{else}}
+        <div class="row">
+          <div class="col-12">
+            Vous n'avez pas encore enregistré de forme
+          </div>
+        </div>
+        {{/if}}
+        {{#if fc_max}}
+          <span class="d-block mt-2">
+            <i class="fas fa-heartbeat text-danger"></i> Fc max : {{fc_max}}bpm
+          </span>              
+        {{/if}}
+      </div>
     </div>
+
+  </div>
+  <div class="col-sm-3 mx-auto bg-light">
+    <div class="d-block h4 text-primary text-center">
+      Activité
+    </div>    
   </div>
 </div>
+
+

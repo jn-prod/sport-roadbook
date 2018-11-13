@@ -65,26 +65,9 @@
                           </div>
                         </div>                        
                       </li>
-                    {{else}}
                       <li class="nav-item">
-                        <a class="nav-link  font-primary text-uppercase mr-2" href="/user/login">Se connecter</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/stories/index.html" rel="nofollow" target="_blank">Blog</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/shop/index.html" rel="nofollow" target="_blank">Shopping</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://nicolasjouanno.com/creation-site-internet.html" rel="nofollow" target="_blank">Services</a>
-                      </li>                        
-                    {{/if}}
-
-                    <li class="nav-item">
-                      <a class="btn btn-outline-primary" href="https://blog.nicolasjouanno.com/pages/soutenir.html">Soutenir</a>
-                    </li>
-
-                    {{#if user}}
+                        <a class="btn btn-outline-primary" href="https://blog.nicolasjouanno.com/pages/soutenir.html">Soutenir</a>
+                      </li>                      
                       <li class="nav-item">
                         <div class="input-group mb-3">
                           <button class="btn btn-outline-dark border-0 ml-md-3 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user mr-2"></i>{{user.firstname}}</button>
@@ -94,6 +77,22 @@
                           </div>
                         </div>
                       </li>
+                    {{else}}
+                      <li class="nav-item">
+                        <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/stories/index.html" rel="nofollow" target="_blank">Blog</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/shop/index.html" rel="nofollow" target="_blank">Shopping</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://nicolasjouanno.com/creation-site-internet.html" rel="nofollow" target="_blank">Services</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link  font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/pages/soutenir.html">Soutenir</a>
+                      </li>                    
+                      <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="/user/login">Se connecter</a>
+                      </li>                                           
                     {{/if}}
                   </ul>
                   <!-- End Menu -->
@@ -105,7 +104,7 @@
       ================================================== -->    
       </header>
 
-      <div class="container">
+      <div class="container-fluid">
         {{{body}}}
       </div>              
     {{/if}}
