@@ -114,6 +114,20 @@ var healthCtrl = {
           res.redirect('/user/' + req.session.user._id)
         }
       })
+  },
+  healthOverview: (req, res) => {
+    Health
+      .find({ user: req.session.user._id })
+      .sort({ created_at: -1 })
+      .exec((err, dbHealth) => {
+        if (err) {
+          res.redirect('/user/' + req.req.session.user._id)
+        }
+        dbHealth.forEach((health) => {
+          health.score_forme = getHealthScore(health)
+        })
+        res.render('partials/health/overview', { healths: dbHealth })
+      })
   }
 }
 
