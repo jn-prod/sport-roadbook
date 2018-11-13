@@ -46,7 +46,12 @@ var helpers = {
       return 'Activité très intensive, fatigue et douleurs musculaires nécessitant du repos sur plusieurs jours'
     }
   },
-  boolean: (val) => { if (val === true) { return 'oui' } else { return 'non' } }
+  boolean: (val) => { if (val === true) { return 'oui' } else { return 'non' } },
+  sport_select: () => {
+    require('./listes/sport').forEach((val) => {
+      return '<option value="' + val.value + '">' + val.name + '</option>'
+    })
+  }
 }
 
 module.exports = helpers
