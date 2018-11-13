@@ -13,6 +13,9 @@ router.post('/add', healthCtrl.postAddStatus)
 // view activitie score
 router.get('/:id', healthCtrl.getHealthScoreView)
 
+// activities score overview
+router.get('/:user/overview', healthCtrl.healthOverview)
+
 // data activitie score
 router.get('/data/:id', healthCtrl.getHealthScoreData)
 

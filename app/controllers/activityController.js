@@ -90,7 +90,7 @@ var activityCtrl = {
     // finale redirection
     res.redirect('/user/' + req.session.user._id)
   },
-  activitiiesOverview: (req, res) => {
+  activitiesOverview: (req, res) => {
     var userId = req.session.user._id
     // request db Activities
     Activity

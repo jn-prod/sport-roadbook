@@ -57,7 +57,10 @@
                   <ul class="navbar-nav ml-auto">
                     {{#if user}}
                       <li class="nav-item">
-                        <a href="/activities/overview" class="nav-link ml-md-3 font-primary text-uppercase mr-2">Activités</a>
+                        <a href="/health/{{user._id}}/overview" class="nav-link ml-md-3 font-primary text-uppercase mr-2">Formes</a>
+                      </li>                    
+                      <li class="nav-item">
+                        <a href="/activities/{{user._id}}/overview" class="nav-link ml-md-3 font-primary text-uppercase mr-4">Activités</a>
                       </li>
                       <li class="nav-item">
                         <div class="input-group mb-3">
