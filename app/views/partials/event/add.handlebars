@@ -1,0 +1,70 @@
+<div class="container mt-5 bg-light">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="h2 text-center mt-5 mb-2">Ajouter un événement</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 mx-auto mb-5 mt-5">
+      <form action="/event/add" method="post" id="événement">
+        <!-- Sport -->        
+        <div class="form-group">
+          <label for="type">Sport*</label>
+          <select class="form-control" id="sport" name="sport" required>
+            {{sport_select}}
+          </select>
+        </div>
+        <!-- type -->        
+        <div class="form-group">
+          <label for="type">Type*</label>
+          <select class="form-control" id="type" name="type" required>
+            <option value="race">Compétition</option>
+            <option value="stage">Stage</option>
+          </select>
+        </div>
+        <!-- name -->
+        <div class="form-group">
+          <label for="name">Nom de la scéance*</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="ex: fractionné court" required>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- date_start -->
+            <div class="form-group">
+              <label for="date_start">Date de début*</label>
+              <input type="date" class="form-control" id="date" name="date_start" autocomplete="on" placeholder="jj-mm-aaaa" required>
+            </div>            
+          </div>
+          <div class="col-sm-6">
+            <!-- date_end -->
+            <div class="form-group">
+              <label for="date_end">Date de fin*</label>
+              <input type="date" class="form-control" id="date" name="date_end" autocomplete="on" placeholder="jj-mm-aaaa" required>
+            </div>            
+          </div>
+        </div>
+
+        <!-- description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+        </div> 
+
+        <!-- distance -->
+        <div class="form-group">
+          <label for="distance">Distance en KM</label>
+          <input type="number" class="form-control" id="distance" name="distance" min="0" placeholder="0" step="0.01">
+        </div>
+
+        <div class="row">
+          <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="alert alert-warning">* champs obligatoirs</p>
+    </div>
+  </div>
+</div>

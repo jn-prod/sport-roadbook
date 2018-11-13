@@ -1,5 +1,14 @@
+var Handlebars = require('handlebars')
+
 var helpers = {
-  date: (val) => { return val.getDate() + '/' + (parseInt(val.getMonth()) + 1) + '/' + val.getFullYear() },
+  date: (val) => {
+    try {
+      return val.getDate() + '/' + (parseInt(val.getMonth()) + 1) + '/' + val.getFullYear()
+    } catch (err) {
+      var date = new Date(Date.parse(val))
+      return date.getDate() + '/' + (parseInt(date.getMonth()) + 1) + '/' + date.getFullYear()
+    }
+  },
   getDay: (val) => { return val.getDate() },
   getMonth: (val) => { return parseInt(val.getMonth()) + 1 },
   getYear: (val) => { return val.getFullYear() },
@@ -48,9 +57,11 @@ var helpers = {
   },
   boolean: (val) => { if (val === true) { return 'oui' } else { return 'non' } },
   sport_select: () => {
+    var out = ''
     require('./listes/sport').forEach((val) => {
-      return '<option value="' + val.value + '">' + val.name + '</option>'
+      out = out + '<option value="' + val.value + '">' + val.name + '</option>'
     })
+    return new Handlebars.SafeString(out)
   }
 }
 

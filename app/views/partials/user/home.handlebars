@@ -1,9 +1,13 @@
 <div class="container">
   <div class="row pt-5 mb-2 text-center">
     <div class="col-sm-6 mx-auto p-2 card border-0">
-      <div class="d-block bg-light  pt-3 pb-3 h-100">
-        <div class="d-block h4 text-primary">
-          Aujourd'hui
+      <div class="d-block bg-light pt-3 pb-3 h-100">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-block h4 text-primary">
+              Aujourd'hui
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-12">
@@ -11,6 +15,22 @@
             <small class="d-block text-muted">{{getMonth date_now}}-{{getYear date_now}}</small> 
           </div>
         </div>
+        <div class="row">
+          <div class="col-12 mt-3 mb-2">
+            <div class="h4 text-primary text-center">
+              Prochain événement
+            </div>            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            {{#if event}}
+              <small class="text-muted">{{ date event.date_start }}-{{ date event.date_end }} </small><strong>{{ event.name }}</strong>
+            {{else}}
+              <a href="/event/add" class="btn btn-primary">Ajouter un événement</a>
+            {{/if}}
+          </div>
+        </div>        
       </div> 
     </div>
     <div class="col-sm-6 mx-auto p-2 card border-0">
