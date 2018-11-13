@@ -1,138 +1,141 @@
-<div class="row pt-5 mb-2 text-center">
-  <div class="col-sm-4 mx-auto p-2 card border-0">
-    <div class="d-block bg-light  pt-3 pb-3 h-100">
-      <div class="d-block h4 text-primary">
-        Aujourd'hui
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <large class="d-block"><strong>{{getDay date_now}}</strong></large>
-          <small class="d-block text-muted">{{getMonth date_now}}-{{getYear date_now}}</small> 
+<div class="container">
+  <div class="row pt-5 mb-2 text-center">
+    <div class="col-sm-6 mx-auto p-2 card border-0">
+      <div class="d-block bg-light  pt-3 pb-3 h-100">
+        <div class="d-block h4 text-primary">
+          Aujourd'hui
         </div>
-      </div>
-    </div> 
-  </div>
-  <div class="col-sm-4 mx-auto p-2 card border-0">
-    <div class="d-block bg-light  pt-3 pb-3 h-100">
-      <div class="d-block text-primary h4">
-        Dernière forme
-      </div>
-      <div class="row">
-        <div class="col-12">
-          {{#if health}}
-            <div class="row">
-              <div class="col-12">
-                <small><span class="text-muted mb-3 d-block">du {{date health.created_at}}</span></small>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 my-auto">
-                <a href="/health/{{health.id}}"><span class="h1 text-dark d-block mb-3"><i class="fas fa-heartbeat"></i> {{healthScore}}<small>%</small></span></a>
-              </div>
-              <div class="col-6">
-                  <div class="d-block">
-                    <span class="text-muted">Poids: </span>{{health.poids}} Kg
-                  </div>
-                  <div class="d-block">
-                    <span class="text-muted">Pouls: </span>{{health.pouls}} Bpm
-                  </div>
-                  <div class="d-block">
-                    <span class="text-muted">Blessure: </span>{{boolean health.blessure}}
-                  </div>
-                  <div class="d-block">
-                    <span class="text-muted">Maladie: </span>{{boolean health.maladie}}
-                  </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <span class="d-block">
-                  Commentaire: {{#if health.commentaires}}{{health.commentaires}}{{else}}-{{/if}}
-                </span>
-              </div>
-            </div>
-          {{else}}
-          <div class="row">
-            <div class="col-12">
-              Vous n'avez pas encore testé votre forme
-              <a href="/health/add" class="btn btn-primary">Tester ma forme</a>
-            </div>
-          </div>
-          {{/if}}
-        </div>
-      </div>      
-    </div>
-
-  </div>
-  <div class="col-sm-4 mx-auto p-2 card border-0">
-    <div class="d-block bg-light  pt-3 pb-3 h-100">
-      <div class="d-block text-primary h4">
-        Dernière activité
-      </div>
-      {{#if activities}}
-        {{#each activities}}
-          <div class="row">
-            <div class="col-11 mx-auto mt-2 bg-light">
-              <div class="row">
-                <div class="col-md-4 col-lg-2 text-center  mt-2 mb-2 my-auto text-center">
-                  <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
-                  <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
-                </div>
-                <div class="col-md-8 col-lg-10 mt-2 mb-2">
-                  <strong class="d-block text-capitalize mb-2">
-                    {{this.name}}
-                  </strong>
-                                
-                  {{#if this.fc_moyenne}}
-                    <span class="badge badge-light d-block text-left mt-2 mb-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
-                    {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
-                    </span>
-                  {{/if}}
-                  <span class="badge badge-grey">{{this.type}}</span>
-                  <span class="badge badge-grey"><i class="fas fa-compass"></i> {{stravaDist this.distance}} Km</span>
-                  <span class="badge badge-grey"><i class="fas fa-sort-up"></i>D+: {{this.total_elevation_gain}} m</span>
-                  <span class="badge badge-grey"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed this.type this.distance this.moving_time}}</span>
-                  <span class="badge badge-grey"><i class="far fa-clock"></i> {{secondToTime this.moving_time}}</span>
-                  {{#if this.rpe}}
-                    <span class="badge badge-grey"><i class="fas fa-file-medical-alt"></i> {{rpe this.rpe}} %</span>
-                  {{/if}} 
-                  {{#if this.calories}}
-                    <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
-                  {{/if}}
-                </div>
-              </div>
-            </div>
-          </div>
-        {{/each}}
-      {{else}}
         <div class="row">
           <div class="col-12">
-            Vous n'avez pas encore enregistré d'activité
+            <large class="d-block"><strong>{{getDay date_now}}</strong></large>
+            <small class="d-block text-muted">{{getMonth date_now}}-{{getYear date_now}}</small> 
           </div>
         </div>
-      {{/if}}
-      <div class="row">
-        <div class="col-12 pt-3 pb-2">
-          <a href="/activities/overview" class="btn btn-primary">Tout voir</a>
+      </div> 
+    </div>
+    <div class="col-sm-6 mx-auto p-2 card border-0">
+      <div class="d-block bg-light  pt-3 pb-3 h-100">
+        <div class="d-block text-primary h4">
+          Dernière forme
         </div>
+        <div class="row">
+          <div class="col-12">
+            {{#if health}}
+              <div class="row">
+                <div class="col-12">
+                  <small><span class="text-muted mb-3 d-block">du {{date health.created_at}}</span></small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6 my-auto">
+                  <a href="/health/{{health.id}}"><span class="h1 text-dark d-block mb-3"><i class="fas fa-heartbeat"></i> {{healthScore}}<small>%</small></span></a>
+                </div>
+                <div class="col-6">
+                    <div class="d-block">
+                      <span class="text-muted">Poids: </span>{{health.poids}} Kg
+                    </div>
+                    <div class="d-block">
+                      <span class="text-muted">Pouls: </span>{{health.pouls}} Bpm
+                    </div>
+                    <div class="d-block">
+                      <span class="text-muted">Blessure: </span>{{boolean health.blessure}}
+                    </div>
+                    <div class="d-block">
+                      <span class="text-muted">Maladie: </span>{{boolean health.maladie}}
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <span class="d-block">
+                    Commentaire: {{#if health.commentaires}}{{health.commentaires}}{{else}}-{{/if}}
+                  </span>
+                </div>
+              </div>
+            {{else}}
+            <div class="row">
+              <div class="col-12">
+                Vous n'avez pas encore testé votre forme
+                <a href="/health/add" class="btn btn-primary">Tester ma forme</a>
+              </div>
+            </div>
+            {{/if}}
+          </div>
+        </div>      
       </div>
-    </div>    
-  </div>
-</div>
 
-<div class="row text-center">
-  <div class="col-12 mt-3 mb-2 pt-4 text-primary">
-    <span class="h4 d-block">Volume d'activités résentes</span><small class="text-muted d-inline ml-2">( /semaine, en heures, période des 10 dernières semaines )</small>
+    </div>
   </div>
-</div>
-<div class="row mt-2 mb-2">
-  <div class="col-md-10 mx-auto">
-    <canvas id="healthScoreGraph"></canvas>
-  </div>
-  {{#if charge}}
-    {{#each charge}}
-      <input type="hidden" value="{{secondToTimeData this.weeklyDuration}}" class="activitiesCharge">
-      <input type="hidden" value="{{this.text}}" class="activitiesWeek">
-    {{/each}} 
-  {{/if}}             
+
+  <div class="row text-center">
+    <div class="col-sm-12 col-md-4 mx-auto p-2 card border-0">
+      <div class="d-block bg-light  pt-3 pb-3 h-100">
+        <div class="d-block text-primary h4">
+          Dernière activité
+        </div>
+        <div class="d-block my-auto">
+          {{#if activities}}
+            {{#each activities}}
+              <div class="row">
+                <div class="col-11 mx-auto mt-2 bg-light">
+                  <div class="row">
+                    <div class="col-md-5 col-lg-3 text-center  mt-2 mb-2 my-auto text-center">
+                      <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
+                      <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
+                    </div>
+                    <div class="col-md-7 col-lg-9 mt-2 mb-2">
+                      <strong class="d-block text-capitalize mb-2">
+                        {{this.name}}
+                      </strong>
+                                    
+                      {{#if this.fc_moyenne}}
+                        <span class="badge badge-light d-block text-left mt-2 mb-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
+                        {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
+                        </span>
+                      {{/if}}
+                      <span class="badge badge-grey">{{this.type}}</span>
+                      <span class="badge badge-grey"><i class="fas fa-compass"></i> {{stravaDist this.distance}} Km</span>
+                      <span class="badge badge-grey"><i class="fas fa-sort-up"></i>D+: {{this.total_elevation_gain}} m</span>
+                      <span class="badge badge-grey"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed this.type this.distance this.moving_time}}</span>
+                      <span class="badge badge-grey"><i class="far fa-clock"></i> {{secondToTime this.moving_time}}</span>
+                      {{#if this.rpe}}
+                        <span class="badge badge-grey"><i class="fas fa-file-medical-alt"></i> {{rpe this.rpe}} %</span>
+                      {{/if}} 
+                      {{#if this.calories}}
+                        <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{this.calories}} calories</span>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            {{/each}}
+          {{else}}
+            <div class="row">
+              <div class="col-12">
+                Vous n'avez pas encore enregistré d'activité
+              </div>
+            </div>
+          {{/if}}
+        
+          <div class="row">
+            <div class="col-12 pt-3 pb-2">
+              <a href="/activities/overview" class="btn btn-primary">Tout voir</a>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+    <div class="col-lg-8 col-md-6 mx-auto">
+      <div class="col-12 mt-3 mb-2 text-primary">
+        <span class="h4 d-block">Volume d'activités récentes</span><small class="text-muted d-inline ml-2">( /semaine, en heures, période des 10 dernières semaines )</small>
+      </div>
+      <canvas id="healthScoreGraph"></canvas>
+    </div>
+    {{#if charge}}
+      {{#each charge}}
+        <input type="hidden" value="{{secondToTimeData this.weeklyDuration}}" class="activitiesCharge">
+        <input type="hidden" value="{{this.text}}" class="activitiesWeek">
+      {{/each}} 
+    {{/if}}             
+  </div>  
 </div>
