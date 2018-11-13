@@ -14,6 +14,9 @@ router.get('/logout', userCtrl.logout)
 // Get Homepage
 router.get('/:user', userCtrl.home)
 
+// Get profil
+router.get('/:user/profil', userCtrl.profil)
+
 // get wait
 router.get('/:user/wait', userCtrl.wait)
 

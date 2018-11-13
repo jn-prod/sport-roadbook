@@ -89,6 +89,76 @@ var activityCtrl = {
       })
     // finale redirection
     res.redirect('/user/' + req.session.user._id)
+  },
+  activitiiesOverview: (req, res) => {
+    var userId = req.session.user._id
+    // request db Activities
+    Activity
+      .find({ user: userId })
+      .sort({ 'start_date_local': -1 })
+      .exec((err, dbActivites) => {
+        var AllFcMax = []
+        var fcMax
+        if (err) throw err
+
+        dbActivites.forEach((val) => {
+          // calcul du TSS
+          if (val.moving_time * 1 > 0 && val.fc_moyenne * 1 > 0) {
+            val.tss = 'NC'
+          } else {
+            val.tss = 'NC'
+          }
+        })
+
+        if (dbActivites.length > 0) {
+          dbActivites.forEach((activity) => {
+            if (activity.fc_max === undefined) {
+              AllFcMax.push(0)
+            } else {
+              AllFcMax.push(activity.fc_max)
+            }
+          })
+        } else {
+          AllFcMax = null
+        }
+
+        // fc max defintion
+        if (AllFcMax.length === 1) {
+          fcMax = AllFcMax[0]
+        } else if (AllFcMax.length > 0) {
+          fcMax = AllFcMax.reduce((a, b) => {
+            return Math.max(a, b)
+          })
+        } else {
+          fcMax = null
+        }
+
+        // tss
+        if (fcMax > 0) {
+          dbActivites.forEach((activity) => {
+            activity.tss = require('../../custom_modules/activity/tss')(activity.fc_moyenne, activity.moving_time, fcMax)
+          })
+        }
+
+        // filter activities array
+        if (req.query.start_date && req.query.end_date && dbActivites.length >= 1) {
+          var date = {
+            start: new Date(req.query.start_date),
+            end: new Date(req.query.end_date)
+          }
+
+          var filtredActivities = dbActivites.filter((val) => {
+            var activityDate = new Date(val.start_date_local)
+            if (activityDate >= date.start && activityDate <= date.end) {
+              return val
+            }
+          })
+
+          dbActivites = filtredActivities
+        }
+
+        res.render('partials/activity/overview', { activities: dbActivites })
+      })
   }
 }
 
