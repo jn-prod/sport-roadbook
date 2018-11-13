@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 mb-2 text-primary text-center">
+      <h1 class="ml-5 d-block mt-5 mb-5 font-primary">Détails des {{events.length}} événements</h1>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <span class="h4 text-primary">
+        Evénements à venir 
+      </span>
+    </div>
+  </div>
+      
+  {{#if events.next}}
+    {{#each events.next}}
+      <div class="row">
+        <div class="col-12 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
+          <div class="row pt-2 pb-2">
+            <div class="col-md-2 text-center  mt-2 mb-2 my-auto mx-auto">
+              <div class="d-flex">
+                <div class="d-block">
+                  <large class="d-block"><strong>{{getDay this.date_start}}</strong></large>
+                  <small class="d-block text-muted">{{getMonth this.date_start}}-{{getYear this.date_start}}</small>                 
+                </div>
+                <div class="d-block mr-2 ml-2">
+                  <strong>-</strong>                
+                </div>
+                <div class="d-block">
+                  <large class="d-block"><strong>{{getDay this.date_end}}</strong></large>
+                  <small class="d-block text-muted">{{getMonth this.date_end}}-{{getYear this.date_end}}</small>                   
+                </div>
+              </div>
+                     
+            </div>
+            <div class="col-md-8 mt-2 mb-2 my-auto d-flex text-center">                          
+              <div class="d-block"><strong>{{this.name}}</strong></div>
+              <div class="d-block">
+                <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
+                <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div>             
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  {{/if}}
+
+  <div class="row mb-3 mt-3">
+    <div class="col-12">
+      <span class="h4 text-primary">
+        Evénements passés
+      </span>
+    </div>
+  </div>  
+  {{#if events.last}}
+    {{#each events.last}}
+      <div class="row">
+        <div class="col-12 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
+          <div class="row pt-2 pb-2">
+            <div class="col-md-2 text-center  mt-2 mb-2 my-auto mx-auto">
+              <div class="d-flex">
+                <div class="d-block">
+                  <large class="d-block"><strong>{{getDay this.date_start}}</strong></large>
+                  <small class="d-block text-muted">{{getMonth this.date_start}}-{{getYear this.date_start}}</small>                 
+                </div>
+                <div class="d-block mr-2 ml-2">
+                  <strong>-</strong>                
+                </div>
+                <div class="d-block">
+                  <large class="d-block"><strong>{{getDay this.date_end}}</strong></large>
+                  <small class="d-block text-muted">{{getMonth this.date_end}}-{{getYear this.date_end}}</small>                   
+                </div>
+              </div>
+                     
+            </div>
+            <div class="col-md-8 mt-2 mb-2 my-auto d-flex text-center">                          
+              <div class="d-block"><strong>{{this.name}}</strong></div>
+              <div class="d-block">
+                <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
+                <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div>             
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  {{/if}}
+
+</div>

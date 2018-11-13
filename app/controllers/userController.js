@@ -8,6 +8,7 @@ var getHealthScore = require('../../custom_modules/health/healthScore')
 var User = require('../models/user')
 var Activity = require('../models/activity')
 var Health = require('../models/health')
+var Event = require('../models/event')
 
 // Controllers
 var userCtrl = {
@@ -77,6 +78,20 @@ var userCtrl = {
             } else {
               res.redirect('/health/add')
             }
+          })
+      })
+
+      // request db events
+      var dbEventsNext = new Promise((resolve, reject) => {
+        Event
+          .find({ 'user': userId, 'date_start': { $gte: dateNow } })
+          .sort({ date_start: -1 })
+          .limit(1)
+          .exec((err, event) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(event[0])
           })
       })
 
@@ -162,7 +177,8 @@ var userCtrl = {
         .props({
           activities: dbActivitiesAll,
           health: dbHealthAll,
-          charge: dbCharge
+          charge: dbCharge,
+          event: dbEventsNext
         })
         .then((val) => {
           // health score calcul
