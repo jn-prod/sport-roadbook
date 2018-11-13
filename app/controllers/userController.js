@@ -35,6 +35,9 @@ var userCtrl = {
       }
     })
   },
+  profil: (req, res) => {
+    res.render('partials/user/profil')
+  },
   home: (req, res) => {
     var getWeekNumber = (d) => {
       d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
@@ -82,6 +85,7 @@ var userCtrl = {
         Activity
           .find({ user: userId })
           .sort({ 'start_date_local': -1 })
+          .limit(1)
           .exec((err, dbActivites) => {
             if (err) {
               reject(err)
@@ -169,59 +173,10 @@ var userCtrl = {
           }
           return val
         })
-        .then((val) => {
-          var fcMax = []
-          if (val.activities.length > 0) {
-            val.activities.forEach((activity) => {
-              if (activity.fc_max === undefined) {
-                fcMax.push(0)
-              } else {
-                fcMax.push(activity.fc_max)
-              }
-            })
-          } else {
-            fcMax = null
-          }
-
-          // fc max defintion
-          if (fcMax.length === 1) {
-            val.fc_max = fcMax[0]
-          } else if (fcMax.length > 0) {
-            val.fc_max = fcMax.reduce((a, b) => {
-              return Math.max(a, b)
-            })
-          } else {
-            val.fc_max = null
-          }
-
-          return val
-        })
         .then((result) => {
           var api = result
 
-          // tss
-          if (api.fc_max > 0) {
-            api.activities.forEach((activity) => {
-              activity.tss = require('../../custom_modules/activity/tss')(activity.fc_moyenne, activity.moving_time, api.fc_max)
-            })
-          }
-
-          // filter activities array
-          if (req.query.start_date && req.query.end_date && api.activities.length >= 1) {
-            var date = {
-              start: new Date(req.query.start_date),
-              end: new Date(req.query.end_date)
-            }
-
-            var filtredActivities = api.activities.filter((val) => {
-              var activityDate = new Date(val.start_date_local)
-              if (activityDate >= date.start && activityDate <= date.end) {
-                return val
-              }
-            })
-
-            api.activities = filtredActivities
-          }
+          api.date_now = dateNow
           res.render('partials/user/home', api)
         })
     } else {

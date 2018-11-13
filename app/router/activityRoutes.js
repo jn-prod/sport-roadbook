@@ -14,5 +14,7 @@ router.post('/add', activityCtrl.postAddActivity)
 router.get('/get/:user/strava/all', activityCtrl.getStravaActivities)
 // delete activities
 router.get('/:activity/delete', activityCtrl.deleteActivitiy)
+// activities overview
+router.get('/overview', activityCtrl.activitiiesOverview)
 
 module.exports = router

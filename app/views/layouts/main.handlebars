@@ -57,6 +57,9 @@
                   <ul class="navbar-nav ml-auto">
                     {{#if user}}
                       <li class="nav-item">
+                        <a href="/activities/overview" class="nav-link ml-md-3 font-primary text-uppercase mr-2">Activités</a>
+                      </li>
+                      <li class="nav-item">
                         <div class="input-group mb-3">
                           <button class="btn btn-primary mr-3 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus mr-2"></i><span class="d-inline mr-3 ml-3">Ajouter</span></button>
                           <div class="dropdown-menu">
@@ -65,10 +68,20 @@
                           </div>
                         </div>                        
                       </li>
-                    {{else}}
                       <li class="nav-item">
-                        <a class="nav-link  font-primary text-uppercase mr-2" href="/user/login">Se connecter</a>
+                        <a class="btn btn-outline-primary" href="https://blog.nicolasjouanno.com/pages/soutenir.html">Soutenir</a>
+                      </li>                      
+                      <li class="nav-item">
+                        <div class="input-group mb-3">
+                          <button class="btn btn-outline-dark border-0 ml-md-3 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user mr-2"></i>{{user.firstname}}</button>
+                          <div class="dropdown-menu">                          
+                            <a class="dropdown-item" href="/user/{{user._id}}?skip=true">Tableau de bord </a>
+                            <a class="dropdown-item" href="/user/{{user._id}}/profil">Profil</a>
+                            <a class="dropdown-item border border-bottom-0 border-right-0 border-left-0 mt-2 pt-2 text-danger" href="/user/logout" >Se déconnecter</a>
+                          </div>
+                        </div>
                       </li>
+                    {{else}}
                       <li class="nav-item">
                         <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/stories/index.html" rel="nofollow" target="_blank">Blog</a>
                       </li>
@@ -77,23 +90,13 @@
                       </li>
                       <li class="nav-item">
                         <a class="nav-link ml-md-3 font-primary text-uppercase mr-2" href="https://nicolasjouanno.com/creation-site-internet.html" rel="nofollow" target="_blank">Services</a>
-                      </li>                        
-                    {{/if}}
-
-                    <li class="nav-item">
-                      <a class="btn btn-outline-primary" href="https://blog.nicolasjouanno.com/pages/soutenir.html">Soutenir</a>
-                    </li>
-
-                    {{#if user}}
-                      <li class="nav-item">
-                        <div class="input-group mb-3">
-                          <button class="btn btn-outline-dark border-0 ml-md-3 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user mr-2"></i>{{user.firstname}}</button>
-                          <div class="dropdown-menu">                          
-                            <a class="dropdown-item" href="/user/{{user._id}}?skip=true">Tableau de bord </a>
-                            <a class="dropdown-item border border-bottom-0 border-right-0 border-left-0 mt-2 pt-2 text-danger" href="/user/logout" >Se déconnecter</a>
-                          </div>
-                        </div>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link  font-primary text-uppercase mr-2" href="https://blog.nicolasjouanno.com/pages/soutenir.html">Soutenir</a>
+                      </li>                    
+                      <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="/user/login">Se connecter</a>
+                      </li>                                           
                     {{/if}}
                   </ul>
                   <!-- End Menu -->
@@ -105,7 +108,7 @@
       ================================================== -->    
       </header>
 
-      <div class="container">
+      <div class="container-fluid">
         {{{body}}}
       </div>              
     {{/if}}
@@ -114,9 +117,6 @@
       <div class="row">
         <div class="col-11 mx-auto text-center mt-2">
           Réalisé avec <i class="fas fa-heart text-primary"></i> par <a title="Nicolas Jouanno - PRODUCT MANAGER, skills MARKETING, DESIGN & TECH" href="https://nicolasjouanno.com" rel="nofollow" target="_blank" class="text-primary">Nicolas Jouanno</a> &copy; 2018 feezify:me - <a href="/mentions-legales" class="text-primary">Mentions légales</a>
-          {{#if user}}
-            - <a href="/user/delete/{{user._id}}" class="text-muted" id="delete_account">Supprimer mon compte</a></p>
-          {{/if}}
         </div>
       </div>      
     </footer>
