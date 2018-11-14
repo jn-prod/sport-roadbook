@@ -15,16 +15,30 @@ var eventController = {
     newEvent.save((err, event) => {
       if (err) throw err
       else {
-        res.redirect('/user/' + req.session.user._id)
+        res.redirect('/event/' + req.session.user._id + '/overview')
       }
     })
+  },
+  deleteEvent: (req, res) => {
+    Event
+      .findOneAndUpdate({
+        _id: req.params.event
+      }, {
+        $set: { user: null }
+      }, (err) => {
+        if (err) throw err
+      })
+    // finale redirection
+    res.redirect('/event/' + req.session.user._id + '/overview')
   },
   eventsOverview: (req, res) => {
     Event
       .find({ user: req.session.user._id })
       .sort({ start_date: -1 })
       .exec((err, dbEvents) => {
-        if (err) throw err
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
         var events = { next: [], last: [] }
 
         if (dbEvents.length > 0) {

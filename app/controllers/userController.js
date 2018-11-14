@@ -61,9 +61,15 @@ var userCtrl = {
           .sort({ 'created_at': -1 })
           .limit(1)
           .exec((err, dbHealth) => {
-            var health = dbHealth[0]
+            var health
             if (err) {
               reject(err)
+            }
+
+            if (dbHealth.length > 0) {
+              health = dbHealth[0]
+            } else {
+              health = {}
             }
 
             // if no score today request it
@@ -91,7 +97,11 @@ var userCtrl = {
             if (err) {
               reject(err)
             }
-            resolve(event[0])
+            if (event.length > 0) {
+              resolve(event[0])
+            } else {
+              resolve({})
+            }
           })
       })
 
@@ -106,14 +116,6 @@ var userCtrl = {
               reject(err)
             }
 
-            dbActivites.forEach((val) => {
-              // calcul du TSS
-              if (val.moving_time * 1 > 0 && val.fc_moyenne * 1 > 0) {
-                val.tss = 'NC'
-              } else {
-                val.tss = 'NC'
-              }
-            })
             resolve(dbActivites)
           })
       })
@@ -158,16 +160,18 @@ var userCtrl = {
               })
             }
 
-            docs.forEach((dbVal) => {
-              finalActivitiesCharge.forEach((finalVal) => {
-                if (finalVal.week === (dbVal._id.week + 1)) {
-                  finalVal.count = dbVal.count
-                  finalVal.weeklyDuration = dbVal.weeklyDuration
-                }
+            if (docs.length > 0) {
+              docs.forEach((dbVal) => {
+                finalActivitiesCharge.forEach((finalVal) => {
+                  if (finalVal.week === (dbVal._id.week + 1)) {
+                    finalVal.count = dbVal.count
+                    finalVal.weeklyDuration = dbVal.weeklyDuration
+                  }
+                })
               })
-            })
+              finalActivitiesCharge.reverse()
+            }
 
-            finalActivitiesCharge.reverse()
             resolve(finalActivitiesCharge)
           })
       })
@@ -183,7 +187,13 @@ var userCtrl = {
         .then((val) => {
           // health score calcul
           if (val.health) {
-            val.healthScore = getHealthScore(val.health)
+            try {
+              val.healthScore = getHealthScore(val.health)
+            } catch (err) {
+              if (err) {
+                val.healthScore = ''
+              }
+            }
           } else {
             val.healthScore = ''
           }

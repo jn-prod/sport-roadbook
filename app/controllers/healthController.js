@@ -18,7 +18,10 @@ var healthCtrl = {
         .limit(1)
         .exec((err, dbHealth) => {
           if (err) throw err
-          var lastHealth = dbHealth[0]
+          var lastHealth = null
+          if (dbHealth.length > 0) {
+            lastHealth = dbHealth[0]
+          }
           res.render('partials/health/add', { lastHealth: lastHealth, ip: ip })
         })
     } else {
@@ -68,7 +71,9 @@ var healthCtrl = {
     Health
       .findOne({ _id: req.params.id })
       .exec((err, healthDetail) => {
-        if (err) throw err
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
         if (String(req.session.user._id) === String(healthDetail.user)) {
           var score = getHealthScore(healthDetail)
           var healthRisk = getHealthRisk(healthDetail)
@@ -88,7 +93,10 @@ var healthCtrl = {
       .findOne({ _id: req.params.id })
       .select({ _id: 0, user: 1, sommeil: 1, recuperation: 1, lassitude: 1, humeur: 1, stress: 1 })
       .exec((err, healthDetail) => {
-        if (err) throw err
+        if (err) {
+          res.setHeader('Access-Control-Allow-Methods', 'GET')
+          res.send(JSON.stringify({}))
+        }
         if (String(req.session.user._id) === String(healthDetail.user)) {
           var score = getHealthScore(healthDetail)
           var healthStatus = {

@@ -28,7 +28,7 @@ var activityCtrl = {
     newActivity.save((err, activity) => {
       if (err) throw err
       else {
-        res.redirect('/user/' + req.session.user._id)
+        res.redirect('/activities/' + req.session.user._id + '/overview')
       }
     })
   },
@@ -40,40 +40,44 @@ var activityCtrl = {
     }
 
     if (strava.stravaId && strava.stravaCode) {
-      strava.stravaApi(strava.stravaId, strava.stravaCode, (stravaActivities) => {
-        stravaActivities.forEach((stravaActivity) => {
-          Activity
-            .findOne({ 'strava_id': stravaActivity.id })
-            .exec((err, res) => {
-              if (err) throw err
+      try {
+        strava.stravaApi(strava.stravaId, strava.stravaCode, (stravaActivities) => {
+          stravaActivities.forEach((stravaActivity) => {
+            Activity
+              .findOne({ 'strava_id': stravaActivity.id })
+              .exec((err, res) => {
+                if (err) throw err
 
-              // if new activity
-              if (res === null) {
-                var activity = {
-                  user: req.session.user._id,
-                  type: stravaActivity.type,
-                  name: stravaActivity.name,
-                  distance: stravaActivity.distance,
-                  moving_time: stravaActivity.moving_time,
-                  total_elevation_gain: stravaActivity.total_elevation_gain,
-                  start_date_local: stravaActivity.start_date_local,
-                  average_speed: stravaActivity.average_speed,
-                  calories: stravaActivity.calories,
-                  fc_moyenne: stravaActivity.average_heartrate,
-                  fc_max: stravaActivity.max_heartrate,
-                  strava_id: stravaActivity.id
-                }
-                var newActivity = new Activity(activity)
-                newActivity.save((err, savedActivity) => {
-                  if (err) throw err
-                  else {
-                    console.log(savedActivity.id + ': saved')
+                // if new activity
+                if (res === null) {
+                  var activity = {
+                    user: req.session.user._id,
+                    type: stravaActivity.type,
+                    name: stravaActivity.name,
+                    distance: stravaActivity.distance,
+                    moving_time: stravaActivity.moving_time,
+                    total_elevation_gain: stravaActivity.total_elevation_gain,
+                    start_date_local: stravaActivity.start_date_local,
+                    average_speed: stravaActivity.average_speed,
+                    calories: stravaActivity.calories,
+                    fc_moyenne: stravaActivity.average_heartrate,
+                    fc_max: stravaActivity.max_heartrate,
+                    strava_id: stravaActivity.id
                   }
-                })
-              }
-            })
+                  var newActivity = new Activity(activity)
+                  newActivity.save((err, savedActivity) => {
+                    if (err) throw err
+                    else {
+                      console.log(savedActivity.id + ': saved')
+                    }
+                  })
+                }
+              })
+          })
         })
-      })
+      } catch (err) {
+        if (err) throw err
+      }
     }
     // finale redirection
     res.redirect('/user/' + req.session.user._id)
@@ -88,7 +92,7 @@ var activityCtrl = {
         if (err) throw err
       })
     // finale redirection
-    res.redirect('/user/' + req.session.user._id)
+    res.redirect('/activities/' + req.session.user._id + '/overview')
   },
   activitiesOverview: (req, res) => {
     var userId = req.session.user._id
@@ -99,7 +103,9 @@ var activityCtrl = {
       .exec((err, dbActivites) => {
         var AllFcMax = []
         var fcMax
-        if (err) throw err
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
 
         dbActivites.forEach((val) => {
           // calcul du TSS
@@ -136,27 +142,38 @@ var activityCtrl = {
         // tss
         if (fcMax > 0) {
           dbActivites.forEach((activity) => {
-            activity.tss = require('../../custom_modules/activity/tss')(activity.fc_moyenne, activity.moving_time, fcMax)
+            try {
+              activity.tss = require('../../custom_modules/activity/tss')(activity.fc_moyenne, activity.moving_time, fcMax)
+            } catch (err) {
+              if (err) {
+                activity.tss = 'NC'
+              }
+            }
           })
         }
 
         // filter activities array
-        if (req.query.start_date && req.query.end_date && dbActivites.length >= 1) {
-          var date = {
-            start: new Date(req.query.start_date),
-            end: new Date(req.query.end_date)
-          }
-
-          var filtredActivities = dbActivites.filter((val) => {
-            var activityDate = new Date(val.start_date_local)
-            if (activityDate >= date.start && activityDate <= date.end) {
-              return val
+        try {
+          if (req.query.start_date && req.query.end_date && dbActivites.length >= 1) {
+            var date = {
+              start: new Date(req.query.start_date),
+              end: new Date(req.query.end_date)
             }
-          })
 
-          dbActivites = filtredActivities
+            var filtredActivities = dbActivites.filter((val) => {
+              var activityDate = new Date(val.start_date_local)
+              if (activityDate >= date.start && activityDate <= date.end) {
+                return val
+              }
+            })
+
+            dbActivites = filtredActivities
+          }
+        } catch (err) {
+          if (err) throw err
         }
 
+        // render page
         res.render('partials/activity/overview', { activities: dbActivites })
       })
   }
