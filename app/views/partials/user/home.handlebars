@@ -54,12 +54,19 @@
                     <div class="d-block">
                       <span class="text-muted">Poids: </span>{{health.poids}} Kg
                     </div>
-                   <div class="d-block">
-                      <span class="text-muted">IMC: </span>{{imc}}Kg/m²
-                    </div>
-                    <div class="d-block">
-                      <span class="text-muted">IMG: </span>{{img}}%
-                    </div>
+                    {{#if weight_analyse}}
+                       <div class="d-block">
+                          <span class="text-muted">Masse corporelle: </span>{{weight_analyse.imc}}Kg/m²
+                        </div>
+                        <div class="d-block">
+                          <span class="text-muted">Masse Grasse: </span>{{weight_analyse.img}}%
+                        </div>
+                    {{else}}
+                      <div class="d-block">
+                        <small class="d-block text-muted">Impossible de claculer votre masse grace, votre profil est incomplet</small>
+                        <a href="/user/{{user._id}}/edit" class="btn btn-outline-primary btn-sm mt-2 mb-2"><i class="fas fa-pencil-alt mr-2"></i>Compléter</a>
+                      </div>
+                    {{/if}}
                     <small class="text-muted d-block mb-2">{{imc_helper imc}}</small>
                     <div class="d-block">
                       <span class="text-muted">Pouls: </span>{{health.pouls}} Bpm

@@ -76,8 +76,8 @@
         </div>
         <!-- poids -->
         <div class="form-group">
-          <label for="poids">Poids au réveil (Kg)</label>
-          <input type="number" class="form-control" id="poids" name="poids" min="0" value="{{lastHealth.poids}}" step="1">
+          <label for="poids">Poids au réveil (Kg) *<small class="text-muted ml-2">Requis pour le test de masse grasse</small></label>
+          <input type="number" class="form-control" id="poids" name="poids" min="0" value="{{lastHealth.poids}}" step="1" required>
         </div>
         <!-- blessure -->        
         <div class="form-group">

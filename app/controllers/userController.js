@@ -256,31 +256,12 @@ var userCtrl = {
         .then((result) => {
           var api = result
 
-          // IMC
-          if (Number(api.user.height) > 0 && Number(api.health.poids) > 0) {
-            var imcCalc = Number(api.health.poids) / (Number(api.user.height) / 100 * Number(api.user.height) / 100)
-            api.imc = Number.parseFloat(imcCalc).toFixed(2)
-          }
-
-          // IMG formule de Deurenberg : IMG (%) = (1.20∗IMC) + (0.23∗Age) − (10.8∗Sexe) − 5.4
-          if (api.imc > 0 && api.user.date_of_birth && (api.user.sex === 'M' || api.user.sex === 'W')) {
+          // IMG & IMG
+          if (api.user.date_of_birth && (api.user.sex === 'M' || api.user.sex === 'W') && Number(api.user.height) > 0 && Number(api.health.poids) > 0 && api.health.created_at) {
             try {
-              var sexValue
-              var userDateOfBirth = new Date(Date.parse(api.user.date_of_birth))
-              var userAge = Number(dateNow.getFullYear()) - Number(userDateOfBirth.getFullYear())
-
-              if (api.user.sex === 'W') {
-                sexValue = 0
-              } else if (api.user.sex === 'M') {
-                sexValue = 1
-              }
-
-              var imgCalc = (1.20 * api.imc) + (0.23 * userAge) - (10.8 * sexValue) - 5.4
-              api.img = Math.round(imgCalc * 100) / 100
+              api.weight_analyse = require('../../custom_modules/health/healthWeightAnalyse')(Number(api.health.poids), Number(api.user.height), api.user.date_of_birth, api.health.created_at, api.user.sex)
             } catch (err) {
               if (err) throw err
-              api.imc = 'NC'
-              api.img = 'NC'
             }
           }
 

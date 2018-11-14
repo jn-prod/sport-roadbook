@@ -22,7 +22,7 @@
 
         <!-- sex -->
         <div class="form-group">
-          <label for="sex">Sex  <span class="text-danger">*</span></label>
+          <label for="sex">Sex  <span class="text-danger">*</span><small class="text-muted ml-2">Requis pour le test de masse grasse</small></label>
           <select name="sex" id="sex" class='form-control' required>
             <option value="{{dbUser.sex}}">{{sex dbUser.sex}}</option>
             <option value="M">Homme</option>
@@ -44,7 +44,7 @@
 
         <!-- date_of_birth   -->
         <div class="form-group">
-          <label for="date_of_birth">Date de Naissance <span class="text-danger">*</span></label>
+          <label for="date_of_birth">Date de Naissance <span class="text-danger">*</span><small class="text-muted ml-2">Requis pour le test de masse grasse</small></label>
           <input type="date" class="form-control" id="date" name="date_of_birth" value="{{date dbUser.date_of_birth}}" required>
         </div>
 
@@ -59,7 +59,7 @@
 
         <!-- height -->        
         <div class="form-group">
-          <label for="height">Taille <span class="text-danger">*</span></label>
+          <label for="height">Taille <span class="text-danger">*</span><small class="text-muted ml-2">Requis pour le test de masse grasse</small></label>
           <select class="form-control" id="height" name="height" required>
             <option value="{{dbUser.height}}" selected>{{dbUser.height}}cm</option>
             {{size_select}}
