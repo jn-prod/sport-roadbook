@@ -54,6 +54,13 @@
                     <div class="d-block">
                       <span class="text-muted">Poids: </span>{{health.poids}} Kg
                     </div>
+                   <div class="d-block">
+                      <span class="text-muted">IMC: </span>{{imc}}Kg/m²
+                    </div>
+                    <div class="d-block">
+                      <span class="text-muted">IMG: </span>{{img}}%
+                    </div>
+                    <small class="text-muted d-block mb-2">{{imc_helper imc}}</small>
                     <div class="d-block">
                       <span class="text-muted">Pouls: </span>{{health.pouls}} Bpm
                     </div>
@@ -63,6 +70,7 @@
                     <div class="d-block">
                       <span class="text-muted">Maladie: </span>{{boolean health.maladie}}
                     </div>
+
                 </div>
               </div>
               <div class="row">

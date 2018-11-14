@@ -1,40 +1,46 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12 mt-5 mb-5">
-      <h1>Profil</h1>
+  <div class="row mt-5 mb-5">
+    <div class="col-12">
+      <h1 class="d-inline">Profil</h1>
+      <a href="/user/{{user._id}}/edit" class="btn btn-primary d-inline float-right mt-2"><i class="fas fa-pencil-alt mr-2"></i><span class="d-none d-md-inline">Modifier</span></a>     
     </div>
   </div>
   {{#if user}}
     <div class="d-block">
-      <span class="text-muted">E-mail :</span> {{user.email}}
+      <span class="text-muted">E-mail :</span> {{dbUser.email}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Nom :</span> {{user.firstname}}
+      <span class="text-muted">Prénom :</span> {{dbUser.firstname}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Prénom :</span> {{user.lastname}}
+      <span class="text-muted">Nom :</span> {{dbUser.lastname}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Sex :</span> {{user.sex}}
+      <span class="text-muted">Sex :</span> {{sex dbUser.sex}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Pays: </span> {{user.country}}
+      <span class="text-muted">Pays: </span> {{dbUser.country}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Ville: </span> {{user.city}}
+      <span class="text-muted">Ville: </span> {{dbUser.city}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Taille :</span> {{user.size}}
+      <span class="text-muted">Taille :</span> {{dbUser.height}}cm
     </div>
     <div class="d-block">
-      <span class="text-muted">Fréquence cardiaque maximale :</span> {{user.fc_max}}
+      <span class="text-muted">Fréquence cardiaque maximale :</span> {{dbUser.fc_max}}bpm
     </div>
     <div class="d-block">
-      <span class="text-muted">Date de naissance</span> {{user.date_of_birth}}
+      <span class="text-muted">Date de naissance :</span> {{date dbUser.date_of_birth}}
     </div>
     <div class="d-block">
-      <span class="text-muted">Compté créé le : {{user.created_at}}</span>
+      <span class="text-muted">Compté créé le : {{dbUser.created_at}}</span>
     </div>
-    <a href="/user/delete/{{user._id}}" class="text-muted mt-3 d-block" id="delete_account">Supprimer mon compte</a></p>
+    <div class="row">
+      <div class="col-12 text-left">
+        <a href="/user/{{dbUser._id}}/delete" class="text-muted mt-3 d-block" id="delete_account">Supprimer mon compte</a>
+      </div>
+    </div>
+    
   {{/if}}  
 </div>

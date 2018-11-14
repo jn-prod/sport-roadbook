@@ -84,15 +84,11 @@ var activityCtrl = {
   },
   deleteActivitiy: (req, res) => {
     Activity
-      .findOneAndUpdate({
-        _id: req.params.activity
-      }, {
-        $set: { user: null }
-      }, (err) => {
+      .findByIdAndUpdate(req.params.activity, { $set: { user: null } }, (err, res) => {
         if (err) throw err
+        // finale redirection
+        res.redirect('/activities/' + req.session.user._id + '/overview')
       })
-    // finale redirection
-    res.redirect('/activities/' + req.session.user._id + '/overview')
   },
   activitiesOverview: (req, res) => {
     var userId = req.session.user._id
