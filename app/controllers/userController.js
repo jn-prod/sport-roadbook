@@ -1,6 +1,8 @@
 // node_modules
 var Promise = require('bluebird')
 
+var dateNow = new Date(Date.now())
+
 // custom_modules
 var getHealthScore = require('../../custom_modules/health/healthScore')
 
@@ -37,7 +39,48 @@ var userCtrl = {
     })
   },
   profil: (req, res) => {
-    res.render('partials/user/profil')
+    User
+      .findById(req.session.user._id)
+      .exec((err, user) => {
+        if (err) {
+          user = {}
+        }
+
+        res.render('partials/user/profil', { dbUser: user })
+      })
+  },
+  getEdit: (req, res) => {
+    User
+      .findById(req.session.user._id)
+      .exec((err, user) => {
+        if (err) {
+          user = {}
+        }
+
+        res.render('partials/user/edit', { dbUser: user })
+      })
+  },
+  postEdit: (req, res) => {
+    var form = req.body
+
+    User
+      .findByIdAndUpdate(req.session.user._id, {
+        $set: {
+          firstname: form.firstname,
+          lastname: form.lastname,
+          sex: form.sex,
+          country: form.country,
+          city: form.city,
+          date_of_birth: new Date(Date.parse(form.date_of_birth)),
+          fc_max: Number(form.fc_max),
+          height: Number(form.height),
+          updated_at: String(dateNow) }
+      }, {
+        upsert: true
+      }, (err, doc) => {
+        if (err) throw err
+        res.redirect('/user/' + req.session.user._id + '/profil')
+      })
   },
   home: (req, res) => {
     var getWeekNumber = (d) => {
@@ -49,8 +92,6 @@ var userCtrl = {
     }
 
     var userId = req.params.user
-
-    var dateNow = new Date(Date.now())
 
     // request user
     if (req.session.user) {
@@ -102,6 +143,18 @@ var userCtrl = {
             } else {
               resolve({})
             }
+          })
+      })
+
+      // request db events
+      var dbUser = new Promise((resolve, reject) => {
+        User
+          .findById(userId)
+          .exec((err, user) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(user)
           })
       })
 
@@ -182,7 +235,8 @@ var userCtrl = {
           activities: dbActivitiesAll,
           health: dbHealthAll,
           charge: dbCharge,
-          event: dbEventsNext
+          event: dbEventsNext,
+          user: dbUser
         })
         .then((val) => {
           // health score calcul
@@ -201,6 +255,15 @@ var userCtrl = {
         })
         .then((result) => {
           var api = result
+
+          // IMG & IMG
+          if (api.user.date_of_birth && (api.user.sex === 'M' || api.user.sex === 'W') && Number(api.user.height) > 0 && Number(api.health.poids) > 0 && api.health.created_at) {
+            try {
+              api.weight_analyse = require('../../custom_modules/health/healthWeightAnalyse')(Number(api.health.poids), Number(api.user.height), api.user.date_of_birth, api.health.created_at, api.user.sex)
+            } catch (err) {
+              if (err) throw err
+            }
+          }
 
           api.date_now = dateNow
           res.render('partials/user/home', api)

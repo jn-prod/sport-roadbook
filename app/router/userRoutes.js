@@ -21,6 +21,12 @@ router.get('/:user/profil', userCtrl.profil)
 router.get('/:user/wait', userCtrl.wait)
 
 // Get Delete Account
-router.get('/delete/:id', userCtrl.delete)
+router.get('/:user/delete', userCtrl.delete)
+
+// Get edit Account
+router.get('/:user/edit', userCtrl.getEdit)
+
+// POST edit Account
+router.post('/:user/edit', userCtrl.postEdit)
 
 module.exports = router

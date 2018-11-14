@@ -12,7 +12,7 @@ var UserSchema = mongoose.Schema({
   sex: { type: String },
   country: { type: String },
   city: { type: String },
-  size: { type: Number },
+  height: { type: Number },
   date_of_birth: { type: Date },
   fc_max: { type: Number, default: 200 },
   tss: { type: Number },

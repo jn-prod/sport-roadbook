@@ -62,6 +62,53 @@ var helpers = {
       out = out + '<option value="' + val.value + '">' + val.name + '</option>'
     })
     return new Handlebars.SafeString(out)
+  },
+  size_select: () => {
+    var out = ''
+    for (var i = 1; i < 250; i++) {
+      out = out + '<option value="' + i + '">' + i + 'cm</option>'
+    }
+    return new Handlebars.SafeString(out)
+  },
+  bpm_select: () => {
+    var out = ''
+    for (var i = 30; i < 230; i++) {
+      out = out + '<option value="' + i + '">' + i + 'bpm</option>'
+    }
+    return new Handlebars.SafeString(out)
+  },
+  sex: (val) => {
+    if (val === 'M') {
+      return 'Homme'
+    } else if (val === 'W') {
+      return 'Femme'
+    } else {
+      return ''
+    }
+  },
+  imc_helper: (val) => {
+    if (val !== 'NC') {
+      var imc = Number(val)
+      if (imc < 16.5) {
+        return 'Voues êtes en dénutrition ou anorexie'
+      } else if (imc >= 16.5 && imc < 18.5) {
+        return 'Vous êtes mince'
+      } else if (imc >= 18.5 && imc < 25) {
+        return 'Vous avez un poids idéal'
+      } else if (imc >= 25 && imc < 30) {
+        return 'Vous êtes en surpoids'
+      } else if (imc >= 30 && imc < 35) {
+        return 'Vous êtes en obésité modérée'
+      } else if (imc >= 35 && imc < 40) {
+        return 'Vous êtes en obésité sévère'
+      } else if (imc >= 40) {
+        return 'Vous êtes en obésité morbide ou massive'
+      } else {
+        return ''
+      }
+    } else {
+      return ''
+    }
   }
 }
 
