@@ -37,8 +37,15 @@
               <div class="d-block"><strong>{{this.name}}</strong></div>
               <div class="d-block">
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
-                <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div>             
+                <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div> 
+                {{#if this.distance}}
+                  <div class="bg-light mr-2 ml-2 d-inline">{{this.distance}}Km</div>  
+                {{/if}}           
               </div>
+              
+            </div>
+            <div class="col-1 m-auto">
+              <a href="/event/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-event"><i class="far fa-trash-alt"></i></a> 
             </div>
           </div>
         </div>
@@ -80,6 +87,10 @@
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div>             
               </div>
+               
+            </div>
+            <div class="col-1 m-auto">
+              <a href="/event/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-event"><i class="far fa-trash-alt"></i></a>
             </div>
           </div>
         </div>
