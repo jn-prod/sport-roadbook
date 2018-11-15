@@ -119,10 +119,14 @@
                       <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
                     </div>
                     <div class="col-md-7 col-lg-9 mt-2 mb-2">
-                      <strong class="d-block text-capitalize mb-2">
-                        {{this.name}}
-                      </strong>
-                                    
+                      <div class="d-block">
+                        {{#if this.competition}}
+                          <i class="fas fa-flag-checkered d-inline"></i>
+                        {{/if}}                 
+                        <strong class="text-capitalize mb-2">
+                          {{this.name}}
+                        </strong>
+                      </div>            
                       {{#if this.fc_moyenne}}
                         <span class="badge badge-light d-block text-left mt-2 mb-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{this.fc_moyenne}} bpm
                         {{#if this.fc_max}} / max : {{ this.fc_max}} bpm {{/if}}
