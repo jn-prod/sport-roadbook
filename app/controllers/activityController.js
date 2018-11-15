@@ -2,6 +2,14 @@
 var Activity = require('../models/activity')
 // var today = new Date(Date.now())
 
+var checkboxToBoolean = (value) => {
+  if (value === 'on' || value === 'true') {
+    return true
+  } else {
+    return false
+  }
+}
+
 // Controllers
 var activityCtrl = {
   getAddActivity: (req, res) => {
@@ -17,9 +25,11 @@ var activityCtrl = {
     }
 
     var form = req.body
+
     form.user = res.locals.user._id
     form.distance = form.distance * 1000
     form.start_date_local = new Date(form.start_date_local)
+    form.competition = checkboxToBoolean(form.competition)
 
     // convertion du temps HH:mm:ss en secondes
     form.moving_time = convertTime(form.moving_time_hours, form.moving_time_minutes, form.moving_time_seconds)
@@ -84,11 +94,14 @@ var activityCtrl = {
   },
   deleteActivitiy: (req, res) => {
     Activity
-      .findByIdAndUpdate(req.params.activity, { $set: { user: null } }, (err, res) => {
+      .findByIdAndUpdate(req.params.activity, { $set: { user: null } }, (err, doc) => {
         if (err) throw err
         // finale redirection
         res.redirect('/activities/' + req.session.user._id + '/overview')
       })
+  },
+  getImport: (req, res) => {
+    res.render('partials/activity/import')
   },
   activitiesOverview: (req, res) => {
     var userId = req.session.user._id
