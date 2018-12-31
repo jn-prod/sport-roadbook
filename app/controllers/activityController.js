@@ -30,6 +30,7 @@ var activityCtrl = {
     form.distance = form.distance * 1000
     form.start_date_local = new Date(form.start_date_local)
     form.competition = checkboxToBoolean(form.competition)
+    form.import = true
 
     // convertion du temps HH:mm:ss en secondes
     form.moving_time = convertTime(form.moving_time_hours, form.moving_time_minutes, form.moving_time_seconds)
@@ -86,7 +87,9 @@ var activityCtrl = {
           })
         })
       } catch (err) {
-        if (err) throw err
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
       }
     }
     // finale redirection
