@@ -1,19 +1,31 @@
 var sport = [
   {
     name: 'Cyclisme',
-    value: 'Cyclisme'
+    value: 'Ride'
   },
   {
-    name: 'Running',
-    value: 'run'
+    name: 'Etirements',
+    value: 'Etirements'
   },
   {
-    name: 'Trail',
-    value: 'Trail'
+    name: 'Fitness / Crossfit / Musculation',
+    value: 'Fitness / Crossfit / Musculation'
+  },
+  {
+    name: 'Marche / Randonnée',
+    value: 'Hike'
+  },
+  {
+    name: 'Meditation',
+    value: 'Meditation'
   },
   {
     name: 'Natation',
     value: 'Natation'
+  },
+  {
+    name: 'Running / Trail',
+    value: 'Run'
   },
   {
     name: 'Stand Up Paddle',
@@ -22,30 +34,6 @@ var sport = [
   {
     name: 'Surf',
     value: 'Surf'
-  },
-  {
-    name: 'Musculation',
-    value: 'Musculation'
-  },
-  {
-    name: 'Fitness',
-    value: 'Fitness'
-  },
-  {
-    name: 'Crossfit',
-    value: 'Crossfit'
-  },
-  {
-    name: 'Randonnée',
-    value: 'Randonnée'
-  },
-  {
-    name: 'Meditation',
-    value: 'Meditation'
-  },
-  {
-    name: 'Etirements',
-    value: 'Etirements'
   },
   {
     name: 'Yoga',

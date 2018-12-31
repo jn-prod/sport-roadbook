@@ -18,6 +18,7 @@ var ActivitySchema = mongoose.Schema({
   fc_moyenne: { type: Number },
   fc_max: { type: Number },
   competition: { type: Boolean, default: false },
+  import: { type: Boolean, default: false },
 
   // import id
   strava_id: { type: Number },
