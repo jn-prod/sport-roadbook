@@ -73,6 +73,18 @@ var userCtrl = {
   },
   postEdit: (req, res) => {
     var form = req.body
+    var dateOfBirth
+    if (form.date_of_birth) {
+      try {
+        dateOfBirth = new Date(Date.parse(form.date_of_birth))
+      } catch (err) {
+        if (err) {
+          dateOfBirth = null
+        }
+      }
+    } else {
+      dateOfBirth = null
+    }
 
     User
       .findByIdAndUpdate(req.session.user._id, {
@@ -82,7 +94,7 @@ var userCtrl = {
           sex: form.sex,
           country: form.country,
           city: form.city,
-          date_of_birth: new Date(Date.parse(form.date_of_birth)),
+          date_of_birth: dateOfBirth,
           fc_max: Number(form.fc_max),
           height: Number(form.height),
           updated_at: String(dateNow) }
