@@ -44,14 +44,14 @@
 
         <!-- date_of_birth   -->
         <div class="form-group">
-          <label for="date_of_birth">Date de Naissance <span class="text-danger">*</span><small class="text-muted ml-2">Requis pour le test de masse grasse</small></label>
-          <input type="date" class="form-control" id="date" name="date_of_birth" value="{{date dbUser.date_of_birth}}" required>
+          <label for="date_of_birth">Date de Naissance <small class="text-muted ml-2">Necessaire pour la mesure d'activité et le test de masse grasse</small></label>
+          <input type="date" class="form-control" id="date" name="date_of_birth" value="{{date dbUser.date_of_birth}}">
         </div>
 
         <!-- fc_max -->
         <div class="form-group">
-          <label for="fc_max">Fréquence cardiaque maximale <span class="text-danger">*</span></label>
-          <select class="form-control" id="fc_max" name="fc_max" required>
+          <label for="fc_max">Fréquence cardiaque maximale <small class="text-muted ml-2">Necessaire pour la mesure d'activité</small></label>
+          <select class="form-control" id="fc_max" name="fc_max">
             <option value="{{dbUser.fc_max}}" selected>{{dbUser.fc_max}}bpm</option>
             {{bpm_select}}
           </select>
@@ -59,8 +59,8 @@
 
         <!-- height -->        
         <div class="form-group">
-          <label for="height">Taille <span class="text-danger">*</span><small class="text-muted ml-2">Requis pour le test de masse grasse</small></label>
-          <select class="form-control" id="height" name="height" required>
+          <label for="height">Taille <small class="text-muted ml-2">Necessaire pour le test de masse grasse</small></label>
+          <select class="form-control" id="height" name="height">
             <option value="{{dbUser.height}}" selected>{{dbUser.height}}cm</option>
             {{size_select}}
           </select>

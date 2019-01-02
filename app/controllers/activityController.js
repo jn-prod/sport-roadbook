@@ -39,7 +39,7 @@ var activityCtrl = {
     newActivity.save((err, activity) => {
       if (err) throw err
       else {
-        res.redirect('/activities/' + req.session.user._id + '/overview')
+        res.redirect('/user/' + req.session.user._id)
       }
     })
   },
@@ -72,7 +72,7 @@ var activityCtrl = {
                     average_speed: stravaActivity.average_speed,
                     calories: stravaActivity.calories,
                     fc_moyenne: stravaActivity.average_heartrate,
-                    fc_max: stravaActivity.max_heartrate,
+                    user_fc_max: stravaActivity.max_heartrate,
                     strava_id: stravaActivity.id
                   }
                   var newActivity = new Activity(activity)
@@ -97,96 +97,79 @@ var activityCtrl = {
   },
   deleteActivitiy: (req, res) => {
     Activity
-      .findByIdAndUpdate(req.params.activity, { $set: { user: null } }, (err, doc) => {
+      .findById(req.params.activity)
+      .populate('user')
+      .exec((err, activity) => {
         if (err) throw err
-        // finale redirection
-        res.redirect('/activities/' + req.session.user._id + '/overview')
+        if (String(activity.user._id) === String(req.session.user._id)) {
+          Activity
+            .findByIdAndUpdate(req.params.activity, { $set: { user: null } }, (err, doc) => {
+              if (err) throw err
+              // finale redirection
+              res.redirect('/user/' + req.session.user._id)
+            })
+        } else {
+          res.redirect('/user/' + req.session.user._id)
+        }
       })
   },
   getImport: (req, res) => {
     res.render('partials/activity/import')
   },
-  activitiesOverview: (req, res) => {
-    var userId = req.session.user._id
+  activitiyDetail: (req, res) => {
     // request db Activities
     Activity
-      .find({ user: userId })
-      .sort({ 'start_date_local': -1 })
-      .exec((err, dbActivites) => {
-        var AllFcMax = []
-        var fcMax
+      .findById(req.params.activity)
+      .populate('user')
+      .exec((err, dbActivity) => {
+        var config = {
+          user_owner: String(dbActivity.user._id) === String(req.session.user._id),
+          user_fc_max: false,
+          activity_full_data: false
+        }
+
         if (err) {
           res.redirect('/user/' + req.session.user._id)
         }
 
-        dbActivites.forEach((val) => {
-          // calcul du TSS
-          if (val.moving_time * 1 > 0 && val.fc_moyenne * 1 > 0) {
-            val.tss = 'NC'
-          } else {
-            val.tss = 'NC'
+        if (dbActivity !== undefined) {
+          // all activity data for next step ?
+          if (dbActivity.moving_time * 1 > 0 && dbActivity.fc_moyenne * 1 > 0) {
+            config.activity_full_data = true
           }
-        })
 
-        if (dbActivites.length > 0) {
-          dbActivites.forEach((activity) => {
-            if (activity.fc_max === undefined) {
-              AllFcMax.push(0)
-            } else {
-              AllFcMax.push(activity.fc_max)
-            }
-          })
-        } else {
-          AllFcMax = null
-        }
+          if (config.activity_full_data) {
+            // calcul de la fc max du user
+            if (dbActivity.user.fc_max > 0) {
+              config.user_fc_max = dbActivity.user.fc_max
+            } else if ((dbActivity.user.fc_max === null || dbActivity.user.fc_max === undefined) && dbActivity.user.date_of_birth !== null) {
+              var birthdate = new Date(dbActivity.user.date_of_birth)
+              var dateNow = new Date(Date.now())
 
-        // fc max defintion
-        if (AllFcMax.length === 1) {
-          fcMax = AllFcMax[0]
-        } else if (AllFcMax.length > 0) {
-          fcMax = AllFcMax.reduce((a, b) => {
-            return Math.max(a, b)
-          })
-        } else {
-          fcMax = null
-        }
-
-        // tss
-        if (fcMax > 0) {
-          dbActivites.forEach((activity) => {
-            try {
-              activity.tss = require('../../custom_modules/activity/tss')(activity.fc_moyenne, activity.moving_time, fcMax)
-            } catch (err) {
-              if (err) {
-                activity.tss = 'NC'
+              try {
+                config.user_fc_max = 220 - (dateNow.getFullYear() - birthdate.getFullYear())
+              } catch (err) {
+                if (err) {
+                  config.user_fc_max = false
+                }
               }
             }
-          })
-        }
 
-        // filter activities array
-        try {
-          if (req.query.start_date && req.query.end_date && dbActivites.length >= 1) {
-            var date = {
-              start: new Date(req.query.start_date),
-              end: new Date(req.query.end_date)
-            }
-
-            var filtredActivities = dbActivites.filter((val) => {
-              var activityDate = new Date(val.start_date_local)
-              if (activityDate >= date.start && activityDate <= date.end) {
-                return val
+            // calcul de la mesure de l'effort - tss
+            if (config.user_fc_max > 0) {
+              try {
+                dbActivity.tss = require('../../custom_modules/activity/tss')(dbActivity.fc_moyenne, dbActivity.moving_time, config.user_fc_max)
+              } catch (err) {
+                if (err) {
+                  dbActivity.tss = 'NC'
+                }
               }
-            })
-
-            dbActivites = filtredActivities
+            }
           }
-        } catch (err) {
-          if (err) throw err
         }
 
         // render page
-        res.render('partials/activity/overview', { activities: dbActivites })
+        res.render('partials/activity/details', { activity: dbActivity, config: config })
       })
   }
 }

@@ -46,6 +46,19 @@
             {{/if}}
           </div>
         </div>  
+ 
+      </div> 
+      <div class="row">
+        <div class="col-12 mt-3">
+          <div class="d-block">
+            <large class="text-center font-weight-bold">
+              Teams
+            </large>            
+          </div>
+          <div class="d-block">
+            <small class="text-muted">Vous n'appartenez à aucune équipe</small>
+          </div>
+        </div>
       </div> 
     </div>
     <div class="col-md-8 mx-auto">
@@ -58,11 +71,11 @@
             {{#if activities.list}}
               {{#each activities.list}}
                 <div class="row my-2 py-3 bg-light">
-                  <div class="col-md-5 col-lg-3 text-center  mt-2 mb-2 my-auto text-center">
+                  <div class="col-md-5 col-lg-2 text-center  mt-2 mb-2 my-auto text-center">
                     <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
                     <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
                   </div>
-                  <div class="col-md-7 col-lg-9 mt-2 mb-2 font-weight-bold">
+                  <div class="col-md-7 col-lg-7 mt-2 mb-2 font-weight-bold">
                     <div class="d-block">
                       {{#if this.competition}}
                         <i class="fas fa-flag-checkered d-inline"></i>
@@ -75,6 +88,12 @@
                     {{#if this.calories}}
                       <span class="badge badge-grey">{{this.calories}} calories</span>
                     {{/if}}
+
+                  </div>
+                  <div class="col-lg-3 my-auto text-center">
+                    <div class="d-block">
+                      <a href="/activities/{{this.id}}" class="btn btn-outline-primary btn-sm">Voir l'analyse</a>
+                    </div>                    
                   </div>
                 </div> 
               {{/each}}
@@ -88,7 +107,6 @@
           </div>
         </div>      
       </div>
-
     </div>
   </div>
 </div>

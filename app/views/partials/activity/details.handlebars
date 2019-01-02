@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-12 mt-3 mb-2 text-primary text-center">
+    <h1 class="ml-5 d-block mt-5 mb-5 font-primary">Analyse de l'activité</h1>
+  </div>
+</div>
+       
+{{#if activity}}
+  <div class="row">
+    <div class="col-11 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light pt-2 pb-3">
+      <div class="row">
+        <div class="col-md-2 text-center  mt-2 mb-2 my-auto text-center">
+          <large class="d-block"><strong>{{getDay activity.start_date_local}}</strong></large>
+          <small class="d-block text-muted">{{getMonth activity.start_date_local}}-{{getYear activity.start_date_local}}</small>                    
+        </div>
+        <div class="col-md-8 mt-2 mb-2">
+          <div class="d-block">
+            {{#if activity.competition}}
+              <i class="fas fa-flag-checkered d-inline"></i>
+            {{/if}}                 
+            <strong class="text-capitalize mb-2">
+              {{activity.name}}
+            </strong>
+          </div>
+                        
+          {{#if activity.fc_moyenne}}
+            <span class="badge badge-light d-block text-left mt-2 mb-2"><i class="fas fa-heartbeat text-danger"></i> moy: {{activity.fc_moyenne}} bpm
+            {{#if activity.fc_max}} / max : {{ activity.fc_max}} bpm {{/if}}
+            </span>
+          {{/if}}
+          <span class="badge badge-grey">{{activity.type}}</span>
+          <span class="badge badge-grey"><i class="fas fa-compass"></i> {{stravaDist activity.distance}} Km</span>
+          <span class="badge badge-grey"><i class="fas fa-sort-up"></i>D+: {{activity.total_elevation_gain}} m</span>
+          <span class="badge badge-grey"><i class="fas fa-tachometer-alt"></i> {{adverageSpeed activity.type activity.distance activity.moving_time}}</span>
+          <span class="badge badge-grey"><i class="far fa-clock"></i> {{secondToTime activity.moving_time}}</span>
+          {{#if activity.rpe}}
+            <span class="badge badge-grey"><i class="fas fa-file-medical-alt"></i> {{rpe activity.rpe}} %</span>
+          {{/if}} 
+          {{#if activity.calories}}
+            <span class="badge badge-grey"><i class="fas fa-heartbeat"></i> {{activity.calories}} calories</span>
+          {{/if}}
+          {{#if activity.tss}}
+            <small class="text-muted d-block mt-2">*{{tss_sentence activity.tss}}</small>
+          {{/if}} 
+          <span class="d-block">{{activity.description}}</span>
+        </div>
+        {{#if config.activity_full_data}}
+          <div class="col-md-2 my-auto text-center">
+            <small class="d-block">Mesure d'effort</small>
+            {{#if config.user_fc_max}}
+              <span class="d-block mt-3"><strong>{{activity.tss}}</strong>*</span>
+            {{else}}
+              <small class="d-block mt-3 text-muted">La mesure de l'effort mesure requiert soit votre date de naissance, soit votre fréquence cardiaque maximal. <a href="/user/{{user._id}}/edit">Compléter votre profil</a></small>
+            {{/if}}
+      
+          </div>          
+        {{/if}}
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          {{#if config.user_owner}}
+            <a href="/activities/{{activity.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-activity text-muted"><i class="far fa-trash-alt"></i> Supprimer</a>
+          {{/if}}
+        </div>
+      </div>      
+    </div>
+  </div>
+{{/if}}
