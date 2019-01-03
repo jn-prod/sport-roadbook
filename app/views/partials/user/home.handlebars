@@ -53,14 +53,38 @@
 
       <!-- team -->
       <div class="row">
-        <div class="col-12 my-3">
-          <div class="d-block">
-            <large class="text-center font-weight-bold">
-              Teams
-            </large>            
-          </div>
-          <div class="d-block">
-            <small class="text-muted">Vous n'appartenez à aucune team</small>
+        <div class="col-12 my-3  ">
+          <div class="d-block border">
+            <div class="d-block">
+              <large class="text-center font-weight-bold mt-3 d-block">
+                Teams
+              </large>            
+            </div>
+            <div class="d-block">
+              <div class="d-block mt-3 mb-2">Membre de :</div>
+              {{#if config.team}}
+                {{#each team}}
+                  <a href="/team/{{this._id}}" class="d-block font-weight-bold my-2">{{this.name}}<small class="text-muted"> - {{this.membres.length}} membres</small></a>
+                {{/each}}
+              {{else}}
+                <small class="text-muted d-block">Vous n'appartenez à aucune team</small>
+              {{/if}}
+              <div class="d-block mt-3 mb-2">Coach de :</div>
+              {{#if config.coach}}
+                {{#each coach}}
+                  <a href="/team/{{this._id}}" class="d-block font-weight-bold my-2">{{this.name}}<small class="text-muted"> - {{this.membres.length}} membres</small></a>
+                {{/each}}
+                
+              {{else}}
+                <small class="text-muted d-block mb-3">Vous n'êtes coach d'aucune team</small>
+                {{#if config.owner}}
+                  <a href="/team/add" class="btn btn-outline-dark my-2">Créer une équipe</a>
+                {{/if}}
+              {{/if}}
+              {{#if config.team_load_more}}
+                <a href="/team/{{user._id}}/overview" class="text-muted my-2 btn btn-outline-light"><small>Voir toutes les teams</small></a>
+              {{/if}}
+            </div>            
           </div>
         </div>
       </div> 

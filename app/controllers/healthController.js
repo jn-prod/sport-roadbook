@@ -134,6 +134,16 @@ var healthCtrl = {
         dbHealth.forEach((health) => {
           health.score_forme = getHealthScore(health)
         })
+
+        // clalcul de IMC & IMG
+        // if (api.profil.date_of_birth && (api.profil.sex === 'M' || api.profil.sex === 'W') && Number(api.profil.height) > 0 && Number(api.health.poids) > 0 && api.health.created_at) {
+        //   try {
+        //     api.weight_analyse = require('../../custom_modules/health/healthWeightAnalyse')(Number(api.health.poids), Number(api.profil.height), api.profil.date_of_birth, api.health.created_at, api.profil.sex)
+        //   } catch (err) {
+        //     if (err) throw err
+        //   }
+        // }
+
         res.render('partials/health/overview', { healths: dbHealth })
       })
   }
