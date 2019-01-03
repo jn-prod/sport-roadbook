@@ -20,6 +20,7 @@ import './components/healthScoreGraph'
 import './components/activitiesChargesGraph'
 import './components/delete-activity'
 import './components/delete-event'
+import './components/delete-team'
 // import './components/addInputLocation'
 
 if (module.hot) {

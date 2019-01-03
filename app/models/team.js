@@ -11,6 +11,9 @@ var UserSchema = mongoose.Schema({
   membres: [
     { type: Schema.ObjectId, ref: 'User', required: true }
   ],
+  events: [
+    { type: Schema.ObjectId, ref: 'Event' }
+  ],
   code: { type: String },
 
   // log

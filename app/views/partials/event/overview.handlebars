@@ -51,6 +51,17 @@
         </div>
       </div>
     {{/each}}
+  {{else}}
+    <div class="row">
+      <div class="col-12">
+        <div class="d-block bg-light p-5 text-muted text-center">
+          <span class="d-block my-2">
+            Vous n'avez aucun événement à venir
+          </span>
+          <a href="/event/add" class="btn btn-outline-primary">Ajouter un événement</a>
+        </div>
+      </div>
+    </div>
   {{/if}}
 
   <div class="row mb-3 mt-3">
