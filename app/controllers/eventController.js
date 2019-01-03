@@ -19,6 +19,20 @@ var eventController = {
       }
     })
   },
+  eventDetails: (req, res) => {
+    Event
+      .findById(req.params.event)
+      .populate('user')
+      .exec((err, event) => {
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
+        var config = {
+          owner: String(event.user._id) === String(req.session.user._id)
+        }
+        res.render('partials/event/details', { event: event, config: config })
+      })
+  },
   deleteEvent: (req, res) => {
     Event
       .findOneAndUpdate({
