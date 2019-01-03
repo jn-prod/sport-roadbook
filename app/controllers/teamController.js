@@ -132,6 +132,38 @@ var eventController = {
         }
       })
   },
+  teamAddMember: (req, res) => {
+    var form = req.body
+    Team
+      .findById(req.params.team)
+      .exec((err, team) => {
+        if (err) {
+          res.redirect('/team/' + req.params.team)
+        } else {
+          if (team.code === form.code) {
+            var find = false
+            if (team.membres.length >= 1) {
+              find = team.membres.find((search) => {
+                return String(search._id) === String(req.session.user._id)
+              })
+            }
+
+            if (find === undefined || find === false) {
+              Team
+                .findByIdAndUpdate(req.params.team, { $push: { membres: req.session.user._id } }, (err, doc) => {
+                  console.log('ok')
+                  if (err) throw err
+                  res.redirect('/team/' + req.params.team)
+                })
+            } else {
+              res.redirect('/team/' + req.params.team)
+            }
+          } else {
+            res.redirect('/team/' + req.params.team)
+          }
+        }
+      })
+  },
   teamOverview: (req, res) => {
     var config = {
       owner: String(req.params.user) === String(req.session.user._id)
