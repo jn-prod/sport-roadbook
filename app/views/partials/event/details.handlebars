@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 mb-2 text-primary text-center">
+      <h1 class="ml-5 d-block mt-5 mb-5 font-primary">{{event.name}}</h1>
+    </div>
+  </div>
+      
+  <div class="row">
+    <div class="col-12 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
+      <div class="row pt-2 pb-2">
+        <div class="col-md-2 text-center  mt-2 mb-2 my-auto mx-auto">
+          <div class="d-flex">
+            <div class="d-block">
+              <large class="d-block"><strong>{{getDay event.date_start}}</strong></large>
+              <small class="d-block text-muted">{{getMonth event.date_start}}-{{getYear event.date_start}}</small>                 
+            </div>
+            <div class="d-block mr-2 ml-2">
+              <strong>-</strong>                
+            </div>
+            <div class="d-block">
+              <large class="d-block"><strong>{{getDay event.date_end}}</strong></large>
+              <small class="d-block text-muted">{{getMonth event.date_end}}-{{getYear event.date_end}}</small>                   
+            </div>
+          </div>
+                 
+        </div>
+        <div class="col-md-10 mt-2 mb-2 my-auto text-left">
+          <div class="d-block">
+            <div class="bg-light mr-2 d-inline">{{event.type}}</div>
+            <div class="bg-light mr-2 ml-2 d-inline">{{event.sport}}</div> 
+            {{#if event.distance}}
+              <div class="bg-light mr-2 ml-2 d-inline">{{event.distance}}Km</div>  
+            {{/if}}           
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="d-block">
+                <span class="text-muted">description:</span> {{event.description}}
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      {{#if config.owner}}
+        <div class="row">
+          <div class="col-12 m-auto">
+            <a href="/event/{{event.id}}/delete" class="btn btn-light btn-sm border-0 btn-sm mt-2 delete-event text-muted my-2"><i class="far fa-trash-alt"></i> Supprimer l'événement</a> 
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

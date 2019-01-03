@@ -33,7 +33,7 @@
               </div>
                      
             </div>
-            <div class="col-md-8 mt-2 mb-2 my-auto d-flex text-center">                          
+            <div class="col-md-5 mt-2 mb-2 my-auto d-flex text-center">                          
               <div class="d-block"><strong>{{this.name}}</strong></div>
               <div class="d-block">
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
@@ -44,13 +44,24 @@
               </div>
               
             </div>
-            <div class="col-1 m-auto">
-              <a href="/event/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-event"><i class="far fa-trash-alt"></i></a> 
+            <div class="col-4 m-auto text-right">
+              <a href="/event/{{this.id}}" class="btn btn-outline-primary btn-sm mt-2">Plus d'informations</a> 
             </div>
           </div>
         </div>
       </div>
     {{/each}}
+  {{else}}
+    <div class="row">
+      <div class="col-12">
+        <div class="d-block bg-light p-5 text-muted text-center">
+          <span class="d-block my-2">
+            Vous n'avez aucun événement à venir
+          </span>
+          <a href="/event/add" class="btn btn-outline-primary">Ajouter un événement</a>
+        </div>
+      </div>
+    </div>
   {{/if}}
 
   <div class="row mb-3 mt-3">
@@ -81,7 +92,7 @@
               </div>
                      
             </div>
-            <div class="col-md-8 mt-2 mb-2 my-auto d-flex text-center">                          
+            <div class="col-md-5 mt-2 mb-2 my-auto d-flex text-center">                          
               <div class="d-block"><strong>{{this.name}}</strong></div>
               <div class="d-block">
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
@@ -89,8 +100,8 @@
               </div>
                
             </div>
-            <div class="col-1 m-auto">
-              <a href="/event/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-event"><i class="far fa-trash-alt"></i></a>
+            <div class="col-4 m-auto text-right">
+              <a href="/event/{{this.id}}" class="btn btn-outline-primary btn-sm mt-2">Plus d'informations</a>
             </div>
           </div>
         </div>

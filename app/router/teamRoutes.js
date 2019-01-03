@@ -12,6 +12,8 @@ router.get('/add', teamCtrl.getAddTeam)
 router.post('/add', teamCtrl.postAddTeam)
 // team details
 router.get('/:team', teamCtrl.teamDetails)
+// add event
+router.get('/:team/event/:event/add', teamCtrl.teamAddEvent)
 // team overview
 router.get('/:user/overview', teamCtrl.teamOverview)
 // delete team

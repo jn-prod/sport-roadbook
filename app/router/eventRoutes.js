@@ -12,6 +12,8 @@ router.get('/add', eventCtrl.getAddEvent)
 router.post('/add', eventCtrl.postAddEvent)
 // activities overview
 router.get('/:user/overview', eventCtrl.eventsOverview)
+// details event
+router.get('/:event', eventCtrl.eventDetails)
 // delete event
 router.get('/:event/delete', eventCtrl.deleteEvent)
 module.exports = router
