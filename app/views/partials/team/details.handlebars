@@ -92,7 +92,19 @@
     </div>
   {{else}}
     <div class="row">
-      <div class="col-12  text-center">
+      <div class="col-md-8 mx-auto text-center">
+        <span class="d-block h4 my-3">S'inscrire à ce groupe</span>
+        <form action="/team/{{team._id}}/membre/add" method="POST">
+          <!-- code -->
+          <div class="form-group">
+            <label for="code">Code de membre* <small class="text-muted">Donné par le coach de la team</small></label>
+            <input type="text" class="form-control" id="code" name="code" placeholder="saisir le code" required>
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+          </div>          
+        </form>
         <p class="bg-light p-5 text-muted"><i class="fas fa-lock mr-2"></i>Vous n'êtes pas membre de cette team. Pour en faire partie, vous devez avoir été invité à la rejoindre par son coach.</p>
       </div>
     </div>

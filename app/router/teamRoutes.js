@@ -14,6 +14,8 @@ router.post('/add', teamCtrl.postAddTeam)
 router.get('/:team', teamCtrl.teamDetails)
 // add event
 router.get('/:team/event/:event/add', teamCtrl.teamAddEvent)
+// add membre validation
+router.post('/:team/membre/add', teamCtrl.teamAddMember)
 // team overview
 router.get('/:user/overview', teamCtrl.teamOverview)
 // delete team
