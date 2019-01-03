@@ -21,14 +21,14 @@
             </div>
           </div>
         </div>
-        <div class="row py-2">
+<!--         <div class="row py-2">
           <div class="col-12 ">
             <div class="d-block border border-white border-right-0 border-left-0 border-bottom-0 py-2">
               <large class="d-block font-weight-bold">profil.points</large>
               <small class="d-block text-muted">points</small>               
             </div>
           </div>
-        </div>      
+        </div>   -->    
         <div class="row">
           <div class="col-12 mt-3 mb-2 border border-white border-right-0 border-left-0 border-bottom-0">
             <large class="d-block text-center font-weight-bold">
@@ -42,29 +42,82 @@
               <small class="text-muted">{{ date event.date_start }}-{{ date event.date_end }} </small><strong>{{ event.name }}</strong>
             {{else}}
               <small class="text-muted mb-2 d-block">Aucun événement à venir</small>
-              <a href="/event/add" class="btn btn-outline-dark">Ajouter un événement</a>
+              {{#if config.owner}}
+                <a href="/event/add" class="btn btn-outline-dark">Ajouter un événement</a>
+              {{/if}}
             {{/if}}
           </div>
         </div>  
  
       </div> 
+
+      <!-- team -->
       <div class="row">
-        <div class="col-12 mt-3">
-          <div class="d-block">
-            <large class="text-center font-weight-bold">
-              Teams
-            </large>            
-          </div>
-          <div class="d-block">
-            <small class="text-muted">Vous n'appartenez à aucune équipe</small>
+        <div class="col-12 my-3  ">
+          <div class="d-block border">
+            <div class="d-block">
+              <large class="text-center font-weight-bold mt-3 d-block">
+                Teams
+              </large>            
+            </div>
+            <div class="d-block">
+              <div class="d-block mt-3 mb-2">Membre de :</div>
+              {{#if config.team}}
+                {{#each team}}
+                  <a href="/team/{{this._id}}" class="d-block font-weight-bold my-2">{{this.name}}<small class="text-muted"> - {{this.membres.length}} membres</small></a>
+                {{/each}}
+              {{else}}
+                <small class="text-muted d-block">Vous n'appartenez à aucune team</small>
+              {{/if}}
+              <div class="d-block mt-3 mb-2">Coach de :</div>
+              {{#if config.coach}}
+                {{#each coach}}
+                  <a href="/team/{{this._id}}" class="d-block font-weight-bold my-2">{{this.name}}<small class="text-muted"> - {{this.membres.length}} membres</small></a>
+                {{/each}}
+                
+              {{else}}
+                <small class="text-muted d-block mb-3">Vous n'êtes coach d'aucune team</small>
+                {{#if config.owner}}
+                  <a href="/team/add" class="btn btn-outline-dark my-2">Créer une équipe</a>
+                {{/if}}
+              {{/if}}
+              {{#if config.team_load_more}}
+                <a href="/team/{{user._id}}/overview" class="text-muted my-2 btn btn-outline-light"><small>Voir toutes les teams</small></a>
+              {{/if}}
+            </div>            
           </div>
         </div>
       </div> 
+
+      <!-- applications connectées -->
+      {{#if config.owner}}
+        <div class="row">
+          <div class="col-12 my-3">
+            <div class="d-block">
+              <large class="text-center font-weight-bold">
+                Applications
+              </large>            
+            </div>
+            <div class="d-block text-center">
+              {{#if user.strava_refresh_token}}
+                <a href="/auth/strava" class="btn btn-outline-light"><i class="fab fa-strava text-primary"></i> <small class="text-primary">Strava connecté</small></a>
+              {{else}}
+                <a href="/auth/strava" class="btn btn-outline-light"><i class="fab fa-strava text-muted"></i> <small class="text-muted">Strava non-connecté</small></a>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      {{/if}}
     </div>
+
+    <!-- activités -->
     <div class="col-md-8 mx-auto">
       <div class="d-block p-3 h-100">
-        <div class="d-block text-muted h4">
+        <div class="d-inline-block text-muted h4">
           Activités
+        </div>
+        <div class="d-inline-block text-muted float-right">
+          <a href="/user/{{user._id}}/wait" class="text-muted"><i class="fas fa-redo"></i></a>
         </div>
         <div class="row">
           <div class="col-12">
@@ -101,6 +154,9 @@
               <div class="row">
                 <div class="col-12">
                   Vous n'avez pas encore enregistré d'activité
+                  {{#if config.owner}}
+                    <a href="/auth/strava" class="btn btn-danger"><i class="fab fa-strava"></i> Importez vos activités strava</a>
+                  {{/if}}
                 </div>
               </div>
             {{/if}}

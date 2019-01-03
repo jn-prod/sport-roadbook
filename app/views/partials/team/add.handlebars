@@ -1,0 +1,33 @@
+<div class="container mt-5 bg-light">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="h2 text-center mt-5 mb-2">Ajouter une team</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 mx-auto mb-5 mt-5">
+      <form action="/team/add" method="post" id="team">
+        <!-- name -->
+        <div class="form-group">
+          <label for="name">Nom de la team*</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="ex: equipe 1 du club" required>
+        </div>
+
+        <!-- description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+        </div>
+
+        <div class="row">
+          <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="alert alert-warning">* champs obligatoirs</p>
+    </div>
+  </div>
+</div>

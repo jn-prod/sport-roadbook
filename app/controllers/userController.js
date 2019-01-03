@@ -3,13 +3,11 @@ var Promise = require('bluebird')
 
 var dateNow = new Date(Date.now())
 
-// custom_modules
-var getHealthScore = require('../../custom_modules/health/healthScore')
-
 // models
 var User = require('../models/user')
 var Activity = require('../models/activity')
 var Event = require('../models/event')
+var Team = require('../models/team')
 
 var activityTranslate = (activity) => {
   if (activity === 'Run') {
@@ -107,6 +105,9 @@ var userCtrl = {
   },
   home: (req, res) => {
     var userId = req.params.user
+    var config = {
+      owner: String(req.params.user) === String(req.session.user._id)
+    }
 
     // request user
     if (req.session.user) {
@@ -127,7 +128,7 @@ var userCtrl = {
           })
       })
 
-      // request db events
+      // request db user
       var dbUser = new Promise((resolve, reject) => {
         User
           .findById(userId)
@@ -136,6 +137,32 @@ var userCtrl = {
               reject(err)
             }
             resolve(user)
+          })
+      })
+
+      // request db teams
+      var dbTeam = new Promise((resolve, reject) => {
+        Team
+          .find({ membres: userId })
+          .limit(5)
+          .exec((err, team) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(team)
+          })
+      })
+
+      // request db coach
+      var dbCoach = new Promise((resolve, reject) => {
+        Team
+          .find({ coach: userId })
+          .limit(5)
+          .exec((err, team) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(team)
           })
       })
 
@@ -177,36 +204,33 @@ var userCtrl = {
         .props({
           activities: dbActivitiesAll,
           event: dbEventsNext,
+          team: dbTeam,
+          coach: dbCoach,
           profil: dbUser
-        })
-        .then((val) => {
-          // health score calcul
-          if (val.health) {
-            try {
-              val.healthScore = getHealthScore(val.health)
-            } catch (err) {
-              if (err) {
-                val.healthScore = ''
-              }
-            }
-          } else {
-            val.healthScore = ''
-          }
-          return val
         })
         .then((result) => {
           var api = result
 
-          // IMG & IMG
-          // if (api.profil.date_of_birth && (api.profil.sex === 'M' || api.profil.sex === 'W') && Number(api.profil.height) > 0 && Number(api.health.poids) > 0 && api.health.created_at) {
-          //   try {
-          //     api.weight_analyse = require('../../custom_modules/health/healthWeightAnalyse')(Number(api.health.poids), Number(api.profil.height), api.profil.date_of_birth, api.health.created_at, api.profil.sex)
-          //   } catch (err) {
-          //     if (err) throw err
-          //   }
-          // }
+          if (api.coach.length >= 1) {
+            config.coach = true
+          } else {
+            config.coach = false
+          }
+
+          if (api.team.length >= 1) {
+            config.team = true
+          } else {
+            config.team = false
+          }
+
+          if (api.team.length >= 1 || api.coach.length >= 1) {
+            config.team_load_more = true
+          } else {
+            config.team_load_more = false
+          }
 
           api.date_now = dateNow
+          api.config = config
           res.render('partials/user/home', api)
         })
         .catch((err) => {

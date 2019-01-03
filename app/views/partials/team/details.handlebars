@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 mb-2 text-primary text-center">
+      <h1 class="ml-5 d-block mt-5 mb-5 font-primary">{{team.name}}</h1>
+      <h2>{{team.description}}</h2>
+    </div>
+  </div>
+      
+
+  <div class="row">
+    <div class="col-12 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
+      <div class="row pt-2 pb-2">
+        <div class="col-md-12 mt-2 mb-2 my-auto d-flex text-center">                          
+          <div class="d-block"><strong>{{this.name}}</strong> <small class="text-muted ml-3">{{team.membres.length}} equipiers</small></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{#each team.membres}}
+            <a href="/user/{{this._id}}" class="d-block">{{this.firstname}} {{this.lastname}}</a>
+          {{/each}}
+        </div>
+      </div>
+      {{#if config.owner}}
+        <div class="row">
+          <div class="col-12 m-auto">
+            <a href="/team/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-team text-muted"><small><i class="far fa-trash-alt"></i>Supprimer la team</small></a> 
+          </div>          
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

@@ -1,12 +1,11 @@
 var stravaApi = require('strava-v3')
 
-var stravaUserActivities = (stravaId, stravaCode, done) => {
-  stravaApi.oauth.getToken(stravaCode, (err, payload, limits) => {
-    var userToken = payload.access_token
+var stravaUserActivities = (stravaRefreshToken, done) => {
+  stravaApi.oauth.getToken(stravaRefreshToken, (err, payload, limits) => {
     if (err) {
       done(null)
     } else {
-      stravaApi.athlete.listActivities({ 'access_token': userToken }, (err, activities, limits) => {
+      stravaApi.athlete.listActivities({ 'access_token': payload.access_token }, (err, activities, limits) => {
         if (err) {
           done(null)
         } else {
