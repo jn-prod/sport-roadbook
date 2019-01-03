@@ -45,14 +45,13 @@ var activityCtrl = {
   },
   getStravaActivities: (req, res) => {
     var strava = {
-      stravaId: req.session.user.strava_id,
-      stravaCode: req.session.strava,
-      stravaApi: require('../../custom_modules/strava/stravaGetUserActivities')
+      token: req.session.user.strava_refresh_token,
+      api: require('../../custom_modules/strava/stravaGetUserActivities')
     }
 
-    if (strava.stravaId && strava.stravaCode) {
+    if (strava.token !== null || strava.token !== undefined) {
       try {
-        strava.stravaApi(strava.stravaId, strava.stravaCode, (stravaActivities) => {
+        strava.api(strava.token, (stravaActivities) => {
           stravaActivities.forEach((stravaActivity) => {
             Activity
               .findOne({ 'strava_id': stravaActivity.id })

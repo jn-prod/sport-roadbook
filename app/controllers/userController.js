@@ -107,6 +107,9 @@ var userCtrl = {
   },
   home: (req, res) => {
     var userId = req.params.user
+    var config = {
+      owner: String(req.params.user) === String(req.session.user._id)
+    }
 
     // request user
     if (req.session.user) {
@@ -207,6 +210,7 @@ var userCtrl = {
           // }
 
           api.date_now = dateNow
+          api.config = config
           res.render('partials/user/home', api)
         })
         .catch((err) => {

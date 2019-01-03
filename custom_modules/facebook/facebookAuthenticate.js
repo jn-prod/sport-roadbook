@@ -8,7 +8,7 @@ var facebookAuthenticate = (req, res, next) => {
       return res.redirect('/user/login')
     } else {
       req.session.user = user
-      res.redirect('/user/' + user.id)
+      res.redirect('/user/' + user.id + '/wait')
     }
   })(req, res, next)
 }

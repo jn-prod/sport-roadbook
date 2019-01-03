@@ -4,6 +4,8 @@ var mongoose = require('mongoose')
 // User Schema
 var UserSchema = mongoose.Schema({
   strava_id: { type: Number },
+  strava_access_token: { type: String },
+  strava_refresh_token: { type: String },
   facebook_id: { type: Number },
   username: { type: String },
   email: { type: String, unique: true, required: true, index: true },

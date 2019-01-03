@@ -25,6 +25,7 @@ var accessResponse = (accessToken, refreshToken, profile, done) => {
         if (userStrava.length === 0) {
           var user = new User({
             strava_id: profile._json.id,
+            strava_access_token: accessToken,
             username: profile._json.username,
             email: profile._json.email,
             firstname: profile._json.firstname,
@@ -40,17 +41,14 @@ var accessResponse = (accessToken, refreshToken, profile, done) => {
             }
           })
         } else {
-          if (!userStrava[0].Strava_id) {
-            User.updateOne({ _id: userStrava[0]._id }, { $set: { 'strava_id': profile._json.id } }, (err, user) => {
+          User
+            .updateOne({ _id: userStrava[0]._id }, { $set: { 'strava_id': profile._json.id, 'strava_access_token': accessToken } }, (err, user) => {
               if (err) {
                 return done(err)
               } else {
                 done(null, userStrava[0])
               }
             })
-          } else {
-            done(null, userStrava[0])
-          }
         }
       }
     })
