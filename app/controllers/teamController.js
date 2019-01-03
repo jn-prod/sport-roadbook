@@ -56,8 +56,26 @@ var eventController = {
           res.redirect('/user/' + req.session.user._id)
         }
         var config = {
-          owner: String(team.coach._id) === String(req.session.user._id)
+          owner: String(team.coach._id) === String(req.session.user._id),
         }
+
+        console.log(team)
+
+        if (team.membres.length >= 1) {
+          config.is_member = team.membres.find((membre) => {
+            if (membre._id !== undefined) {
+              return req.session.user._id === membre._id 
+            } else {
+              return false 
+            }
+            
+            
+          }) 
+        } else {
+          config.is_member = false
+        }
+
+        console.log(config)
 
         res.render('partials/team/details', { team: team, config: config })
       })
