@@ -52,38 +52,40 @@ var activityCtrl = {
     if (strava.token !== null || strava.token !== undefined) {
       try {
         strava.api(strava.token, (stravaActivities) => {
-          stravaActivities.forEach((stravaActivity) => {
-            Activity
-              .findOne({ 'strava_id': stravaActivity.id })
-              .exec((err, res) => {
-                if (err) throw err
+          if (stravaActivities.length >= 1) {
+            stravaActivities.forEach((stravaActivity) => {
+              Activity
+                .findOne({ 'strava_id': stravaActivity.id })
+                .exec((err, res) => {
+                  if (err) throw err
 
-                // if new activity
-                if (res === null) {
-                  var activity = {
-                    user: req.session.user._id,
-                    type: stravaActivity.type,
-                    name: stravaActivity.name,
-                    distance: stravaActivity.distance,
-                    moving_time: stravaActivity.moving_time,
-                    total_elevation_gain: stravaActivity.total_elevation_gain,
-                    start_date_local: stravaActivity.start_date_local,
-                    average_speed: stravaActivity.average_speed,
-                    calories: stravaActivity.calories,
-                    fc_moyenne: stravaActivity.average_heartrate,
-                    user_fc_max: stravaActivity.max_heartrate,
-                    strava_id: stravaActivity.id
-                  }
-                  var newActivity = new Activity(activity)
-                  newActivity.save((err, savedActivity) => {
-                    if (err) throw err
-                    else {
-                      console.log(savedActivity.id + ': saved')
+                  // if new activity
+                  if (res === null) {
+                    var activity = {
+                      user: req.session.user._id,
+                      type: stravaActivity.type,
+                      name: stravaActivity.name,
+                      distance: stravaActivity.distance,
+                      moving_time: stravaActivity.moving_time,
+                      total_elevation_gain: stravaActivity.total_elevation_gain,
+                      start_date_local: stravaActivity.start_date_local,
+                      average_speed: stravaActivity.average_speed,
+                      calories: stravaActivity.calories,
+                      fc_moyenne: stravaActivity.average_heartrate,
+                      user_fc_max: stravaActivity.max_heartrate,
+                      strava_id: stravaActivity.id
                     }
-                  })
-                }
-              })
-          })
+                    var newActivity = new Activity(activity)
+                    newActivity.save((err, savedActivity) => {
+                      if (err) throw err
+                      else {
+                        console.log(savedActivity.id + ': saved')
+                      }
+                    })
+                  }
+                })
+            })
+          }
         })
       } catch (err) {
         if (err) {

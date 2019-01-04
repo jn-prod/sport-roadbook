@@ -125,26 +125,32 @@ var healthCtrl = {
   },
   healthOverview: (req, res) => {
     Health
-      .find({ user: req.session.user._id })
+      .find({ user: req.params.user })
+      .populate('user')
       .sort({ created_at: -1 })
       .exec((err, dbHealth) => {
+        var healths = []
         if (err) {
           res.redirect('/user/' + req.req.session.user._id)
         }
+
+        // console.log(dbHealth)
         dbHealth.forEach((health) => {
-          health.score_forme = getHealthScore(health)
+          var weightAnalyse
+          var scoreForme = getHealthScore(health)
+          // clalcul de IMC & IMG
+          if (health.user.date_of_birth && (health.user.sex === 'M' || health.user.sex === 'W') && Number(health.user.height) > 0 && Number(health.poids) > 0 && health.created_at) {
+            try {
+              weightAnalyse = require('../../custom_modules/health/healthWeightAnalyse')(Number(health.poids), Number(health.user.height), health.user.date_of_birth, health.created_at, health.user.sex)
+            } catch (err) {
+              if (err) throw err
+            }
+          }
+
+          healths.push(Object.assign({ weight_analyse: weightAnalyse, score_forme: scoreForme }, health._doc))
         })
 
-        // clalcul de IMC & IMG
-        // if (api.profil.date_of_birth && (api.profil.sex === 'M' || api.profil.sex === 'W') && Number(api.profil.height) > 0 && Number(api.health.poids) > 0 && api.health.created_at) {
-        //   try {
-        //     api.weight_analyse = require('../../custom_modules/health/healthWeightAnalyse')(Number(api.health.poids), Number(api.profil.height), api.profil.date_of_birth, api.health.created_at, api.profil.sex)
-        //   } catch (err) {
-        //     if (err) throw err
-        //   }
-        // }
-
-        res.render('partials/health/overview', { healths: dbHealth })
+        res.render('partials/health/overview', { healths: healths })
       })
   }
 }

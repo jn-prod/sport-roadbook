@@ -9,8 +9,10 @@
     <div class="col-11 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light pt-2 pb-3">
       <div class="row">
         <div class="col-md-2 text-center  mt-2 mb-2 my-auto text-center">
-          <large class="d-block"><strong>{{getDay activity.start_date_local}}</strong></large>
-          <small class="d-block text-muted">{{getMonth activity.start_date_local}}-{{getYear activity.start_date_local}}</small>                    
+          <div class="d-block bg-white p-2 border border-muted rounded">
+            <large class="d-block"><strong>{{getDay activity.start_date_local}}</strong></large>
+            <small class="d-block text-muted">{{getMonth activity.start_date_local}}-{{getYear activity.start_date_local}}</small>                    
+          </div>
         </div>
         <div class="col-md-8 mt-2 mb-2">
           <div class="d-block">

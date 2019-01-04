@@ -5,108 +5,176 @@
       <h2>{{team.description}}</h2>
     </div>
   </div>
-  {{#if config.is_member}}
-    <div class="row">
-      <div class="col-md-4  mt-2 ">
-        <div class="d-block mx-auto border border-top-0 border-right-0 border-left-0 border-primary bg-light p-3">
-          <div class="row pt-2 pb-2">
-            <div class="col-md-12 mt-2 mb-2 my-auto d-flex text-center">                          
-              <div class="d-block"><strong>{{this.name}}</strong> <small class="text-muted ml-3">Coach</small></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <a href="/user/{{this._id}}" class="d-block"><i class="fas fa-user mr-2"></i>{{team.coach.firstname}} {{team.coach.lastname}}</a>
-            </div>
-          </div>  
-          <div class="row pt-2 pb-2">
-            <div class="col-md-12 mt-2 mb-2 my-auto d-flex text-center">                          
-              <div class="d-block"><strong>{{this.name}}</strong> <small class="text-muted ml-3">Equipiers - {{team.membres.length}}</small></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              {{#each team.membres}}
-                <a href="/user/{{this._id}}" class="d-block"><i class="fas fa-user mr-2"></i>{{this.firstname}} {{this.lastname}}</a>
-              {{/each}}
-            </div>
-          </div>          
-        </div>
 
-        {{#if config.owner}}
-          <div class="row">
-            <div class="col-12 m-auto">
-              <a href="/team/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-team text-muted"><small><i class="far fa-trash-alt"></i>Supprimer la team</small></a> 
+  <!-- la team est active si le code est présent -->
+  {{#if team.code}}
+
+    <!-- seul les membres ont accès aux informations de la team -->
+    {{#if config.is_member}}
+
+      <div class="row">
+        <div class="col-md-4  mt-2 ">
+          <div class="d-block mx-auto border border-top-0 border-right-0 border-left-0 border-primary bg-light p-3">
+            <div class="row pt-2 pb-2">
+              <div class="col-md-12 mt-2 mb-2 my-auto d-flex text-center">                          
+                <div class="d-block"><strong>{{this.name}}</strong> <small class="text-muted ml-3">Coach</small></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <a href="/user/{{this._id}}" class="d-block"><i class="fas fa-user mr-2"></i>{{team.coach.firstname}} {{team.coach.lastname}}</a>
+              </div>
+            </div>  
+            <div class="row pt-2 pb-2">
+              <div class="col-md-12 mt-2 mb-2 my-auto d-flex text-center">                          
+                <div class="d-block"><strong>{{this.name}}</strong> <small class="text-muted ml-3">Equipiers - {{team.membres.length}}</small></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{#each team.membres}}
+                  <a href="/user/{{this._id}}" class="d-block"><i class="fas fa-user mr-2"></i>{{this.firstname}} {{this.lastname}}</a>
+                {{/each}}
+              </div>
             </div>          
           </div>
-        {{/if}}
-      </div>
-      <div class="col-md-8">
-        {{#if user_events}}
-          {{#each user_events}}
-            <div class="row bg-light py-2">
-              <div class="col-md-2 my-auto text-center">
-                <large class="d-block"><strong>{{getDay this.date_start}}</strong></large>
-                <small class="d-block text-muted">{{getMonth this.date_start}}-{{getYear this.date_start}}</small> 
-              </div>
-              <div class="col-md-10 my-auto">                 
-                <div class="d-inline-block ml-2 font-weight-bold">{{this.sport}}</div>
-                <div class="d-inline-block ml-2">{{this.name}}</div>
-                <div class="d-inline-block ml-2">{{this.distance}}km</div>
-                <div class="d-inline-block float-right"><a href="/team/{{../team._id}}/event/{{this._id}}/add" class="btn btn-outline-primary btn-sm">Ajouter au programme</a></div>
-              </div>
+
+          <!-- seul le propriétaire peut supprimer la team -->
+          {{#if config.owner}}
+
+            <div class="row">
+              <div class="col-12 m-auto">
+                <a href="/team/{{this.id}}/delete" class="btn btn-light border-0 btn-sm mt-2 delete-team text-muted"><small><i class="far fa-trash-alt"></i>Supprimer la team</small></a> 
+              </div>          
             </div>
-          {{/each}}
-        {{/if}}        
-        <span class="h4 my-3 text-muted d-block">Evénements à venir</span>
-        {{#if team.events}}
-          {{#each team.events}}
-            {{#if this.user}}
-              <div class="row bg-light my-2 py-2">
+
+          {{/if}}
+
+        </div>
+        <div class="col-md-8">
+
+          <!-- proposition d'ajouter les événements du user -->
+          {{#if user_events}}
+
+            {{#each user_events}}
+              <div class="row bg-light py-2">
                 <div class="col-md-2 my-auto text-center">
-                  <large class="d-block"><strong>{{getDay this.date_start}}</strong></large>
-                  <small class="d-block text-muted">{{getMonth this.date_start}}-{{getYear this.date_start}}</small> 
+                  <div class="d-block bg-white p-2 border border-muted rounded">
+                    <large class="d-block"><strong>{{getDay this.date_start}}</strong></large>
+                    <small class="d-block text-muted">{{getMonth this.date_start}}-{{getYear this.date_start}}</small> 
+                  </div>
                 </div>
                 <div class="col-md-10 my-auto">                 
                   <div class="d-inline-block ml-2 font-weight-bold">{{this.sport}}</div>
                   <div class="d-inline-block ml-2">{{this.name}}</div>
                   <div class="d-inline-block ml-2">{{this.distance}}km</div>
-                  <div class="d-inline-block float-right"><a href="/event/{{this._id}}" class="btn btn-outline-primary btn-sm">Voir le détail</a></div>
+                  <div class="d-inline-block float-right"><a href="/team/{{../team._id}}/event/{{this._id}}/add" class="btn btn-outline-primary btn-sm">Ajouter au programme</a></div>
                 </div>
-              </div>              
-            {{/if}}
-          {{/each}}
-        {{else}}
-          <div class="row">
-            <div class="col-12">
-              <div class="d-block bg-light p-5 text-muted text-center">
-                <span class="d-block my-2">
-                  Vous n'avez aucun événement à venir
-                </span>
-                <a href="/event/add" class="btn btn-outline-primary">Créer un événement</a>
               </div>
-            </div>
-          </div>        
-        {{/if}}
-      </div>
-    </div>
-  {{else}}
-    <div class="row">
-      <div class="col-md-8 mx-auto text-center">
-        <span class="d-block h4 my-3">S'inscrire à ce groupe</span>
-        <form action="/team/{{team._id}}/membre/add" method="POST">
-          <!-- code -->
-          <div class="form-group">
-            <label for="code">Code de membre* <small class="text-muted">Donné par le coach de la team</small></label>
-            <input type="text" class="form-control" id="code" name="code" placeholder="saisir le code" required>
-          </div>
+            {{/each}}
 
-          <div class="row">
-            <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+          {{/if}}  
+
+          <span class="h4 my-3 text-muted d-block">Evénements à venir</span>
+
+          <!-- affichage des evenements de la team -->
+          {{#if team.events}}
+
+            {{#each team.events}}
+
+              <!-- n'afficher que les événement qui ont un user en propriétaire-->
+              {{#if this.user}}
+
+                <div class="row bg-light my-2 py-2">
+                  <div class="col-md-2 my-auto text-center">
+                    <div class="d-block bg-white p-2 border border-muted rounded">
+                      <large class="d-block"><strong>{{getDay this.date_start}}</strong></large>
+                      <small class="d-block text-muted">{{getMonth this.date_start}}-{{getYear this.date_start}}</small> 
+                    </div>
+                  </div>
+                  <div class="col-md-10 my-auto">                 
+                    <div class="d-inline-block ml-2 font-weight-bold">{{this.sport}}</div>
+                    <div class="d-inline-block ml-2">{{this.name}}</div>
+                    <div class="d-inline-block ml-2">{{this.distance}}km</div>
+                    <div class="d-inline-block float-right"><a href="/event/{{this._id}}" class="btn btn-outline-primary btn-sm">Voir le détail</a></div>
+                  </div>
+                </div>   
+
+              {{/if}}
+
+            {{/each}}
+
+          <!-- affichage si la team n'a pas dévénement -->
+          {{else}}
+
+            <div class="row">
+              <div class="col-12">
+                <div class="d-block bg-light p-5 text-muted text-center">
+                  <span class="d-block my-2">
+                    Vous n'avez aucun événement à venir
+                  </span>
+                  <a href="/event/add" class="btn btn-outline-primary">Créer un événement</a>
+                </div>
+              </div>
+            </div>  
+
+          {{/if}}
+
+        </div>
+      </div>
+
+    <!-- affichage par defaut pour les visiteurs qui ne sont ni membre, ni coach -->
+    {{else}}
+
+      <div class="row">
+        <div class="col-md-8 mx-auto text-center">
+          <span class="d-block h4 my-3">S'inscrire à ce groupe</span>
+          <form action="/team/{{team._id}}/membre/add" method="POST">
+            <!-- code -->
+            <div class="form-group">
+              <label for="code">Code de membre* <small class="text-muted">Donné par le coach de la team</small></label>
+              <input type="text" class="form-control" id="code" name="code" placeholder="saisir le code" required>
+            </div>
+
+            <div class="row">
+              <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+            </div>          
+          </form>
+          <small class="bg-light border border-danger p-5 text-muted d-block my-3"><i class="fas fa-lock mr-2"></i>Vous n'êtes pas membre de cette team. Pour en faire partie, vous devez avoir été invité à la rejoindre par son coach. Pour finaliser votre inscription, votre coach vous donnera le code de membre.</small>
+        </div>
+      </div>
+
+    {{/if}}
+
+  <!-- la team est désactive si il n'y a pas de code -->
+  {{else}}
+
+    <!-- affichage pour le coach -->
+    {{#if config.owner}}
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="p-5 d-block border border-danger text-center mb-3">
+            <large class="font-weight-bold d-block">
+              Comment rendre public votre team et commencer à accueillir ses premiers membres?
+            </large>
+            <span class="d-block text-muted my-3">Le développement d'une team est une fonctionnalité payante déblocable via un abonnement de 15€/mois/team.</span>
+            <div class="d-block py-3">
+              <a href="#" class="text-muted float-left font-underline">Voir les fonctionnalités pour les teams</a>
+              <a href="https://gum.co/mEpzl" class="btn btn-danger float-right" target="_blank">Déverrouiller</a>              
+            </div>
           </div>          
-        </form>
-        <p class="bg-light p-5 text-muted"><i class="fas fa-lock mr-2"></i>Vous n'êtes pas membre de cette team. Pour en faire partie, vous devez avoir été invité à la rejoindre par son coach.</p>
+        </div>
+      </div>
+    {{/if}}
+
+    <!-- affichage pour le coach, les membres et les visiteurs-->
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <span class="bg-light p-5 d-block border border-muted text-muted text-center mb-3">
+          Cette team n'a pas été rendu public part son coach.
+        </span>
       </div>
     </div>
   {{/if}}
+
 </div>

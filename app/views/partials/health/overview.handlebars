@@ -9,58 +9,73 @@
     <div class="row">
       <div class="col-11 mx-auto border border-top-0 border-right-0 border-left-0 border-primary mt-2 bg-light">
         <div class="row pt-2 pb-2">
-          <div class="col-md-2 text-center  mt-2 mb-2 my-auto">
-            <large class="d-block"><strong>{{getDay this.created_at}}</strong></large>
-            <small class="d-block text-muted">{{getMonth this.created_at}}-{{getYear this.created_at}}</small>                    
-          </div>
-          <div class="col-md-4 mt-2 mb-2 my-auto d-flex text-center">                          
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+          <div class="col-lg-12 mt-2 mb-2 my-auto d-flex justify-content-between flex-wrap text-center">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto bg-white p-2 border border-muted rounded">
+              <large class="d-block text-dark text-center"><strong>{{getDay this.created_at}}</strong></large>
+              <small class="d-block text-muted">{{getMonth this.created_at}}-{{getYear this.created_at}}</small>                    
+              {{#if this.blessure}}
+                <div class="d-inline mr-2 ml-2"><i class="fas fa-band-aid text-danger"></i></div>
+              {{/if}}
+              {{#if this.maladie}}
+                <div class="d-inline mr-2 ml-2"><i class="fas fa-briefcase-medical text-danger"></i></div>
+              {{/if}}              
+            </div>                       
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">sommeil</small>
               <span class="badge badge-grey">{{this.sommeil}}/5</span>
             </div>
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">recuperation</small>
               <span class="badge badge-grey">{{this.recuperation}}/5</span>
             </div>
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">lassitude</small>
               <span class="badge badge-grey">{{this.lassitude}}/5</span>
             </div>
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">humeur</small>
               <span class="badge badge-grey">{{this.humeur}}/5</span>
             </div>
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">stress</small>
               <span class="badge badge-grey">{{this.stress}}/5</span>
             </div>
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">pouls</small>
               <span class="badge badge-grey">{{this.pouls}}bpm</span>
             </div>
-            <div class="d-block mr-2 ml-2 pt-2 pb-2 text-muted">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
               <small class="d-block mb-2">poids</small>
               <span class="badge badge-grey">{{this.poids}}Kg</span>
             </div>
-          </div>
-          <div class="col-md-3 text-center  mt-2 mb-2 my-auto">
-            <small class="d-block mb-2">Méteo</small>
-            <img src="http://openweathermap.org/img/w/{{this.weather.openweathermap_icon}}.png" alt="{{health_detail.weather.weather_main}}" class="img img-fluid">
-            <small class="d-block text-muted">Température maximale: {{this.weather.main_temp_max}}°</small>
-          </div>
-          <div class="col-md-1 mt-2 mb-2 my-auto text-center">
-            {{#if this.blessure}}
-              <div class="d-inline mr-2 ml-2"><i class="fas fa-band-aid text-danger"></i></div>
-            {{/if}}
-            {{#if this.maladie}}
-              <div class="d-inline mr-2 ml-2"><i class="fas fa-briefcase-medical text-danger"></i></div>
-            {{/if}}
-          </div>
-          <div class="col-md-2 my-auto text-center">
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
+              <small class="d-block mb-2">IMC</small>
+              <span class="badge badge-grey">{{this.weight_analyse.imc}}</span>
+            </div>
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto">
+              <small class="d-block mb-2">IMG</small>
+              <span class="badge badge-grey">{{this.weight_analyse.img}}</span>
+            </div>
+            <div class="d-inline-block mr-2 ml-2 pt-2 pb-2 text-muted my-auto text-center">
+              <small class="d-block mb-2">Méteo</small>
+              <img src="http://openweathermap.org/img/w/{{this.weather.openweathermap_icon}}.png" alt="{{health_detail.weather.weather_main}}" class="img img-fluid">
+              <small class="d-block text-muted">Température maximale: {{this.weather.main_temp_max}}°</small>  
+            </div>
+            <div class="d-inline-block text-center my-auto">
               <small class="d-block text-muted">Score forme</small>
               <span class="d-block mt-2"><strong class="score_forme">{{this.score_forme}}</strong>*</span>      
+            </div>
           </div>
         </div>
+        {{#if this.commentaires}}
+          <div class="row">
+            <div class="col-12">
+              <div class="d-block p-3">
+                <small class="text-muted">Commentaires: {{this.commentaires}}</small>
+              </div>
+            </div>
+          </div>
+        {{/if}}
       </div>
     </div>
   {{/each}}
