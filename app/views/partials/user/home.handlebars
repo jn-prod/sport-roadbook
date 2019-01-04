@@ -31,7 +31,7 @@
         </div>   -->    
         <div class="row">
           <div class="col-12 mt-3 mb-2 border border-white border-right-0 border-left-0 border-bottom-0">
-            <large class="d-block text-center font-weight-bold">
+            <large class="d-block text-center font-weight-bold pt-3">
               Prochain objectif
             </large>            
           </div>
@@ -43,12 +43,25 @@
             {{else}}
               <small class="text-muted mb-2 d-block">Aucun événement à venir</small>
               {{#if config.owner}}
-                <a href="/event/add" class="btn btn-outline-dark">Ajouter un événement</a>
+                <a href="/event/add" class="btn btn-outline-dark btn-sm">Ajouter un événement</a>
               {{/if}}
             {{/if}}
           </div>
         </div>  
- 
+        <div class="row">
+          <div class="col-12 mt-3 mb-2 border border-white border-right-0 border-left-0 border-bottom-0">
+            <large class="d-block text-center font-weight-bold pt-3">
+              Mes formes
+            </large>            
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-12 mt-3 mb-2">
+            <large class="d-block text-center font-weight-bold">
+              <a href="/health/{{user._id}}/overview" class="btn btn-outline-dark btn-sm">Voir ma dernière forme</a>
+            </large>            
+          </div>
+        </div> 
       </div> 
 
       <!-- team -->
@@ -125,8 +138,10 @@
               {{#each activities.list}}
                 <div class="row my-2 py-3 bg-light">
                   <div class="col-md-5 col-lg-2 text-center  mt-2 mb-2 my-auto text-center">
-                    <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
-                    <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                    
+                    <div class="d-block bg-white p-2 border border-muted rounded">
+                      <large class="d-block"><strong>{{getDay this.start_date_local}}</strong></large>
+                      <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                 
+                    </div>
                   </div>
                   <div class="col-md-7 col-lg-7 mt-2 mb-2 font-weight-bold">
                     <div class="d-block">
