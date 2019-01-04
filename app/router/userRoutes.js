@@ -4,6 +4,7 @@ var router = express.Router()
 
 // Controllers
 var userCtrl = require('../controllers/userController')
+var authenticated = require('../../custom_modules/authenticate')
 
 // ---------------- INDEX ----------------
 // Get login page
@@ -12,21 +13,21 @@ router.get('/login', userCtrl.login)
 router.get('/logout', userCtrl.logout)
 
 // Get Homepage
-router.get('/:user', userCtrl.home)
+router.get('/:user', authenticated, userCtrl.home)
 
 // Get profil
-router.get('/:user/profil', userCtrl.profil)
+router.get('/:user/profil', authenticated, userCtrl.profil)
 
 // get wait
-router.get('/:user/wait', userCtrl.wait)
+router.get('/:user/wait', authenticated, userCtrl.wait)
 
 // Get Delete Account
-router.get('/:user/delete', userCtrl.delete)
+router.get('/:user/delete', authenticated, userCtrl.delete)
 
 // Get edit Account
-router.get('/:user/edit', userCtrl.getEdit)
+router.get('/:user/edit', authenticated, userCtrl.getEdit)
 
 // POST edit Account
-router.post('/:user/edit', userCtrl.postEdit)
+router.post('/:user/edit', authenticated, userCtrl.postEdit)
 
 module.exports = router

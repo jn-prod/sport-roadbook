@@ -4,16 +4,17 @@ var router = express.Router()
 
 // Controllers
 var eventCtrl = require('../controllers/eventController')
+var authenticated = require('../../custom_modules/authenticate')
 
 // ---------------- INDEX ----------------
 // get add activity form
-router.get('/add', eventCtrl.getAddEvent)
+router.get('/add', authenticated, eventCtrl.getAddEvent)
 // post add activity form
-router.post('/add', eventCtrl.postAddEvent)
+router.post('/add', authenticated, eventCtrl.postAddEvent)
 // activities overview
-router.get('/:user/overview', eventCtrl.eventsOverview)
+router.get('/:user/overview', authenticated, eventCtrl.eventsOverview)
 // details event
-router.get('/:event', eventCtrl.eventDetails)
+router.get('/:event', authenticated, eventCtrl.eventDetails)
 // delete event
-router.get('/:event/delete', eventCtrl.deleteEvent)
+router.get('/:event/delete', authenticated, eventCtrl.deleteEvent)
 module.exports = router
