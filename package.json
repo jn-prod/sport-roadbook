@@ -5,8 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./node_modules/.bin/pm2 start app.js -i 1 --attach",
-    "build-win": "set NODE_ENV=production&& webpack --config webpack.config.js",
-    "build-osx": "NODE_ENV=production webpack --config webpack.config.js",
+    "server": "node app",
+    "webpack:server": "webpack-dev-server -d --hot --config webpack.config.js --watch",
+    "server:dev": "concurrently \"npm run webpack:server\" \"npm run server\"",
+    "build:win": "set NODE_ENV=production&& webpack --config webpack.config.js",
+    "build:osx": "NODE_ENV=production webpack --config webpack.config.js",
     "pretest": "./node_modules/.bin/eslint --ignore-path .eslintignore .",
     "test": "./node_modules/.bin/mocha"
   },
@@ -72,6 +75,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
     "clean-webpack-plugin": "^1.0.0",
+    "concurrently": "^4.1.0",
     "css-loader": "^0.28.11",
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
@@ -88,15 +92,11 @@
     "mini-css-extract-plugin": "^0.4.4",
     "mocha": "*",
     "popper.js": "^1.14.5",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
     "sinon": "^5.1.1",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-middleware": "^3.4.0",
-    "webpack-dev-server": "^3.1.14",
-    "webpack-hot-middleware": "^2.24.3"
+    "webpack-dev-server": "^3.1.14"
   }
 }

@@ -38,23 +38,6 @@ app.use(Liana.init({
 var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 app.use(redirectToHTTPS())
 
-// Webpack
-if (process.env.LOCAL === 'true') {
-  var webpack = require('webpack')
-  var webpackConfig = require('./webpack.config')
-  var compiler = webpack(webpackConfig)
-  var webpackDevMiddleware = require('webpack-dev-middleware')
-  var webpackHotMiddleware = require('webpack-hot-middleware')
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    stats: { colors: true },
-    reload: true,
-    inline: true
-  })
-  )
-  app.use(webpackHotMiddleware(compiler))
-}
-
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'assets/public')))
 
@@ -94,11 +77,7 @@ passport.use(new StravaStrategy(
 // Locals
 app.use(function (req, res, next) {
   res.locals.user = req.session.user || null
-  if (process.env.LOCAL) {
-    res.locals.env = true
-  } else {
-    res.locals.env = false
-  }
+  res.locals.localhost = process.env.LOCAL === 'true'
   next()
 })
 
