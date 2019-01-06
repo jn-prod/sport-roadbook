@@ -23,6 +23,6 @@ import './components/delete-event'
 import './components/delete-team'
 // import './components/addInputLocation'
 
-if (module.hot) {
-  module.hot.accept()
-}
+// if (module.hot) {
+//   module.hot.accept()
+// }

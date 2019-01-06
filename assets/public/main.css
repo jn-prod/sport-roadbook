@@ -108,7 +108,7 @@
 }
 @font-face {
   font-family: 'impact';
-  src: url(/fonts/Maximum_Impact.ttf) format('truetype');
+  src: url(fonts/Maximum_Impact.ttf) format('truetype');
 }
 
  .mainheading {
@@ -179,7 +179,7 @@ pre {
     font-family: Merriweather;
 }
 .bg-header {
-    background-image: url(/c04d9feb7793b69850a32118ea879270.jpg);
+    background-image: url(images/header.jpg);
     background-size: cover;
     background-position: 50%;    
 }
@@ -714,7 +714,7 @@ pre {
 }
  @media (min-width:768px) {
      .jumbotron.bg-footer {
-         background-image: url(/1a60a44850d790af3ba57208b705719e.jpg);
+         background-image: url(images/jumbotron.jpg);
          background-size:cover;
          background-position: center;
     }
