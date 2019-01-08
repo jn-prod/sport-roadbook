@@ -26,6 +26,17 @@
   border-color: #f9e093 !important;
 }
 
+.btn-muted {
+  color: #6c757d !important;
+  border: solid 1px #6c757d;
+}
+
+.btn-muted:hover {
+  color: #FFF !important;
+  border: solid 1px #00b4b1;
+  background-color: #00b4b1;
+}
+
 .badge-primary {
   background-color: #00b4b1 !important;
 }
