@@ -170,6 +170,7 @@ var userCtrl = {
       var dbActivitiesAll = new Promise((resolve, reject) => {
         Activity
           .find({ user: userId })
+          .populate('user')
           .sort({ 'start_date_local': -1 })
           .exec((err, dbActivites) => {
             var countActivities = {
@@ -207,6 +208,52 @@ var userCtrl = {
           team: dbTeam,
           coach: dbCoach,
           profil: dbUser
+        })
+        .then((result) => {
+          if (result.activities.list.length >= 1) {
+            var config = {
+              user_fc_max: false,
+              activity_full_data: false,
+              ctl: new Date(),
+              atl: new Date()
+            }
+
+            var activities = result.activities.list
+
+            // forme calc TSB = CTL – ATL
+            var tsb = {
+              // Fitness (CTL: Chronic Traing Load)
+              ctl: {
+                value: 0,
+                start_date: config.ctl.setDate(config.ctl.getDate() - 42)
+              },
+              // Fatigue (ATL: Acute Training Load)
+              atl: {
+                value: 0,
+                start_date: config.atl.setDate(config.atl.getDate() - 7)
+              }
+            }
+
+            activities.forEach((activity) => {
+              if (activity.start_date_local >= tsb.ctl.start_date) {
+                var tss = require('../../custom_modules/activity/tss')(activity, config)
+                if (tss.activity.tss > 0) {
+                  tsb.ctl.value += tss.activity.tss
+                  if (activity.start_date_local >= tsb.atl.start_date) {
+                    tsb.atl.value += tss.activity.tss
+                  }                  
+                }
+              }
+            })
+
+            tsb.ctl = tsb.ctl.value / 42
+            tsb.atl = tsb.atl.value / 7
+            
+            result.training_stress_balance = tsb.ctl - tsb.atl
+            return result
+          } else {
+            return result
+          }
         })
         .then((result) => {
           var api = result
