@@ -54,14 +54,13 @@ var tssCalc = (activity, configuration) => {
         }
       }
 
-      return { activity:  Object.assign({tss: Number(tss)}, dbActivity._doc), config: config }
+      return { activity: Object.assign({ tss: Number(tss) }, dbActivity._doc), config: config }
     } else {
-      return { activity:  dbActivity, config: config }
+      return { activity: dbActivity, config: config }
     }
   } else {
-    return { activity:  dbActivity, config: config }
+    return { activity: dbActivity, config: config }
   }
 }
-
 
 module.exports = tssCalc

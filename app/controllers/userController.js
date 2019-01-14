@@ -231,25 +231,37 @@ var userCtrl = {
               atl: {
                 value: 0,
                 start_date: config.atl.setDate(config.atl.getDate() - 7)
-              }
+              },
+              total: 0
             }
 
             activities.forEach((activity) => {
               if (activity.start_date_local >= tsb.ctl.start_date) {
-                var tss = require('../../custom_modules/activity/tss')(activity, config)
+                var tss
+                try {
+                  tss = require('../../custom_modules/activity/tss')(activity, config)
+                } catch (err) {
+                  if (err) {
+                    tss = 0
+                  }
+                }
+
                 if (tss.activity.tss > 0) {
                   tsb.ctl.value += tss.activity.tss
                   if (activity.start_date_local >= tsb.atl.start_date) {
                     tsb.atl.value += tss.activity.tss
-                  }                  
+                  }
                 }
               }
             })
 
-            tsb.ctl = tsb.ctl.value / 42
-            tsb.atl = tsb.atl.value / 7
-            
-            result.training_stress_balance = tsb.ctl - tsb.atl
+            if (tsb.ctl.value >= 0 && tsb.atl.value >= 0) {
+              tsb.ctl = Number.parseFloat(tsb.ctl.value / 42).toFixed(0)
+              tsb.atl = Number.parseFloat(tsb.atl.value / 7).toFixed(0)
+              tsb.total = Number.parseFloat(tsb.ctl - tsb.atl).toFixed(0)
+            }
+
+            result.training_stress_balance = tsb
             return result
           } else {
             return result
