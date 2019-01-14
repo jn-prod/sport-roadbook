@@ -115,7 +115,7 @@ var userCtrl = {
       var dbEventsNext = new Promise((resolve, reject) => {
         Event
           .find({ 'user': userId, 'date_start': { $gte: dateNow } })
-          .sort({ date_start: -1 })
+          .sort({ date_start: 1 })
           .exec((err, event) => {
             if (err) {
               reject(err)
@@ -170,7 +170,7 @@ var userCtrl = {
       var dbActivitiesAll = new Promise((resolve, reject) => {
         Activity
           .find({ user: userId })
-          .sort({ 'start_date_local': 1 })
+          .sort({ 'start_date_local': -1 })
           .exec((err, dbActivites) => {
             var countActivities = {
               hike: 0,
