@@ -133,44 +133,10 @@ var activityCtrl = {
           res.redirect('/user/' + req.session.user._id)
         }
 
-        if (dbActivity !== undefined) {
-          // all activity data for next step ?
-          if (dbActivity.moving_time * 1 > 0 && dbActivity.fc_moyenne * 1 > 0) {
-            config.activity_full_data = true
-          }
-
-          if (config.activity_full_data) {
-            // calcul de la fc max du user
-            if (dbActivity.user.fc_max > 0) {
-              config.user_fc_max = dbActivity.user.fc_max
-            } else if ((dbActivity.user.fc_max === null || dbActivity.user.fc_max === undefined) && dbActivity.user.date_of_birth !== null) {
-              var birthdate = new Date(dbActivity.user.date_of_birth)
-              var dateNow = new Date(Date.now())
-
-              try {
-                config.user_fc_max = 220 - (dateNow.getFullYear() - birthdate.getFullYear())
-              } catch (err) {
-                if (err) {
-                  config.user_fc_max = false
-                }
-              }
-            }
-
-            // calcul de la mesure de l'effort - tss
-            if (config.user_fc_max > 0) {
-              try {
-                dbActivity.tss = require('../../custom_modules/activity/tss')(dbActivity.fc_moyenne, dbActivity.moving_time, config.user_fc_max)
-              } catch (err) {
-                if (err) {
-                  dbActivity.tss = 'NC'
-                }
-              }
-            }
-          }
-        }
+        var tss = require('../../custom_modules/activity/tss')(dbActivity, config)
 
         // render page
-        res.render('partials/activity/details', { activity: dbActivity, config: config })
+        res.render('partials/activity/details', tss)
       })
   }
 }
