@@ -235,25 +235,27 @@ var userCtrl = {
               total: 0
             }
 
-            activities.forEach((activity) => {
-              if (activity.start_date_local >= tsb.ctl.start_date) {
-                var tss
-                try {
-                  tss = require('../../custom_modules/activity/tss')(activity, config)
-                } catch (err) {
-                  if (err) {
-                    tss = 0
+            if (activities.length >= 1) {
+              activities.forEach((activity) => {
+                if (activity.start_date_local >= tsb.ctl.start_date) {
+                  var tss
+                  try {
+                    tss = require('../../custom_modules/activity/tss')(activity, config)
+                  } catch (err) {
+                    if (err) {
+                      tss = 0
+                    }
                   }
-                }
 
-                if (tss.activity.tss > 0) {
-                  tsb.ctl.value += tss.activity.tss
-                  if (activity.start_date_local >= tsb.atl.start_date) {
-                    tsb.atl.value += tss.activity.tss
+                  if (tss.activity.tss > 0) {
+                    tsb.ctl.value += tss.activity.tss
+                    if (activity.start_date_local >= tsb.atl.start_date) {
+                      tsb.atl.value += tss.activity.tss
+                    }
                   }
                 }
-              }
-            })
+              })
+            }
 
             if (tsb.ctl.value >= 0 && tsb.atl.value >= 0) {
               tsb.ctl = Number.parseFloat(tsb.ctl.value / 42).toFixed(0)
