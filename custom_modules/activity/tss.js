@@ -116,12 +116,11 @@ var tssCalc = (activity, configuration) => {
         return { activity:  dbActivity, config: config }
       }
     } else {
-      return { activity:  dbActivity, config: config }
+      return { activity: dbActivity, config: config }
     }
   } else {
-    return { activity:  dbActivity, config: config }
+    return { activity: dbActivity, config: config }
   }
 }
-
 
 module.exports = tssCalc
