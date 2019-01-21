@@ -12,6 +12,8 @@ import '../img/header.jpg'
 import '../img/jumbotron.jpg'
 
 // js
+import 'jquery'
+import 'bootstrap'
 import '@fortawesome/fontawesome'
 import './components/formSubmit'
 import './components/periodeFormFilter'

@@ -101,7 +101,18 @@
                
             </div>
             <div class="col-4 m-auto text-right">
-              <a href="/event/{{this.id}}" class="btn btn-muted btn-sm mt-2">Plus d'informations</a>
+              <div class="dropdown">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a href="/event/{{this.id}}" class="dropdown-item">Plus d'informations</a>
+                  <a href="#" class="dropdown-item">Voir le/les classement(s)</a>
+                  <a href="#" class="dropdown-item">Voir la/les activité(s)</a>
+                  <a href="#" class="dropdown-item">Joindre un/des classement(s)</a>
+                  <a href="#" class="dropdown-item">Joindre une/des activité(s)</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
