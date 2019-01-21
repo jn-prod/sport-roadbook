@@ -16,7 +16,6 @@ var tssFormula = (activityFcMoyenne, activityMovingTime, userFcMax) => {
 }
 
 var secondsToHm = (d) => {
-  
   d = Number(d)
   if (d >= 0) {
     return d / 3600
@@ -54,7 +53,7 @@ var rpeToTss = (rpe, time) => {
       return 140 * chrono
     } else {
       return null
-    }    
+    }
   } else {
     return null
   }
@@ -107,13 +106,14 @@ var tssCalc = (activity, configuration) => {
         tss = rpeToTss(dbActivity.rpe, dbActivity.moving_time)
       }
 
-      return { activity:  Object.assign({tss: Number(tss)}, dbActivity._doc), config: config }
+      return { activity: Object.assign({ tss: Number(tss) }, dbActivity._doc), config: config }
     } else if (config.convert_rpe) {
       tss = rpeToTss(dbActivity.rpe, dbActivity.moving_time)
       if (tss !== null && tss !== undefined) {
-        return { activity:  Object.assign({tss: Number(tss)}, dbActivity._doc), config: config }
+        var tssFormated = Number.parseFloat(tss).toFixed(2)
+        return { activity: Object.assign({ tss: Number(tssFormated) }, dbActivity._doc), config: config }
       } else {
-        return { activity:  dbActivity, config: config }
+        return { activity: dbActivity, config: config }
       }
     } else {
       return { activity: dbActivity, config: config }

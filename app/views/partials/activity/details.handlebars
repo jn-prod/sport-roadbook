@@ -45,15 +45,11 @@
           {{/if}} 
           <span class="d-block">{{activity.description}}</span>
         </div>
-        {{#if config.activity_full_data}}
+        {{#if activity.tss}}
           <div class="col-md-2 my-auto text-center">
-            <small class="d-block">Mesure d'effort</small>
-            {{#if config.user_fc_max}}
+            <small class="d-block font-weight-bold">Mesure d'effort</small>
               <span class="d-block mt-3"><strong>{{activity.tss}}</strong>*</span>
-            {{else}}
-              <small class="d-block mt-3 text-muted">La mesure de l'effort mesure requiert soit votre date de naissance, soit votre fréquence cardiaque maximal. <a href="/user/{{user._id}}/edit">Compléter votre profil</a></small>
-            {{/if}}
-      
+<!--               <small class="d-block mt-3 text-muted">La mesure de l'effort mesure requiert soit votre date de naissance, soit votre fréquence cardiaque maximal. <a href="/user/{{user._id}}/edit">Compléter votre profil</a></small>     --> 
           </div>          
         {{/if}}
       </div>

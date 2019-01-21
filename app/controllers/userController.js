@@ -248,14 +248,13 @@ var userCtrl = {
                   }
 
                   if (tss.activity.tss > 0) {
-                    console.log(tss.activity.tss)
                     tsb.ctl.value += tss.activity.tss
                     if (activity.start_date_local >= tsb.atl.start_date) {
                       tsb.atl.value += tss.activity.tss
                     }
                   }
-                }           
-              })              
+                }
+              })
             }
 
             if (tsb.ctl.value >= 0 && tsb.atl.value >= 0) {
