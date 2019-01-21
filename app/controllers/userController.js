@@ -234,17 +234,20 @@ var userCtrl = {
               }
             }
 
-            activities.forEach((activity) => {
-              if (activity.start_date_local >= tsb.ctl.start_date) {
-                var tss = require('../../custom_modules/activity/tss')(activity, config)
-                if (tss.activity.tss > 0) {
-                  tsb.ctl.value += tss.activity.tss
-                  if (activity.start_date_local >= tsb.atl.start_date) {
-                    tsb.atl.value += tss.activity.tss
-                  }                  
+            if (activities.length >= 1) {
+              activities.forEach((activity) => {
+                if (activity.start_date_local >= tsb.ctl.start_date) {
+                  var tss = require('../../custom_modules/activity/tss')(activity, config)
+                  console.log(tss.activity.tss)
+                  if (tss.activity.tss > 0) {
+                    tsb.ctl.value += tss.activity.tss
+                    if (activity.start_date_local >= tsb.atl.start_date) {
+                      tsb.atl.value += tss.activity.tss
+                    }                  
+                  }
                 }
-              }
-            })
+              })              
+            }
 
             tsb.ctl = tsb.ctl.value / 42
             tsb.atl = tsb.atl.value / 7
