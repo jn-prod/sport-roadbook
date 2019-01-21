@@ -9,6 +9,7 @@ var EventSchema = mongoose.Schema({
   sport: { type: String },
   name: { type: String },
   description: { type: String },
+  city: { type: String },
   distance: { type: Number },
   date_start: { type: Date, required: true },
   date_end: { type: Date, required: true },
