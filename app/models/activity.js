@@ -5,6 +5,7 @@ var Schema = mongoose.Schema
 
 var ActivitySchema = mongoose.Schema({
   user: { type: Schema.ObjectId, ref: 'User', required: true },
+  event: { type: Schema.ObjectId, ref: 'Event' },
   type: { type: String, index: true },
   name: { type: String },
   description: { type: String },

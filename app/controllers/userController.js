@@ -120,7 +120,7 @@ var userCtrl = {
             if (err) {
               reject(err)
             }
-            if (event.length > 0) {
+            if (event !== undefined && event.length > 0) {
               resolve(event[0])
             } else {
               resolve(false)
@@ -237,16 +237,17 @@ var userCtrl = {
 
             if (activities.length >= 1) {
               activities.forEach((activity) => {
-                if (activity.start_date_local >= tsb.ctl.start_date) {
-                  var tss
-                  try {
-                    tss = require('../../custom_modules/activity/tss')(activity, config)
-                  } catch (err) {
-                    if (err) {
-                      tss = 0
-                    }
+                var tss
+                try {
+                  tss = require('../../custom_modules/activity/tss')(activity, config)
+                  activity.tss = tss.activity.tss
+                } catch (err) {
+                  if (err) {
+                    tss = 0
                   }
+                }
 
+                if (activity.start_date_local >= tsb.ctl.start_date) {
                   if (tss.activity.tss > 0) {
                     tsb.ctl.value += tss.activity.tss
                     if (activity.start_date_local >= tsb.atl.start_date) {
