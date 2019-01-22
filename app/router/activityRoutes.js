@@ -11,6 +11,11 @@ var authenticated = require('../../custom_modules/authenticate')
 router.get('/add', authenticated, activityCtrl.getAddActivity)
 // post add activity form
 router.post('/add', authenticated, activityCtrl.postAddActivity)
+
+// get join activity to event page
+router.get('/:activity/event/select', authenticated, activityCtrl.getJoinSelectEvent)
+// post join activyty to event
+router.get('/:activity/event/:event/add', authenticated, activityCtrl.getJoinEvent)
 // get all strava activities
 router.get('/get/:user/strava/all', authenticated, activityCtrl.getStravaActivities)
 // delete activities

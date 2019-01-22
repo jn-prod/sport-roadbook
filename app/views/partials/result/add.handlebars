@@ -1,0 +1,55 @@
+<div class="container mt-5 bg-light pb-5 mb-5">
+  <div class="row">
+    <div class="col-12 mb-5">
+      <h1 class="h2 text-center mt-5 mb-2">Quel est votre résultat pour {{event.name}} ?</h1>
+    </div>
+  </div>
+  <div class="row py-5">
+    <div class="col-md-8 mx-auto">
+      <form action="/result/event/{{event.id}}/add" method="post" id="classement">
+        <!-- place -->
+        <div class="form-group">
+          <label for="place">Classement *</label>
+          <input type="number" class="form-control" id="place" name="place" step="1" value="" min="0" placeholder="ex: 1" required>
+        </div>
+
+        <!-- finishers_qty -->
+        <div class="form-group">
+          <label for="finishers_qty">Nombre de personnes classées *</label>
+          <input type="number" class="form-control" id="finishers_qty" name="finishers_qty" step="1" value=""  placeholder="ex: 100" min="0"required>
+        </div>
+
+        <!-- official_time -->
+        <div class="d-block">
+          Temps officiel *
+        </div>
+        <div class="row">
+          <div class="col-4 mx-auto">
+            <div class="form-group d-flex">
+              <input type="number" class="form-control" id="official_time_hours" name="official_time_hours" min="0" placeholder="ex: 00" step="1" value="" required><span class="d-block my-auto bg-muted ml-2">hh</span>
+            </div>            
+          </div>
+          <div class="col-4 mx-auto">
+            <div class="form-group d-flex">
+              <input type="number" class="form-control" id="official_time_minutes" name="official_time_minutes" min="0" max="59" placeholder="ex: 00" step="1" value="" required><span class="d-block my-auto bg-muted ml-2">mm</span>
+            </div>            
+          </div>
+          <div class="col-4 mx-auto">
+            <div class="form-group d-flex">
+              <input type="number" class="form-control" id="official_time_seconds" name="official_time_seconds" min="0" max="59" placeholder="ex: 00" step="1" value="" required><span class="d-block my-auto bg-muted ml-2">ss</span>
+            </div>            
+          </div>
+        </div>
+        <!-- description -->
+        <div class="form-group">
+          <label for="description">Remarques</label>
+          <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+        </div>
+
+        <div class="row">
+          <button type="submit" class="btn btn-primary col-md-4 d-inline mx-auto">Valider</button>
+        </div>
+      </form>      
+    </div>
+  </div>
+</div>

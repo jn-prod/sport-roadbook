@@ -30,16 +30,74 @@
             <div class="bg-light mr-2 ml-2 d-inline">{{event.sport}}</div> 
             {{#if event.distance}}
               <div class="bg-light mr-2 ml-2 d-inline">{{event.distance}}Km</div>  
-            {{/if}}           
+            {{/if}}
+            <div class="bg-light mr-2 ml-2 d-inline">{{event.city}}</div>            
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="d-block">
-                <span class="text-muted">description:</span> {{event.description}}
+          {{#if event.description}}
+            <div class="row">
+              <div class="col-12">
+                <div class="d-block my-3">
+                  <span class="text-muted">description:</span> {{event.description}}
+                </div>
               </div>
             </div>
+          {{/if}}
+
+          <div class="row my-3">
+            <div class="col-md-2">
+              <i class="fas fa-trophy"></i>
+              <span class="font-weight-bold">Classement</span>
+            </div>
+            
+            <div class="col-md-10">
+              {{#if results}}
+                {{#each results}}
+                  <div class="d-block">
+                    <span class="font-weight-bold">{{this.place}}/{{this.finishers_qty}} {{secondToTime this.official_time}}</span>
+                  </div>
+                  <div class="d-block">
+                    <small class="font-weight-bold text-muted">Indice: {{this.indice}}%</small>
+                  </div>
+                  {{#if this.description}}
+                    <small class="d-block tex-muted"><span class="text-muted">Remarques: </span>{{this.description}}</small>
+                  {{/if}}
+                {{/each}}
+              {{else}}
+                <a href="/result/event/{{event.id}}/add" class="btn btn-outline-primary btn-sm my-3">Ajouter un classement</a>
+              {{/if}}
+            </div>
           </div>
-          
+          <div class="row my-3">
+            <div class="col-md-2">
+              <i class="fas fa-stopwatch"></i>
+              <span class="font-weight-bold">Effort</span>
+            </div>
+            
+            <div class="col-md-10">
+              {{#if activities}}
+                {{#each activities}}
+                  <div class="d-block font-weight-bold">
+                    <span class="mr-2 d-inline-block">{{this.name}}</span>
+                    <span class="mx-2 d-inline-block">{{stravaDist this.distance}}Km</span>
+                    <span class="mx-2 d-inline-block">{{secondToTime this.moving_time}}</span>
+                    <span class="mx-2 d-inline-block">{{this.total_elevation_gain}}m</span>
+                  </div>
+                  <div class="d-block my-2">
+                    {{#if this.tss}}
+                      <small class="mr-2 text-muted font-weight-bold">Fatigue: {{this.tss}}</small>
+                    {{/if}}                      
+                  </div>
+                  {{#if this.description}}
+                    <small class="d-block tex-muted my-2"><span class="text-muted">Remarques: </span>{{this.description}}</small>
+                  {{/if}}
+                  <div class="d-block my-2"><a href="/activities/{{this.id}}" class="btn btn-sm btn-outline-primary">Voir l'analyse</a></div>
+                {{/each}}
+              {{else}}
+                <a href="/user/{{user.id}}" class="btn btn-outline-primary btn-sm my-3">Joindre une activité</a>
+                <a href="/activities/add" class="btn btn-outline-primary btn-sm my-3">Créer une activité</a>
+              {{/if}}
+            </div>
+          </div>
         </div>
       </div>
       {{#if config.owner}}

@@ -175,24 +175,40 @@
                       <small class="d-block text-muted">{{getMonth this.start_date_local}}-{{getYear this.start_date_local}}</small>                 
                     </div>
                   </div>
-                  <div class="col-md-7 col-lg-7 mt-2 mb-2 font-weight-bold">
-                    <div class="d-block">
-                      {{#if this.competition}}
-                        <i class="fas fa-flag-checkered d-inline"></i>
+                  <div class="col-md-7 col-lg-7 mt-2 mb-2">
+                    <div class="d-block font-weight-bold">
+                      <div class="d-block">
+                        {{#if this.competition}}
+                          <i class="fas fa-flag-checkered d-inline"></i>
+                        {{/if}}
+                        {{this.type}}
+                      </div>
+                      <span class="mr-2">{{stravaDist this.distance}}Km</span>
+                      <span class="m-2">{{secondToTime this.moving_time}}</span>
+                      {{#if this.total_elevation_gain}}
+                        <span class="m-2">{{this.total_elevation_gain}}m</span>
                       {{/if}}
-                      {{this.type}}
+                      {{#if this.calories}}
+                        <span class="badge badge-grey">{{this.calories}} calories</span>
+                      {{/if}}                      
                     </div>
-                    <span class="mr-2">{{stravaDist this.distance}}Km</span>
-                    <span class="m-2">{{secondToTime this.moving_time}}</span>
-                    <span class="m-2">{{this.total_elevation_gain}}m</span>
-                    {{#if this.calories}}
-                      <span class="badge badge-grey">{{this.calories}} calories</span>
-                    {{/if}}
-
+                    <div class="d-block">
+                      {{#if this.tss}}
+                        <small class="mr-2 text-muted font-weight-bold">Fatigue {{this.tss}}</small>
+                      {{/if}}                      
+                    </div>
                   </div>
                   <div class="col-lg-3 my-auto text-center">
                     <div class="d-block">
-                      <a href="/activities/{{this.id}}" class="btn btn-outline-primary btn-sm">Voir l'analyse</a>
+                      <div class="dropdown">
+                        <button class="btn btn-sm btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a href="/activities/{{this.id}}" class="dropdown-item">Voir l'analyse</a>
+                          <a href="/activities/{{this.id}}/event/select" class="dropdown-item">Joindre à un événement</a>
+                        </div>
+                      </div>
                     </div>                    
                   </div>
                 </div> 

@@ -34,7 +34,7 @@
                      
             </div>
             <div class="col-md-5 mt-2 mb-2 my-auto d-flex text-center">                          
-              <div class="d-block"><strong>{{this.name}}</strong></div>
+              <div class="d-block"><a href="/event/{{this.id}}" class="font-weight-bold text-dark">{{this.name}}</a></div>
               <div class="d-block">
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div> 
@@ -42,7 +42,6 @@
                   <div class="bg-light mr-2 ml-2 d-inline">{{this.distance}}Km</div>  
                 {{/if}}           
               </div>
-              
             </div>
             <div class="col-4 m-auto text-right">
               <a href="/event/{{this.id}}" class="btn btn-outline-primary btn-sm mt-2">Plus d'informations</a> 
@@ -67,7 +66,7 @@
   <div class="row mb-3 mt-5">
     <div class="col-12">
       <span class="h4 text-muted">
-        Evénements passés
+        Evénements passés & classements
       </span>
     </div>
   </div>  
@@ -93,7 +92,7 @@
                      
             </div>
             <div class="col-md-5 mt-2 mb-2 my-auto d-flex text-center">                          
-              <div class="d-block"><strong>{{this.name}}</strong></div>
+              <div class="d-block"><a href="/event/{{this.id}}" class="font-weight-bold text-dark">{{this.name}}</a></div>
               <div class="d-block">
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.type}}</div>
                 <div class="bg-light mr-2 ml-2 d-inline">{{this.sport}}</div>             
@@ -106,11 +105,9 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a href="/event/{{this.id}}" class="dropdown-item">Plus d'informations</a>
-                  <a href="#" class="dropdown-item">Voir le/les classement(s)</a>
-                  <a href="#" class="dropdown-item">Voir la/les activité(s)</a>
-                  <a href="#" class="dropdown-item">Joindre un/des classement(s)</a>
-                  <a href="#" class="dropdown-item">Joindre une/des activité(s)</a>
+                  <a href="/event/{{this.id}}" class="dropdown-item">Récapitulatif & classement</a>
+                  <a href="/result/event/{{this.id}}/add" class="dropdown-item">Ajouter un classement</a>
+                  <a href="/user/{{../user.id}}" class="dropdown-item">Joindre une activité</a>
                 </div>
               </div>
             </div>

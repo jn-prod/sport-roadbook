@@ -1,6 +1,9 @@
 // models
 var Activity = require('../models/activity')
+var Event = require('../models/event')
 // var today = new Date(Date.now())
+
+var convertTime = require('../../custom_modules/tools/convert-time').toNumber
 
 var checkboxToBoolean = (value) => {
   if (value === 'on' || value === 'true') {
@@ -20,10 +23,6 @@ var activityCtrl = {
     }
   },
   postAddActivity: (req, res) => {
-    function convertTime (hours, minutes, seconds) {
-      return (hours * 60 * 60) + (minutes * 60) + parseInt(seconds)
-    }
-
     var form = req.body
 
     form.user = res.locals.user._id
@@ -42,6 +41,48 @@ var activityCtrl = {
         res.redirect('/user/' + req.session.user._id)
       }
     })
+  },
+  getJoinSelectEvent: (req, res) => {
+    var config = {
+      title: 'Quel est l\'événement correspondant à cette activité ?',
+      section: 'L\'événement pour cette activité n\'a pas encore été créer ?',
+      link: 'activities/' + req.params.activity
+    }
+
+    Event
+      .find({ user: req.session.user._id })
+      .exec((err, events) => {
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
+
+        if (String(req.session.user._id) === String(events[0].user._id)) {
+          res.render('partials/event/join', { events: events, config: config })
+        } else {
+          res.redirect('/user/' + req.session.user._id)
+        }
+      })
+  },
+  getJoinEvent: (req, res) => {
+    Activity
+      .findById(req.params.activity)
+      .exec((err, activity) => {
+        if (err) {
+          res.redirect('/user/' + req.session.user._id)
+        }
+
+        if (String(req.session.user._id) === String(activity.user._id)) {
+          Activity
+            .findByIdAndUpdate(req.params.activity, { $set: { event: req.params.event } }, (err, activity) => {
+              if (err) {
+                res.redirect('/user/' + req.session.user._id)
+              }
+              res.redirect('/event/' + req.params.event)
+            })
+        } else {
+          res.redirect('/user/' + req.session.user._id)
+        }
+      })
   },
   getStravaActivities: (req, res) => {
     var strava = {

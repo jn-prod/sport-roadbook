@@ -89,6 +89,7 @@ app.use('/health', require('./app/router/healthRoutes'))
 app.use('/auth', require('./app/router/authRoutes'))
 app.use('/event', require('./app/router/eventRoutes'))
 app.use('/team', require('./app/router/teamRoutes'))
+app.use('/result', require('./app/router/resultRoutes'))
 
 // Handlebars
 var hbs = exphbs.create({

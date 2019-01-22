@@ -1,7 +1,7 @@
 var formSubmit = () => {
   $('form').on('submit', (e) => {
     var formId = $('form').attr('id')
-    if (formId === 'activité' || formId === 'forme' || formId === 'événement' || formId === 'profil' || formId === 'team') {
+    if (formId === 'activité' || formId === 'forme' || formId === 'événement' || formId === 'profil' || formId === 'team' || formId === 'classement') {
       var answer
       if (formId === 'activité') {
         answer = 'Souhaitez-vous valider cette activité ?'
@@ -13,6 +13,8 @@ var formSubmit = () => {
         answer = 'Souhaitez-vous valider ce profil ?'
       } else if (formId === 'team') {
         answer = 'Souhaitez-vous ajouter cette team ?'
+      } else if (formId === 'classement') {
+        answer = 'Souhaitez-vous ajouter ce classement ?'
       }
 
       var question = window.confirm(answer)
