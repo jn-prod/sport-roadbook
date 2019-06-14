@@ -6,8 +6,7 @@ Master [![Build Status](https://travis-ci.org/jn-prod/sport-roadbook.svg?branch=
 This app use Node.js, Express and Mongoose. Application de gestion d'entrainement sportif.
 
 ### Urls
-dev : https://feezify-dev.herokuapp.com/
-prod : http://www.feezify.me
+demo : https://feezify-dev.herokuapp.com/
 
 # Commands 
 
