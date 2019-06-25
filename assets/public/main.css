@@ -312,7 +312,7 @@ pre {
      color:rgba(0,0,0,.8);
 }
  .dot:after {
-     content:"\B7";
+     content:"·";
      margin-left:3px;
      margin-right:3px;
 }
@@ -849,6 +849,7 @@ pre {
 .font-primary{
     font-family: Merriweather !important;
 }
+
 .nav-link {
     border: solid;
     border-top: 0;

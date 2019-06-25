@@ -44,7 +44,7 @@
     "express-messages": "*",
     "express-session": "^1.16.2",
     "express-validator": "^5.3.0",
-    "forest-express-mongoose": "^2.16.1",
+    "forest-express-mongoose": "^3.2.0",
     "fs": "0.0.1-security",
     "handlebars": "^4.1.2",
     "helmet": "^3.18.0",
