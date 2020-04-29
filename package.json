@@ -87,7 +87,7 @@
     "file-loader": "^1.1.11",
     "google-maps": "*",
     "html-webpack-plugin": "*",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mini-css-extract-plugin": "^0.4.5",
     "mocha": "^6.1.4",
     "popper.js": "^1.15.0",
